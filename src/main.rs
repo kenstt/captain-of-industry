@@ -8,7 +8,7 @@ fn main() -> eframe::Result<()> {
         native_options,
         Box::new(|cc| {
             setup_custom_fonts(&cc.egui_ctx);
-            Box::new(App::new()) as Box<dyn eframe::App>
+            Ok(Box::new(App::new()) as Box<dyn eframe::App>)
         }),
     )
 }
@@ -29,7 +29,7 @@ fn setup_custom_fonts(ctx: &egui::Context) {
         if let Ok(font_data) = std::fs::read(path) {
             fonts.font_data.insert(
                 "chinese_font".to_owned(),
-                egui::FontData::from_owned(font_data),
+                egui::FontData::from_owned(font_data).into(),
             );
 
             fonts
