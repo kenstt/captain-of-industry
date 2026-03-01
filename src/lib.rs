@@ -164,12 +164,12 @@ mod tests {
         let mut calc = Calculator::new();
         calc.add_machine(Machine {
             id: "cracking".to_string(),
-            name: "Cracking".to_string(),
+            name: "裂解".to_string(),
         });
         // 假設配方：10 單位原油 -> 6 單位汽油 + 4 單位渣油，耗時 10 秒
         calc.add_recipe(Recipe {
             id: "cracking".to_string(),
-            name: "Oil Cracking".to_string(),
+            name: "原油裂解".to_string(),
             inputs: vec![Ingredient {
                 resource_id: ResourceId("crude_oil".to_string()),
                 amount: 10.0,

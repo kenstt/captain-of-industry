@@ -16,19 +16,24 @@ fn main() -> eframe::Result<()> {
 fn setup_custom_fonts(ctx: &egui::Context) {
     let mut fonts = egui::FontDefinitions::default();
 
-    // 優先順序：微軟正黑體 (msjh.ttc) -> 微軟雅黑 (msyh.ttc) -> 標楷體 (kaiu.ttf)
+    // 優先順序：macOS 苹方 (PingFang) -> 黑體 (STHeiti) -> 宋體 (Songti) -> Windows 微軟正黑體 (msjh.ttc)
     let font_paths = [
+        "/System/Library/Fonts/PingFang.ttc",
+        "/System/Library/Fonts/STHeiti Light.ttc",
+        "/System/Library/Fonts/STHeiti Medium.ttc",
+        "/System/Library/Fonts/Supplemental/Songti.ttc",
         "C:\\Windows\\Fonts\\msjh.ttc",
         "C:\\Windows\\Fonts\\msjhbd.ttc",
         "C:\\Windows\\Fonts\\msyh.ttc",
         "C:\\Windows\\Fonts\\kaiu.ttf",
     ];
 
-    let mut font_loaded = false;
+    let mut loaded_count = 0;
     for path in font_paths {
         if let Ok(font_data) = std::fs::read(path) {
+            let font_name = format!("chinese_font_{}", loaded_count);
             fonts.font_data.insert(
-                "chinese_font".to_owned(),
+                font_name.clone(),
                 egui::FontData::from_owned(font_data).into(),
             );
 
@@ -36,20 +41,19 @@ fn setup_custom_fonts(ctx: &egui::Context) {
                 .families
                 .entry(egui::FontFamily::Proportional)
                 .or_default()
-                .insert(0, "chinese_font".to_owned());
+                .insert(0, font_name.clone());
 
             fonts
                 .families
                 .entry(egui::FontFamily::Monospace)
                 .or_default()
-                .push("chinese_font".to_owned());
+                .push(font_name);
 
-            font_loaded = true;
-            break;
+            loaded_count += 1;
         }
     }
 
-    if font_loaded {
+    if loaded_count > 0 {
         ctx.set_fonts(fonts);
     }
 }
@@ -71,7 +75,7 @@ enum Language {
 impl Language {
     fn name(&self) -> &'static str {
         match self {
-            Language::ZhTw => "繁體中文",
+            Language::ZhTw => "正體中文",
             Language::En => "English",
         }
     }
@@ -80,8 +84,8 @@ impl Language {
         let text = match self {
             Language::ZhTw => match key {
                 "title" => "Captain of Industry 生產線計算器",
-                "select_recipe" => "選擇配方:",
-                "count" => "數量:",
+                "select_recipe" => "選擇配方：",
+                "count" => "數量：",
                 "add_machine" => "新增設備",
                 "current_line" => "當前生產線",
                 "resource_balance" => "資源平衡 (每分鐘)",
@@ -121,7 +125,7 @@ impl App {
 
         calc.add_recipe(Recipe {
             id: "molten_iron".to_string(),
-            name: "鐵水".to_string(),
+            name: "熔融鐵".to_string(),
             inputs: vec![
                 Ingredient { resource_id: ResourceId("iron_ore".to_string()), amount: 12.0 },
                 Ingredient { resource_id: ResourceId("coke".to_string()), amount: 3.0 },
@@ -158,7 +162,7 @@ impl eframe::App for App {
             ui.horizontal(|ui| {
                 ui.heading(self.lang.t("title"));
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                    egui::ComboBox::from_id_source("lang_select")
+                    egui::ComboBox::new("lang_select", "")
                         .selected_text(self.lang.name())
                         .show_ui(ui, |ui| {
                             ui.selectable_value(&mut self.lang, Language::ZhTw, Language::ZhTw.name());
@@ -169,7 +173,7 @@ impl eframe::App for App {
 
             ui.horizontal(|ui| {
                 ui.label(self.lang.t("select_recipe"));
-                egui::ComboBox::from_id_source("recipe_select")
+                egui::ComboBox::new("recipe_select", "")
                     .selected_text(self.calc.recipes.get(&self.new_recipe_id).map(|r| r.name.as_str()).unwrap_or(""))
                     .show_ui(ui, |ui| {
                         for recipe in self.calc.recipes.values() {
