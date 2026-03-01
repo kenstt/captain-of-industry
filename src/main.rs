@@ -1,54 +1,127 @@
 use captain_of_industry::{Calculator, Ingredient, Machine, Recipe, ResourceId};
+use eframe::egui;
 
-fn main() {
-    let mut calc = Calculator::new();
+fn main() -> eframe::Result<()> {
+    let native_options = eframe::NativeOptions::default();
+    eframe::run_native(
+        "Captain of Industry Calculator",
+        native_options,
+        Box::new(|_cc| Box::new(App::new()) as Box<dyn eframe::App>),
+    )
+}
 
-    // 建立機器
-    calc.add_machine(Machine {
-        id: "blast_furnace".to_string(),
-        name: "高爐 (Blast Furnace)".to_string(),
-    });
+struct App {
+    calc: Calculator,
+    active_recipes: Vec<(String, f64)>,
+    new_recipe_id: String,
+    new_recipe_count: String,
+}
 
-    // 建立配方：鐵水 (Molten Iron)
-    // 12 鐵礦 + 3 焦炭 -> 12 鐵水, 耗時 20 秒
-    calc.add_recipe(Recipe {
-        id: "molten_iron".to_string(),
-        name: "鐵水".to_string(),
-        inputs: vec![
-            Ingredient {
-                resource_id: ResourceId("iron_ore".to_string()),
-                amount: 12.0,
-            },
-            Ingredient {
-                resource_id: ResourceId("coke".to_string()),
-                amount: 3.0,
-            },
-        ],
-        outputs: vec![Ingredient {
-            resource_id: ResourceId("molten_iron".to_string()),
-            amount: 12.0,
-        }],
-        duration: 20.0,
-        machine_id: "blast_furnace".to_string(),
-    });
+impl App {
+    fn new() -> Self {
+        let mut calc = Calculator::new();
 
-    // 目標：每分鐘產出 60 單位鐵水
-    let target_output = 60.0;
-    if let Some(result) = calc.calculate_requirements("molten_iron", target_output) {
-        println!("目標產出: {:.1} 鐵水 / 分鐘", target_output);
-        println!("配方: {}", result.recipe_name);
-        println!("機器: {} 需要 {:.2} 台", result.machine_name, result.machines_needed);
+        // Add some default data
+        calc.add_machine(Machine {
+            id: "blast_furnace".to_string(),
+            name: "高爐 (Blast Furnace)".to_string(),
+        });
+        calc.add_machine(Machine {
+            id: "assembly".to_string(),
+            name: "組裝機 (Assembly)".to_string(),
+        });
 
-        println!("輸入:");
-        for input in result.inputs {
-            println!("  - {}: {:.2} / 分鐘", input.resource_id.0, input.amount);
+        calc.add_recipe(Recipe {
+            id: "molten_iron".to_string(),
+            name: "鐵水".to_string(),
+            inputs: vec![
+                Ingredient { resource_id: ResourceId("iron_ore".to_string()), amount: 12.0 },
+                Ingredient { resource_id: ResourceId("coke".to_string()), amount: 3.0 },
+            ],
+            outputs: vec![Ingredient { resource_id: ResourceId("molten_iron".to_string()), amount: 12.0 }],
+            duration: 20.0,
+            machine_id: "blast_furnace".to_string(),
+        });
+
+        calc.add_recipe(Recipe {
+            id: "iron_plate".to_string(),
+            name: "鐵板".to_string(),
+            inputs: vec![
+                Ingredient { resource_id: ResourceId("molten_iron".to_string()), amount: 12.0 },
+            ],
+            outputs: vec![Ingredient { resource_id: ResourceId("iron_plate".to_string()), amount: 12.0 }],
+            duration: 20.0,
+            machine_id: "blast_furnace".to_string(),
+        });
+
+        Self {
+            calc,
+            active_recipes: Vec::new(),
+            new_recipe_id: "molten_iron".to_string(),
+            new_recipe_count: "1.0".to_string(),
         }
+    }
+}
 
-        println!("輸出:");
-        for output in result.outputs {
-            println!("  - {}: {:.2} / 分鐘", output.resource_id.0, output.amount);
-        }
-    } else {
-        println!("找不到配方！");
+impl eframe::App for App {
+    fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+        egui::CentralPanel::default().show(ctx, |ui| {
+            ui.heading("Captain of Industry 生產線計算器");
+
+            ui.horizontal(|ui| {
+                ui.label("選擇配方:");
+                egui::ComboBox::from_id_source("recipe_select")
+                    .selected_text(self.calc.recipes.get(&self.new_recipe_id).map(|r| r.name.as_str()).unwrap_or(""))
+                    .show_ui(ui, |ui| {
+                        for recipe in self.calc.recipes.values() {
+                            ui.selectable_value(&mut self.new_recipe_id, recipe.id.clone(), &recipe.name);
+                        }
+                    });
+
+                ui.label("數量:");
+                ui.text_edit_singleline(&mut self.new_recipe_count);
+
+                if ui.button("新增設備").clicked() {
+                    if let Ok(count) = self.new_recipe_count.parse::<f64>() {
+                        self.active_recipes.push((self.new_recipe_id.clone(), count));
+                    }
+                }
+            });
+
+            ui.separator();
+
+            ui.columns(2, |cols| {
+                cols[0].heading("當前生產線");
+                let mut to_remove = None;
+                for (i, (id, count)) in self.active_recipes.iter().enumerate() {
+                    cols[0].horizontal(|ui| {
+                        let name = self.calc.recipes.get(id).map(|r| r.name.as_str()).unwrap_or("Unknown");
+                        ui.label(format!("{}: {:.2} 台", name, count));
+                        if ui.button("🗑").clicked() {
+                            to_remove = Some(i);
+                        }
+                    });
+                }
+                if let Some(i) = to_remove {
+                    self.active_recipes.remove(i);
+                }
+
+                cols[1].heading("資源平衡 (每分鐘)");
+                let flows = self.calc.calculate_net_flow(&self.active_recipes);
+                let mut sorted_flows: Vec<_> = flows.into_iter().collect();
+                sorted_flows.sort_by(|a, b| a.0 .0.cmp(&b.0 .0));
+
+                for (res_id, amount) in sorted_flows {
+                    let color = if amount < 0.0 {
+                        egui::Color32::RED
+                    } else if amount > 0.0 {
+                        egui::Color32::GREEN
+                    } else {
+                        egui::Color32::GRAY
+                    };
+                    cols[1].colored_label(color, format!("{}: {:.2}", res_id.0, amount));
+                }
+            });
+        });
     }
 }

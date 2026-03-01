@@ -57,9 +57,6 @@ impl Calculator {
     pub fn calculate_requirements(&self, recipe_id: &str, target_output_per_min: f64) -> Option<CalculationResult> {
         let recipe = self.recipes.get(recipe_id)?;
 
-        // Find the primary output (assume first for now, or find the one that matches if needed)
-        // In Captain of Industry, a recipe can have multiple outputs.
-        // We usually calculate based on one desired output.
         let primary_output = recipe.outputs.first()?;
         let output_per_duration = primary_output.amount;
         let durations_per_min = 60.0 / recipe.duration;
@@ -92,6 +89,31 @@ impl Calculator {
             inputs,
             outputs,
         })
+    }
+
+    /// Calculate net resource flow for a list of active recipes and their machine counts
+    pub fn calculate_net_flow(&self, active_recipes: &[(String, f64)]) -> HashMap<ResourceId, f64> {
+        let mut flows = HashMap::new();
+
+        for (recipe_id, count) in active_recipes {
+            if let Some(recipe) = self.recipes.get(recipe_id) {
+                let durations_per_min = 60.0 / recipe.duration;
+
+                // Subtract inputs
+                for input in &recipe.inputs {
+                    let rate = input.amount * durations_per_min * count;
+                    *flows.entry(input.resource_id.clone()).or_insert(0.0) -= rate;
+                }
+
+                // Add outputs
+                for output in &recipe.outputs {
+                    let rate = output.amount * durations_per_min * count;
+                    *flows.entry(output.resource_id.clone()).or_insert(0.0) += rate;
+                }
+            }
+        }
+
+        flows
     }
 }
 
