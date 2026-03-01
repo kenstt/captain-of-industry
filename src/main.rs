@@ -6,8 +6,52 @@ fn main() -> eframe::Result<()> {
     eframe::run_native(
         "Captain of Industry Calculator",
         native_options,
-        Box::new(|_cc| Box::new(App::new()) as Box<dyn eframe::App>),
+        Box::new(|cc| {
+            setup_custom_fonts(&cc.egui_ctx);
+            Box::new(App::new()) as Box<dyn eframe::App>
+        }),
     )
+}
+
+fn setup_custom_fonts(ctx: &egui::Context) {
+    let mut fonts = egui::FontDefinitions::default();
+
+    // 優先順序：微軟正黑體 (msjh.ttc) -> 微軟雅黑 (msyh.ttc) -> 標楷體 (kaiu.ttf)
+    let font_paths = [
+        "C:\\Windows\\Fonts\\msjh.ttc",
+        "C:\\Windows\\Fonts\\msjhbd.ttc",
+        "C:\\Windows\\Fonts\\msyh.ttc",
+        "C:\\Windows\\Fonts\\kaiu.ttf",
+    ];
+
+    let mut font_loaded = false;
+    for path in font_paths {
+        if let Ok(font_data) = std::fs::read(path) {
+            fonts.font_data.insert(
+                "chinese_font".to_owned(),
+                egui::FontData::from_owned(font_data),
+            );
+
+            fonts
+                .families
+                .entry(egui::FontFamily::Proportional)
+                .or_default()
+                .insert(0, "chinese_font".to_owned());
+
+            fonts
+                .families
+                .entry(egui::FontFamily::Monospace)
+                .or_default()
+                .push("chinese_font".to_owned());
+
+            font_loaded = true;
+            break;
+        }
+    }
+
+    if font_loaded {
+        ctx.set_fonts(fonts);
+    }
 }
 
 struct App {
