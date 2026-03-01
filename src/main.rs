@@ -59,6 +59,50 @@ struct App {
     active_recipes: Vec<(String, f64)>,
     new_recipe_id: String,
     new_recipe_count: String,
+    lang: Language,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum Language {
+    ZhTw,
+    En,
+}
+
+impl Language {
+    fn name(&self) -> &'static str {
+        match self {
+            Language::ZhTw => "繁體中文",
+            Language::En => "English",
+        }
+    }
+
+    fn t(&self, key: &str) -> String {
+        let text = match self {
+            Language::ZhTw => match key {
+                "title" => "Captain of Industry 生產線計算器",
+                "select_recipe" => "選擇配方:",
+                "count" => "數量:",
+                "add_machine" => "新增設備",
+                "current_line" => "當前生產線",
+                "resource_balance" => "資源平衡 (每分鐘)",
+                "machines_unit" => "台",
+                "unknown" => "未知",
+                _ => key,
+            },
+            Language::En => match key {
+                "title" => "Captain of Industry Production Line Calculator",
+                "select_recipe" => "Select Recipe:",
+                "count" => "Count:",
+                "add_machine" => "Add Machine",
+                "current_line" => "Current Production Line",
+                "resource_balance" => "Resource Balance (per min)",
+                "machines_unit" => "units",
+                "unknown" => "Unknown",
+                _ => key,
+            },
+        };
+        text.to_string()
+    }
 }
 
 impl App {
@@ -103,6 +147,7 @@ impl App {
             active_recipes: Vec::new(),
             new_recipe_id: "molten_iron".to_string(),
             new_recipe_count: "1.0".to_string(),
+            lang: Language::ZhTw,
         }
     }
 }
@@ -110,10 +155,20 @@ impl App {
 impl eframe::App for App {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         egui::CentralPanel::default().show(ctx, |ui| {
-            ui.heading("Captain of Industry 生產線計算器");
+            ui.horizontal(|ui| {
+                ui.heading(self.lang.t("title"));
+                ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
+                    egui::ComboBox::from_id_source("lang_select")
+                        .selected_text(self.lang.name())
+                        .show_ui(ui, |ui| {
+                            ui.selectable_value(&mut self.lang, Language::ZhTw, Language::ZhTw.name());
+                            ui.selectable_value(&mut self.lang, Language::En, Language::En.name());
+                        });
+                });
+            });
 
             ui.horizontal(|ui| {
-                ui.label("選擇配方:");
+                ui.label(self.lang.t("select_recipe"));
                 egui::ComboBox::from_id_source("recipe_select")
                     .selected_text(self.calc.recipes.get(&self.new_recipe_id).map(|r| r.name.as_str()).unwrap_or(""))
                     .show_ui(ui, |ui| {
@@ -122,10 +177,10 @@ impl eframe::App for App {
                         }
                     });
 
-                ui.label("數量:");
+                ui.label(self.lang.t("count"));
                 ui.text_edit_singleline(&mut self.new_recipe_count);
 
-                if ui.button("新增設備").clicked() {
+                if ui.button(self.lang.t("add_machine")).clicked() {
                     if let Ok(count) = self.new_recipe_count.parse::<f64>() {
                         self.active_recipes.push((self.new_recipe_id.clone(), count));
                     }
@@ -135,12 +190,13 @@ impl eframe::App for App {
             ui.separator();
 
             ui.columns(2, |cols| {
-                cols[0].heading("當前生產線");
+                cols[0].heading(self.lang.t("current_line"));
                 let mut to_remove = None;
                 for (i, (id, count)) in self.active_recipes.iter().enumerate() {
                     cols[0].horizontal(|ui| {
-                        let name = self.calc.recipes.get(id).map(|r| r.name.as_str()).unwrap_or("Unknown");
-                        ui.label(format!("{}: {:.2} 台", name, count));
+                        let unknown = self.lang.t("unknown");
+                        let name = self.calc.recipes.get(id).map(|r| r.name.as_str()).unwrap_or(&unknown);
+                        ui.label(format!("{}: {:.2} {}", name, count, self.lang.t("machines_unit")));
                         if ui.button("🗑").clicked() {
                             to_remove = Some(i);
                         }
@@ -150,7 +206,7 @@ impl eframe::App for App {
                     self.active_recipes.remove(i);
                 }
 
-                cols[1].heading("資源平衡 (每分鐘)");
+                cols[1].heading(self.lang.t("resource_balance"));
                 let flows = self.calc.calculate_net_flow(&self.active_recipes);
                 let mut sorted_flows: Vec<_> = flows.into_iter().collect();
                 sorted_flows.sort_by(|a, b| a.0 .0.cmp(&b.0 .0));
