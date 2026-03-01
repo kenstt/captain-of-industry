@@ -1,0 +1,183 @@
+{
+  "resources": [
+    { "id": "iron_ore", "name": "Iron Ore", "name_zh": "鐵礦", "category": "Mineral" },
+    { "id": "copper_ore", "name": "Copper Ore", "name_zh": "銅礦", "category": "Mineral" },
+    { "id": "coal", "name": "Coal", "name_zh": "煤炭", "category": "Mineral" },
+    { "id": "sand", "name": "Sand", "name_zh": "沙", "category": "Mineral" },
+    { "id": "rock", "name": "Rock", "name_zh": "岩石", "category": "Mineral" },
+    { "id": "limestone", "name": "Limestone", "name_zh": "石灰石", "category": "Mineral" },
+    { "id": "crude_oil", "name": "Crude Oil", "name_zh": "原油", "category": "Liquid" },
+    { "id": "water", "name": "Water", "name_zh": "水", "category": "Liquid" },
+    { "id": "molten_iron", "name": "Molten Iron", "name_zh": "鐵水", "category": "Intermediate" },
+    { "id": "molten_copper", "name": "Molten Copper", "name_zh": "銅水", "category": "Intermediate" },
+    { "id": "molten_steel", "name": "Molten Steel", "name_zh": "鋼水", "category": "Intermediate" },
+    { "id": "molten_glass", "name": "Molten Glass", "name_zh": "玻璃液", "category": "Intermediate" },
+    { "id": "iron_plate", "name": "Iron Plate", "name_zh": "鐵板", "category": "Product" },
+    { "id": "copper_plate", "name": "Copper Plate", "name_zh": "銅板", "category": "Product" },
+    { "id": "steel", "name": "Steel", "name_zh": "鋼材", "category": "Product" },
+    { "id": "glass", "name": "Glass", "name_zh": "玻璃", "category": "Product" },
+    { "id": "coke", "name": "Coke", "name_zh": "焦炭", "category": "Intermediate" },
+    { "id": "slag", "name": "Slag", "name_zh": "爐渣", "category": "Waste" },
+    { "id": "exhaust", "name": "Exhaust", "name_zh": "廢氣", "category": "Waste" },
+    { "id": "concrete", "name": "Concrete", "name_zh": "混凝土", "category": "Product" }
+  ],
+  "machines": [],
+  "recipes": [
+    {
+      "id": "molten_iron",
+      "name": "Molten Iron",
+      "name_zh": "鐵水",
+      "inputs": [
+        { "resource_id": "iron_ore", "amount": 12.0 },
+        { "resource_id": "coke", "amount": 3.0 }
+      ],
+      "outputs": [
+        { "resource_id": "molten_iron", "amount": 12.0 },
+        { "resource_id": "slag", "amount": 4.0 }
+      ],
+      "duration": 20.0,
+      "machine_id": "blast_furnace",
+      "tier": 1,
+      "tags": ["smelting", "iron"]
+    },
+    {
+      "id": "molten_copper",
+      "name": "Molten Copper",
+      "name_zh": "銅水",
+      "inputs": [
+        { "resource_id": "copper_ore", "amount": 12.0 }
+      ],
+      "outputs": [
+        { "resource_id": "molten_copper", "amount": 12.0 },
+        { "resource_id": "slag", "amount": 2.0 }
+      ],
+      "duration": 20.0,
+      "machine_id": "blast_furnace",
+      "tier": 1,
+      "tags": ["smelting", "copper"]
+    },
+    {
+      "id": "iron_plate",
+      "name": "Iron Plate",
+      "name_zh": "鐵板",
+      "inputs": [
+        { "resource_id": "molten_iron", "amount": 8.0 }
+      ],
+      "outputs": [
+        { "resource_id": "iron_plate", "amount": 8.0 }
+      ],
+      "duration": 20.0,
+      "machine_id": "cooled_mold",
+      "tier": 1,
+      "tags": ["casting", "iron"]
+    },
+    {
+      "id": "copper_plate",
+      "name": "Copper Plate",
+      "name_zh": "銅板",
+      "inputs": [
+        { "resource_id": "molten_copper", "amount": 8.0 }
+      ],
+      "outputs": [
+        { "resource_id": "copper_plate", "amount": 8.0 }
+      ],
+      "duration": 20.0,
+      "machine_id": "cooled_mold",
+      "tier": 1,
+      "tags": ["casting", "copper"]
+    },
+    {
+      "id": "molten_steel",
+      "name": "Molten Steel",
+      "name_zh": "鋼水",
+      "inputs": [
+        { "resource_id": "iron_ore", "amount": 6.0 },
+        { "resource_id": "coal", "amount": 2.0 }
+      ],
+      "outputs": [
+        { "resource_id": "molten_steel", "amount": 4.0 },
+        { "resource_id": "exhaust", "amount": 4.0 }
+      ],
+      "duration": 20.0,
+      "machine_id": "arc_furnace",
+      "tier": 2,
+      "tags": ["smelting", "steel"]
+    },
+    {
+      "id": "steel",
+      "name": "Steel",
+      "name_zh": "鋼材",
+      "inputs": [
+        { "resource_id": "molten_steel", "amount": 8.0 }
+      ],
+      "outputs": [
+        { "resource_id": "steel", "amount": 8.0 }
+      ],
+      "duration": 20.0,
+      "machine_id": "metal_caster",
+      "tier": 2,
+      "tags": ["casting", "steel"]
+    },
+    {
+      "id": "coke",
+      "name": "Coke",
+      "name_zh": "焦炭",
+      "inputs": [
+        { "resource_id": "coal", "amount": 6.0 }
+      ],
+      "outputs": [
+        { "resource_id": "coke", "amount": 4.0 }
+      ],
+      "duration": 20.0,
+      "machine_id": "distillery",
+      "tier": 1,
+      "tags": ["processing"]
+    },
+    {
+      "id": "concrete",
+      "name": "Concrete",
+      "name_zh": "混凝土",
+      "inputs": [
+        { "resource_id": "rock", "amount": 6.0 },
+        { "resource_id": "water", "amount": 4.0 }
+      ],
+      "outputs": [
+        { "resource_id": "concrete", "amount": 4.0 }
+      ],
+      "duration": 20.0,
+      "machine_id": "assembly_line",
+      "tier": 1,
+      "tags": ["construction"]
+    },
+    {
+      "id": "molten_glass",
+      "name": "Molten Glass",
+      "name_zh": "玻璃液",
+      "inputs": [
+        { "resource_id": "sand", "amount": 8.0 }
+      ],
+      "outputs": [
+        { "resource_id": "molten_glass", "amount": 8.0 }
+      ],
+      "duration": 20.0,
+      "machine_id": "glass_maker",
+      "tier": 2,
+      "tags": ["smelting", "glass"]
+    },
+    {
+      "id": "glass",
+      "name": "Glass",
+      "name_zh": "玻璃",
+      "inputs": [
+        { "resource_id": "molten_glass", "amount": 8.0 }
+      ],
+      "outputs": [
+        { "resource_id": "glass", "amount": 8.0 }
+      ],
+      "duration": 20.0,
+      "machine_id": "cooled_mold",
+      "tier": 2,
+      "tags": ["casting", "glass"]
+    }
+  ]
+}

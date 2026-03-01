@@ -1,0 +1,76 @@
+{
+  "resources": [],
+  "recipes": [],
+  "machines": [
+    {
+      "id": "blast_furnace",
+      "name": "Blast Furnace",
+      "name_zh": "高爐",
+      "power_consumption": 60.0,
+      "category": "smelting"
+    },
+    {
+      "id": "arc_furnace",
+      "name": "Arc Furnace",
+      "name_zh": "電弧爐",
+      "power_consumption": 120.0,
+      "category": "smelting"
+    },
+    {
+      "id": "cooled_mold",
+      "name": "Cooled Mold",
+      "name_zh": "冷卻鑄模",
+      "power_consumption": 40.0,
+      "category": "casting"
+    },
+    {
+      "id": "metal_caster",
+      "name": "Metal Caster",
+      "name_zh": "金屬鑄造機",
+      "power_consumption": 80.0,
+      "category": "casting"
+    },
+    {
+      "id": "assembly_line",
+      "name": "Assembly Line",
+      "name_zh": "組裝線",
+      "power_consumption": 100.0,
+      "category": "assembly"
+    },
+    {
+      "id": "chemical_plant",
+      "name": "Chemical Plant",
+      "name_zh": "化學廠",
+      "power_consumption": 150.0,
+      "category": "chemical"
+    },
+    {
+      "id": "crusher",
+      "name": "Crusher",
+      "name_zh": "粉碎機",
+      "power_consumption": 40.0,
+      "category": "processing"
+    },
+    {
+      "id": "distillery",
+      "name": "Distillery",
+      "name_zh": "蒸餾塔",
+      "power_consumption": 100.0,
+      "category": "chemical"
+    },
+    {
+      "id": "glass_maker",
+      "name": "Glass Maker",
+      "name_zh": "玻璃製造機",
+      "power_consumption": 80.0,
+      "category": "smelting"
+    },
+    {
+      "id": "exhaust_scrubber",
+      "name": "Exhaust Scrubber",
+      "name_zh": "廢氣淨化器",
+      "power_consumption": 60.0,
+      "category": "processing"
+    }
+  ]
+}

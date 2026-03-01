@@ -1,36 +1,12 @@
-use serde::{Deserialize, Serialize};
+pub mod data;
+pub mod calculator;
+
+// Re-export core types for backward compatibility
+pub use data::models::{
+    CalculationResult, GameData, Ingredient, Machine, Recipe, Resource, ResourceId,
+};
+
 use std::collections::HashMap;
-
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
-pub struct ResourceId(pub String);
-
-#[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct Resource {
-    pub id: ResourceId,
-    pub name: String,
-}
-
-#[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct Ingredient {
-    pub resource_id: ResourceId,
-    pub amount: f64,
-}
-
-#[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct Recipe {
-    pub id: String,
-    pub name: String,
-    pub inputs: Vec<Ingredient>,
-    pub outputs: Vec<Ingredient>,
-    pub duration: f64, // seconds
-    pub machine_id: String,
-}
-
-#[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct Machine {
-    pub id: String,
-    pub name: String,
-}
 
 pub struct Calculator {
     pub recipes: HashMap<String, Recipe>,
@@ -54,12 +30,13 @@ impl Calculator {
     }
 
     /// Calculate requirements for a target output rate (units per minute)
-    pub fn calculate_requirements(&self, recipe_id: &str, target_output_per_min: f64) -> Option<CalculationResult> {
+    pub fn calculate_requirements(
+        &self,
+        recipe_id: &str,
+        target_output_per_min: f64,
+    ) -> Option<CalculationResult> {
         let recipe = self.recipes.get(recipe_id)?;
 
-        // Find the primary output (assume first for now, or find the one that matches if needed)
-        // In Captain of Industry, a recipe can have multiple outputs.
-        // We usually calculate based on one desired output.
         let primary_output = recipe.outputs.first()?;
         let output_per_duration = primary_output.amount;
         let durations_per_min = 60.0 / recipe.duration;
@@ -95,15 +72,6 @@ impl Calculator {
     }
 }
 
-#[derive(Debug)]
-pub struct CalculationResult {
-    pub recipe_name: String,
-    pub machine_name: String,
-    pub machines_needed: f64,
-    pub inputs: Vec<Ingredient>,
-    pub outputs: Vec<Ingredient>,
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -114,10 +82,14 @@ mod tests {
         calc.add_machine(Machine {
             id: "furnace".to_string(),
             name: "Furnace".to_string(),
+            name_zh: None,
+            power_consumption: 0.0,
+            category: String::new(),
         });
         calc.add_recipe(Recipe {
             id: "copper".to_string(),
             name: "Copper Plate".to_string(),
+            name_zh: None,
             inputs: vec![Ingredient {
                 resource_id: ResourceId("copper_ore".to_string()),
                 amount: 10.0,
@@ -126,11 +98,12 @@ mod tests {
                 resource_id: ResourceId("copper_plate".to_string()),
                 amount: 10.0,
             }],
-            duration: 10.0, // 每 10 秒 10 個，即每分鐘 60 個
+            duration: 10.0,
             machine_id: "furnace".to_string(),
+            tier: 0,
+            tags: vec![],
         });
 
-        // 目標每分鐘 120 個產出，需要 2 台機器
         let result = calc.calculate_requirements("copper", 120.0).unwrap();
         assert_eq!(result.machines_needed, 2.0);
         assert_eq!(result.inputs[0].amount, 120.0);
@@ -143,11 +116,14 @@ mod tests {
         calc.add_machine(Machine {
             id: "cracking".to_string(),
             name: "Cracking".to_string(),
+            name_zh: None,
+            power_consumption: 0.0,
+            category: String::new(),
         });
-        // 假設配方：10 單位原油 -> 6 單位汽油 + 4 單位渣油，耗時 10 秒
         calc.add_recipe(Recipe {
             id: "cracking".to_string(),
             name: "Oil Cracking".to_string(),
+            name_zh: None,
             inputs: vec![Ingredient {
                 resource_id: ResourceId("crude_oil".to_string()),
                 amount: 10.0,
@@ -164,14 +140,144 @@ mod tests {
             ],
             duration: 10.0,
             machine_id: "cracking".to_string(),
+            tier: 0,
+            tags: vec![],
         });
 
-        // 每分鐘產出 36 單位汽油 (6/10秒 = 36/分鐘)
-        // 36 汽油 / 36 單機 = 1 台機器
         let result = calc.calculate_requirements("cracking", 36.0).unwrap();
         assert_eq!(result.machines_needed, 1.0);
         assert_eq!(result.inputs[0].amount, 60.0);
-        assert_eq!(result.outputs[0].amount, 36.0); // 汽油
-        assert_eq!(result.outputs[1].amount, 24.0); // 渣油
+        assert_eq!(result.outputs[0].amount, 36.0);
+        assert_eq!(result.outputs[1].amount, 24.0);
+    }
+
+    #[test]
+    fn test_chain_calculation() {
+        use std::collections::HashSet;
+
+        let data = GameData {
+            resources: vec![],
+            machines: vec![
+                Machine {
+                    id: "furnace".to_string(),
+                    name: "Furnace".to_string(),
+                    name_zh: None,
+                    power_consumption: 50.0,
+                    category: String::new(),
+                },
+                Machine {
+                    id: "smelter".to_string(),
+                    name: "Smelter".to_string(),
+                    name_zh: None,
+                    power_consumption: 100.0,
+                    category: String::new(),
+                },
+            ],
+            recipes: vec![
+                Recipe {
+                    id: "iron_plate".to_string(),
+                    name: "Iron Plate".to_string(),
+                    name_zh: None,
+                    inputs: vec![Ingredient {
+                        resource_id: ResourceId("molten_iron".to_string()),
+                        amount: 10.0,
+                    }],
+                    outputs: vec![Ingredient {
+                        resource_id: ResourceId("iron_plate".to_string()),
+                        amount: 10.0,
+                    }],
+                    duration: 10.0,
+                    machine_id: "smelter".to_string(),
+                    tier: 0,
+                    tags: vec![],
+                },
+                Recipe {
+                    id: "molten_iron".to_string(),
+                    name: "Molten Iron".to_string(),
+                    name_zh: None,
+                    inputs: vec![Ingredient {
+                        resource_id: ResourceId("iron_ore".to_string()),
+                        amount: 12.0,
+                    }],
+                    outputs: vec![Ingredient {
+                        resource_id: ResourceId("molten_iron".to_string()),
+                        amount: 12.0,
+                    }],
+                    duration: 20.0,
+                    machine_id: "furnace".to_string(),
+                    tier: 0,
+                    tags: vec![],
+                },
+            ],
+        };
+
+        let chain = calculator::chain::calculate_chain(
+            &data,
+            "iron_plate",
+            60.0,
+            0,
+            &HashSet::new(),
+        )
+        .unwrap();
+
+        // 60 iron plate/min needs 1 smelter (10 per 10s = 60/min)
+        assert_eq!(chain.machines_needed, 1.0);
+        // It needs 60 molten_iron/min
+        assert_eq!(chain.children.len(), 1);
+        // The upstream molten_iron recipe: 12 per 20s = 36/min per machine
+        // Need 60/36 = 1.667 furnaces
+        if let data::models::ChainSource::Recipe(ref upstream) = chain.children[0].source {
+            assert!((upstream.machines_needed - 60.0 / 36.0).abs() < 0.01);
+        } else {
+            panic!("Expected upstream recipe");
+        }
+    }
+
+    #[test]
+    fn test_balance_analysis() {
+        use std::collections::HashSet;
+
+        let data = GameData {
+            resources: vec![],
+            machines: vec![Machine {
+                id: "furnace".to_string(),
+                name: "Furnace".to_string(),
+                name_zh: None,
+                power_consumption: 50.0,
+                category: String::new(),
+            }],
+            recipes: vec![Recipe {
+                id: "copper".to_string(),
+                name: "Copper Plate".to_string(),
+                name_zh: None,
+                inputs: vec![Ingredient {
+                    resource_id: ResourceId("copper_ore".to_string()),
+                    amount: 10.0,
+                }],
+                outputs: vec![Ingredient {
+                    resource_id: ResourceId("copper_plate".to_string()),
+                    amount: 10.0,
+                }],
+                duration: 10.0,
+                machine_id: "furnace".to_string(),
+                tier: 0,
+                tags: vec![],
+            }],
+        };
+
+        let chain = calculator::chain::calculate_chain(
+            &data,
+            "copper",
+            60.0,
+            0,
+            &HashSet::new(),
+        )
+        .unwrap();
+
+        let report = calculator::balance::analyze_balance(&chain, &data);
+
+        // copper_plate is produced (surplus), copper_ore is consumed (deficit as raw material)
+        assert!(!report.resource_balances.is_empty());
+        assert!(!report.machine_totals.is_empty());
     }
 }
