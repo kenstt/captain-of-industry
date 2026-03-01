@@ -8,7 +8,7 @@ fn main() -> eframe::Result<()> {
         native_options,
         Box::new(|cc| {
             setup_custom_fonts(&cc.egui_ctx);
-            Box::new(App::new()) as Box<dyn eframe::App>
+            Ok(Box::new(App::new()) as Box<dyn eframe::App>)
         }),
     )
 }
@@ -29,7 +29,7 @@ fn setup_custom_fonts(ctx: &egui::Context) {
         if let Ok(font_data) = std::fs::read(path) {
             fonts.font_data.insert(
                 "chinese_font".to_owned(),
-                egui::FontData::from_owned(font_data),
+                egui::FontData::from_owned(font_data).into(),
             );
 
             fonts
@@ -114,7 +114,7 @@ impl eframe::App for App {
 
             ui.horizontal(|ui| {
                 ui.label("選擇配方:");
-                egui::ComboBox::from_id_source("recipe_select")
+                egui::ComboBox::new("recipe_select", "")
                     .selected_text(self.calc.recipes.get(&self.new_recipe_id).map(|r| r.name.as_str()).unwrap_or(""))
                     .show_ui(ui, |ui| {
                         for recipe in self.calc.recipes.values() {
