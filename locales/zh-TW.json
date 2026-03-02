@@ -104,5 +104,7 @@
   "calculate_balance": "計算平衡",
 
   "filter_tag": "篩選分類",
-  "all_tags": "全部"
+  "all_tags": "全部",
+  "maintenance_per_month": "維護 (/月)",
+  "total_maintenance": "總維護"
 }

@@ -104,5 +104,7 @@
   "calculate_balance": "Calculate Balance",
 
   "filter_tag": "Filter Tag",
-  "all_tags": "All"
+  "all_tags": "All",
+  "maintenance_per_month": "Maintenance (/month)",
+  "total_maintenance": "Total Maintenance"
 }

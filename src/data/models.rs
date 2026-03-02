@@ -216,6 +216,7 @@ pub struct BalanceReport {
     pub total_power: f64,
     pub total_workers: f64,
     pub total_computing: f64,
+    pub total_maintenance: Vec<Ingredient>,
 }
 
 #[derive(Debug, Clone)]

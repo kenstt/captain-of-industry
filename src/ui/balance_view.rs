@@ -5,6 +5,32 @@ use crate::calculator::balance;
 use crate::data::models::*;
 use crate::ui::theme;
 
+fn format_maintenance(
+    costs: &[Ingredient],
+    resources_map: &std::collections::HashMap<ResourceId, &Resource>,
+) -> String {
+    if costs.is_empty() {
+        return "-".to_string();
+    }
+    costs
+        .iter()
+        .map(|c| {
+            let name = resources_map
+                .get(&c.resource_id)
+                .and_then(|r| r.name_zh.as_deref())
+                .map(|zh| zh.to_string())
+                .unwrap_or_else(|| {
+                    resources_map
+                        .get(&c.resource_id)
+                        .map(|r| r.name.clone())
+                        .unwrap_or_else(|| c.resource_id.0.clone())
+                });
+            format!("{} x{}", name, c.amount)
+        })
+        .collect::<Vec<_>>()
+        .join(", ")
+}
+
 fn format_count(v: f64) -> String {
     if v.fract() == 0.0 {
         format!("{}", v as i64)
@@ -277,6 +303,7 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &mut BalanceViewState, data: 
             ui.strong(format!("{} (kW)", t!("power_consumption")));
             ui.strong(t!("workers"));
             ui.strong(format!("{} (TFLOPs)", t!("computing")));
+            ui.strong(t!("maintenance_per_month"));
             ui.end_row();
 
             for mt in &report.machine_totals {
@@ -296,6 +323,7 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &mut BalanceViewState, data: 
                 } else {
                     "-".to_string()
                 });
+                ui.label(format_maintenance(&mt.maintenance_costs, &resources_map));
                 ui.end_row();
             }
         });
@@ -316,6 +344,13 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &mut BalanceViewState, data: 
             "{}: {:.1} TFLOPs",
             t!("total_computing"),
             report.total_computing
+        ));
+    }
+    if !report.total_maintenance.is_empty() {
+        ui.label(format!(
+            "{}: {}",
+            t!("total_maintenance"),
+            format_maintenance(&report.total_maintenance, &resources_map)
         ));
     }
 }

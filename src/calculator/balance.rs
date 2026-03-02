@@ -163,13 +163,34 @@ pub fn analyze_balance(node: &ChainNode, data: &GameData) -> BalanceReport {
             .then_with(|| a.net_rate.partial_cmp(&b.net_rate).unwrap_or(std::cmp::Ordering::Equal))
     });
 
+    let total_maintenance = aggregate_maintenance(&machine_totals);
+
     BalanceReport {
         resource_balances,
         machine_totals,
         total_power,
         total_workers,
         total_computing,
+        total_maintenance,
     }
+}
+
+fn aggregate_maintenance(machine_totals: &[MachineTally]) -> Vec<Ingredient> {
+    let mut map: HashMap<ResourceId, f64> = HashMap::new();
+    for mt in machine_totals {
+        for mc in &mt.maintenance_costs {
+            *map.entry(mc.resource_id.clone()).or_insert(0.0) += mc.amount;
+        }
+    }
+    let mut result: Vec<Ingredient> = map
+        .into_iter()
+        .map(|(resource_id, amount)| Ingredient {
+            resource_id,
+            amount,
+        })
+        .collect();
+    result.sort_by(|a, b| a.resource_id.0.cmp(&b.resource_id.0));
+    result
 }
 
 /// Analyze resource balance from a list of (recipe_id, machine_count) entries.
@@ -355,12 +376,15 @@ pub fn analyze_balance_from_recipes(
             .then_with(|| a.net_rate.partial_cmp(&b.net_rate).unwrap_or(std::cmp::Ordering::Equal))
     });
 
+    let total_maintenance = aggregate_maintenance(&machine_totals);
+
     BalanceReport {
         resource_balances,
         machine_totals,
         total_power,
         total_workers,
         total_computing,
+        total_maintenance,
     }
 }
 
