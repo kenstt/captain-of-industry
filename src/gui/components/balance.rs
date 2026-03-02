@@ -246,7 +246,7 @@ pub fn Balance() -> Element {
                             r#type: "number",
                             value: "{add_count}",
                             oninput: move |e| add_count.set(e.value()),
-                            min: "0.01",
+                            min: "0",
                             step: "1",
                         }
                     }
@@ -255,12 +255,12 @@ pub fn Balance() -> Element {
                         onclick: move |_| {
                             let bid = add_building.read().clone();
                             let rid = add_recipe.read().clone();
-                            let cnt: f64 = add_count.read().parse().unwrap_or(1.0);
-                            if !bid.is_empty() && !rid.is_empty() && cnt > 0.0 {
+                            let cnt: u32 = add_count.read().parse().unwrap_or(1);
+                            if !bid.is_empty() && !rid.is_empty() && cnt > 0 {
                                 app_state.write().add_island_entry(
                                     BuildingId::new(&bid),
                                     RecipeId::new(&rid),
-                                    cnt,
+                                    cnt as f64,
                                 );
                                 add_building.set(String::new());
                                 add_recipe.set(String::new());
@@ -292,7 +292,7 @@ pub fn Balance() -> Element {
                         for (eid, bname, rname, count, elec, workers) in entry_rows.iter() {
                             {
                                 let eid = *eid;
-                                let count_val = *count;
+                                let count_val = *count as u32;
                                 rsx! {
                                     tr {
                                         td { "{bname}" }
@@ -302,14 +302,14 @@ pub fn Balance() -> Element {
                                                 r#type: "number",
                                                 class: "inline-input",
                                                 value: "{count_val}",
-                                                min: "0.01",
+                                                min: "0",
                                                 step: "1",
                                                 oninput: move |e| {
-                                                    if let Ok(v) = e.value().parse::<f64>() {
-                                                        if v > 0.0 {
+                                                    if let Ok(v) = e.value().parse::<u32>() {
+                                                        if v > 0 {
                                                             let mut state = app_state.write();
                                                             if let Some(entry) = state.island_entries.iter_mut().find(|x| x.id == eid) {
-                                                                entry.count = v;
+                                                                entry.count = v as f64;
                                                             }
                                                         }
                                                     }
