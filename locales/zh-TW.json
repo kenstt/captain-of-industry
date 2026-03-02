@@ -97,5 +97,9 @@
   "total_computing": "總算力",
   "maintenance_cost": "維護消耗",
   "add_maintenance": "+ 新增維護物品",
-  "per_month": "/月"
+  "per_month": "/月",
+
+  "add_recipe_entry": "+ 新增配方",
+  "machine_count": "機器數量",
+  "calculate_balance": "計算平衡"
 }

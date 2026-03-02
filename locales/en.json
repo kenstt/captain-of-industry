@@ -97,5 +97,9 @@
   "total_computing": "Total Computing",
   "maintenance_cost": "Maintenance Cost",
   "add_maintenance": "+ Add Maintenance",
-  "per_month": "/month"
+  "per_month": "/month",
+
+  "add_recipe_entry": "+ Add Recipe",
+  "machine_count": "Machine Count",
+  "calculate_balance": "Calculate Balance"
 }

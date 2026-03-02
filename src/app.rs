@@ -231,16 +231,13 @@ impl eframe::App for App {
                 }
                 Tab::ProductionChain => {
                     chain_view::show_chain_view(ui, &mut self.chain_state, &self.data);
-
-                    // Update balance when chain is calculated
-                    balance_view::update_balance(
-                        &mut self.balance_state,
-                        self.chain_state.chain_result.as_ref(),
-                        &self.data,
-                    );
                 }
                 Tab::ResourceBalance => {
-                    balance_view::show_balance_view(ui, &self.balance_state);
+                    balance_view::show_balance_view(
+                        ui,
+                        &mut self.balance_state,
+                        &self.data,
+                    );
                 }
             }
         });
