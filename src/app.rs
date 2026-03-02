@@ -66,14 +66,22 @@ impl App {
             }
         }
 
-        // If no bundled font, try system fonts (Windows)
+        // If no bundled font, try system fonts
         if !cjk_loaded {
             let system_fonts = [
-                "C:/Windows/Fonts/msyh.ttc",      // Microsoft YaHei
-                "C:/Windows/Fonts/msjh.ttc",       // Microsoft JhengHei
+                // macOS
+                "/System/Library/Fonts/STHeiti Medium.ttc",
+                "/System/Library/Fonts/Hiragino Sans GB.ttc",
+                "/System/Library/Fonts/Supplemental/Songti.ttc",
+                "/System/Library/Fonts/Supplemental/Arial Unicode.ttf",
+                "/System/Library/Fonts/PingFang.ttc",
+                // Windows
+                "C:/Windows/Fonts/msjh.ttc",       // Microsoft JhengHei (繁體)
+                "C:/Windows/Fonts/msyh.ttc",       // Microsoft YaHei (簡體)
                 "C:/Windows/Fonts/simsun.ttc",     // SimSun
-                "/System/Library/Fonts/PingFang.ttc", // macOS
-                "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc", // Linux
+                // Linux
+                "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+                "/usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc",
             ];
             for font_path in &system_fonts {
                 if let Ok(font_data) = std::fs::read(font_path) {
