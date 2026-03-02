@@ -1,0 +1,37 @@
+[
+  {
+    "id": "iron_smelting_scrap",
+    "name": "鐵冶煉（廢料）",
+    "name_en": "Iron Smelting (From Scrap)"
+  },
+  {
+    "id": "iron_smelting_ore",
+    "name": "鐵冶煉（礦石）",
+    "name_en": "Iron Smelting (From Ore)",
+    "prerequisites": ["iron_smelting_scrap"]
+  },
+  {
+    "id": "copper_smelting",
+    "name": "銅冶煉",
+    "name_en": "Copper Smelting",
+    "prerequisites": ["iron_smelting_scrap"]
+  },
+  {
+    "id": "glass_smelting",
+    "name": "玻璃冶煉",
+    "name_en": "Glass Smelting",
+    "prerequisites": ["iron_smelting_scrap"]
+  },
+  {
+    "id": "advanced_smelting",
+    "name": "進階冶煉",
+    "name_en": "Advanced Smelting",
+    "prerequisites": ["iron_smelting_ore", "copper_smelting"]
+  },
+  {
+    "id": "maintenance_2",
+    "name": "維護 II",
+    "name_en": "Maintenance II",
+    "prerequisites": ["iron_smelting_scrap"]
+  }
+]

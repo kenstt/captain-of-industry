@@ -1,0 +1,17 @@
+[
+  {
+    "id": "smokestack_exhaust",
+    "name": "排放廢氣",
+    "name_en": "Vent Exhaust",
+    "inputs": [
+      { "resource_id": "exhaust", "amount": 60 }
+    ],
+    "outputs": [
+      { "resource_id": "air_pollution", "amount": 30 }
+    ],
+    "duration": 60,
+    "building_id": "smokestack",
+    "is_default": true,
+    "research_required": "iron_smelting_scrap"
+  }
+]

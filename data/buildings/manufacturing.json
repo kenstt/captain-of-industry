@@ -1,0 +1,18 @@
+[
+  {
+    "id": "maintenance_depot",
+    "name": "維護站",
+    "name_en": "Maintenance Depot",
+    "category": "Manufacturing",
+    "footprint": { "width": 7, "height": 6 },
+    "construction_costs": [
+      { "resource_id": "construction_parts_2", "amount": 50 }
+    ],
+    "workers": 20,
+    "base_electricity_kw": 250,
+    "available_recipes": [
+      "produce_maintenance_1"
+    ],
+    "research_required": "maintenance_2"
+  }
+]

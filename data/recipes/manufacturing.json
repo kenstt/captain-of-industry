@@ -1,0 +1,19 @@
+[
+  {
+    "id": "produce_maintenance_1",
+    "name": "生產維護 I",
+    "name_en": "Produce Maintenance I",
+    "inputs": [
+      { "resource_id": "mechanical_parts", "amount": 8 },
+      { "resource_id": "electronics", "amount": 4 }
+    ],
+    "outputs": [
+      { "resource_id": "maintenance_1", "amount": 160 },
+      { "resource_id": "recyclables", "amount": 6 }
+    ],
+    "duration": 60,
+    "building_id": "maintenance_depot",
+    "is_default": true,
+    "research_required": "maintenance_2"
+  }
+]

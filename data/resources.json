@@ -1,0 +1,230 @@
+[
+  {
+    "id": "iron_ore",
+    "name": "鐵礦",
+    "name_en": "Iron Ore",
+    "category": "RawMaterial",
+    "is_primary": true
+  },
+  {
+    "id": "iron_ore_crushed",
+    "name": "碎鐵礦",
+    "name_en": "Iron Ore Crushed",
+    "category": "Intermediate",
+    "is_primary": true
+  },
+  {
+    "id": "iron_scrap",
+    "name": "鐵廢料",
+    "name_en": "Iron Scrap",
+    "category": "RawMaterial",
+    "is_primary": true
+  },
+  {
+    "id": "copper_ore",
+    "name": "銅礦",
+    "name_en": "Copper Ore",
+    "category": "RawMaterial",
+    "is_primary": true
+  },
+  {
+    "id": "copper_ore_crushed",
+    "name": "碎銅礦",
+    "name_en": "Copper Ore Crushed",
+    "category": "Intermediate",
+    "is_primary": true
+  },
+  {
+    "id": "copper_scrap",
+    "name": "銅廢料",
+    "name_en": "Copper Scrap",
+    "category": "RawMaterial",
+    "is_primary": true
+  },
+  {
+    "id": "coal",
+    "name": "煤",
+    "name_en": "Coal",
+    "category": "RawMaterial",
+    "is_primary": true
+  },
+  {
+    "id": "limestone",
+    "name": "石灰石",
+    "name_en": "Limestone",
+    "category": "RawMaterial",
+    "is_primary": true
+  },
+  {
+    "id": "sand",
+    "name": "沙",
+    "name_en": "Sand",
+    "category": "RawMaterial",
+    "is_primary": true
+  },
+  {
+    "id": "glass_mix",
+    "name": "玻璃混合料",
+    "name_en": "Glass Mix",
+    "category": "Intermediate"
+  },
+  {
+    "id": "broken_glass",
+    "name": "碎玻璃",
+    "name_en": "Broken Glass",
+    "category": "Intermediate"
+  },
+  {
+    "id": "molten_iron",
+    "name": "鐵水",
+    "name_en": "Molten Iron",
+    "category": "MoltenMaterial"
+  },
+  {
+    "id": "molten_copper",
+    "name": "銅水",
+    "name_en": "Molten Copper",
+    "category": "MoltenMaterial"
+  },
+  {
+    "id": "molten_glass",
+    "name": "玻璃水",
+    "name_en": "Molten Glass",
+    "category": "MoltenMaterial"
+  },
+  {
+    "id": "iron_plate",
+    "name": "鐵板",
+    "name_en": "Iron Plate",
+    "category": "Intermediate"
+  },
+  {
+    "id": "copper_plate",
+    "name": "銅板",
+    "name_en": "Copper Plate",
+    "category": "Intermediate"
+  },
+  {
+    "id": "glass",
+    "name": "玻璃",
+    "name_en": "Glass",
+    "category": "Intermediate"
+  },
+  {
+    "id": "slag",
+    "name": "礦渣",
+    "name_en": "Slag",
+    "category": "Waste",
+    "is_waste": true
+  },
+  {
+    "id": "exhaust",
+    "name": "廢氣",
+    "name_en": "Exhaust",
+    "category": "Waste",
+    "is_waste": true
+  },
+  {
+    "id": "air_pollution",
+    "name": "空氣污染",
+    "name_en": "Air Pollution",
+    "category": "Pollution",
+    "is_pollution": true
+  },
+  {
+    "id": "construction_parts",
+    "name": "建設零件 I",
+    "name_en": "Construction Parts I",
+    "category": "FinalProduct"
+  },
+  {
+    "id": "construction_parts_2",
+    "name": "建設零件 II",
+    "name_en": "Construction Parts II",
+    "category": "FinalProduct"
+  },
+  {
+    "id": "construction_parts_3",
+    "name": "建設零件 III",
+    "name_en": "Construction Parts III",
+    "category": "FinalProduct"
+  },
+  {
+    "id": "maintenance_1",
+    "name": "維護 I",
+    "name_en": "Maintenance I",
+    "category": "Maintenance",
+    "is_virtual": true
+  },
+  {
+    "id": "maintenance_2",
+    "name": "維護 II",
+    "name_en": "Maintenance II",
+    "category": "Maintenance",
+    "is_virtual": true
+  },
+  {
+    "id": "maintenance_3",
+    "name": "維護 III",
+    "name_en": "Maintenance III",
+    "category": "Maintenance",
+    "is_virtual": true
+  },
+  {
+    "id": "electricity",
+    "name": "電力",
+    "name_en": "Electricity",
+    "category": "Electricity",
+    "is_virtual": true
+  },
+  {
+    "id": "computing",
+    "name": "算力",
+    "name_en": "Computing",
+    "category": "Computing",
+    "is_virtual": true
+  },
+  {
+    "id": "unity",
+    "name": "凝聚力",
+    "name_en": "Unity",
+    "category": "Unity",
+    "is_virtual": true
+  },
+  {
+    "id": "mechanical_parts",
+    "name": "機械零件",
+    "name_en": "Mechanical Parts",
+    "category": "Intermediate"
+  },
+  {
+    "id": "electronics",
+    "name": "電子元件",
+    "name_en": "Electronics",
+    "category": "Intermediate"
+  },
+  {
+    "id": "recyclables",
+    "name": "可回收物",
+    "name_en": "Recyclables",
+    "category": "Intermediate"
+  },
+  {
+    "id": "diesel",
+    "name": "柴油",
+    "name_en": "Diesel",
+    "category": "Fuel"
+  },
+  {
+    "id": "heavy_oil",
+    "name": "重油",
+    "name_en": "Heavy Oil",
+    "category": "Fuel"
+  },
+  {
+    "id": "hydrogen",
+    "name": "氫氣",
+    "name_en": "Hydrogen",
+    "category": "Fuel"
+  }
+]

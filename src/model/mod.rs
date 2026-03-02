@@ -1,0 +1,22 @@
+pub mod ids;
+pub mod resource;
+pub mod building;
+pub mod recipe;
+pub mod vehicle;
+pub mod research;
+pub mod difficulty;
+pub mod edict;
+pub mod cargo_ship;
+pub mod results;
+
+// 方便外部使用的 re-exports
+pub use ids::*;
+pub use resource::*;
+pub use building::*;
+pub use recipe::*;
+pub use vehicle::*;
+pub use research::*;
+pub use difficulty::*;
+pub use edict::*;
+pub use cargo_ship::*;
+pub use results::*;

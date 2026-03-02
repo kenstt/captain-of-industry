@@ -1,0 +1,69 @@
+[
+  {
+    "id": "blast_furnace",
+    "name": "高爐",
+    "name_en": "Blast Furnace",
+    "category": "Smelting",
+    "footprint": { "width": 9, "height": 6 },
+    "construction_costs": [
+      { "resource_id": "construction_parts", "amount": 60 }
+    ],
+    "workers": 8,
+    "base_electricity_kw": 0,
+    "available_recipes": [
+      "bf_molten_iron_scrap",
+      "bf_molten_iron_ore",
+      "bf_molten_copper_ore",
+      "bf_molten_copper_scrap",
+      "bf_molten_glass_broken",
+      "bf_molten_glass_mix"
+    ],
+    "research_required": "iron_smelting_scrap",
+    "unity_boost": 0.2
+  },
+  {
+    "id": "blast_furnace_2",
+    "name": "高爐 II",
+    "name_en": "Blast Furnace II",
+    "category": "Smelting",
+    "footprint": { "width": 9, "height": 6 },
+    "construction_costs": [
+      { "resource_id": "construction_parts_3", "amount": 180 }
+    ],
+    "workers": 18,
+    "base_electricity_kw": 0,
+    "maintenance": {
+      "tier": "Maintenance1",
+      "amount_per_month": 5.0,
+      "idle_fraction": 0.33
+    },
+    "available_recipes": [
+      "bf2_molten_iron_crushed",
+      "bf2_molten_iron_scrap",
+      "bf2_molten_copper_crushed",
+      "bf2_molten_copper_scrap",
+      "bf2_molten_glass_mix",
+      "bf2_molten_glass_broken"
+    ],
+    "research_required": "advanced_smelting",
+    "unity_boost": 0.2
+  },
+  {
+    "id": "metal_caster",
+    "name": "金屬鑄造機",
+    "name_en": "Metal Caster",
+    "category": "Smelting",
+    "footprint": { "width": 6, "height": 3 },
+    "construction_costs": [
+      { "resource_id": "construction_parts", "amount": 30 }
+    ],
+    "workers": 4,
+    "base_electricity_kw": 0,
+    "available_recipes": [
+      "cast_iron_plate",
+      "cast_copper_plate"
+    ],
+    "research_required": "iron_smelting_scrap",
+    "unity_boost": 0.2
+  }
+]

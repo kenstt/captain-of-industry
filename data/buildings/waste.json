@@ -1,0 +1,18 @@
+[
+  {
+    "id": "smokestack",
+    "name": "煙囪",
+    "name_en": "Smokestack",
+    "category": "WasteProcessing",
+    "footprint": { "width": 3, "height": 3 },
+    "construction_costs": [
+      { "resource_id": "construction_parts", "amount": 20 }
+    ],
+    "workers": 0,
+    "base_electricity_kw": 0,
+    "available_recipes": [
+      "smokestack_exhaust"
+    ],
+    "research_required": "iron_smelting_scrap"
+  }
+]

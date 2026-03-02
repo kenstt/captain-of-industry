@@ -1,0 +1,233 @@
+[
+  {
+    "id": "bf_molten_iron_scrap",
+    "name": "鐵水（鐵廢料）",
+    "name_en": "Molten Iron (Iron Scrap)",
+    "inputs": [
+      { "resource_id": "iron_scrap", "amount": 8 },
+      { "resource_id": "coal", "amount": 2 }
+    ],
+    "outputs": [
+      { "resource_id": "molten_iron", "amount": 24 },
+      { "resource_id": "exhaust", "amount": 6 }
+    ],
+    "duration": 60,
+    "building_id": "blast_furnace",
+    "is_default": true,
+    "research_required": "iron_smelting_scrap"
+  },
+  {
+    "id": "bf_molten_iron_ore",
+    "name": "鐵水（鐵礦）",
+    "name_en": "Molten Iron (Iron Ore)",
+    "inputs": [
+      { "resource_id": "iron_ore", "amount": 10 },
+      { "resource_id": "coal", "amount": 4 }
+    ],
+    "outputs": [
+      { "resource_id": "molten_iron", "amount": 24 },
+      { "resource_id": "slag", "amount": 12 },
+      { "resource_id": "exhaust", "amount": 8 }
+    ],
+    "duration": 60,
+    "building_id": "blast_furnace",
+    "research_required": "iron_smelting_ore"
+  },
+  {
+    "id": "bf_molten_copper_ore",
+    "name": "銅水（銅礦）",
+    "name_en": "Molten Copper (Copper Ore)",
+    "inputs": [
+      { "resource_id": "copper_ore", "amount": 10 },
+      { "resource_id": "coal", "amount": 4 }
+    ],
+    "outputs": [
+      { "resource_id": "molten_copper", "amount": 24 },
+      { "resource_id": "slag", "amount": 12 },
+      { "resource_id": "exhaust", "amount": 8 }
+    ],
+    "duration": 60,
+    "building_id": "blast_furnace",
+    "research_required": "copper_smelting"
+  },
+  {
+    "id": "bf_molten_copper_scrap",
+    "name": "銅水（銅廢料）",
+    "name_en": "Molten Copper (Copper Scrap)",
+    "inputs": [
+      { "resource_id": "copper_scrap", "amount": 8 },
+      { "resource_id": "coal", "amount": 2 }
+    ],
+    "outputs": [
+      { "resource_id": "molten_copper", "amount": 24 },
+      { "resource_id": "exhaust", "amount": 6 }
+    ],
+    "duration": 60,
+    "building_id": "blast_furnace",
+    "research_required": "copper_smelting"
+  },
+  {
+    "id": "bf_molten_glass_broken",
+    "name": "玻璃水（碎玻璃）",
+    "name_en": "Molten Glass (Broken Glass)",
+    "inputs": [
+      { "resource_id": "broken_glass", "amount": 12 },
+      { "resource_id": "coal", "amount": 2 }
+    ],
+    "outputs": [
+      { "resource_id": "molten_glass", "amount": 8 },
+      { "resource_id": "exhaust", "amount": 6 }
+    ],
+    "duration": 60,
+    "building_id": "blast_furnace",
+    "research_required": "glass_smelting"
+  },
+  {
+    "id": "bf_molten_glass_mix",
+    "name": "玻璃水（玻璃混合料）",
+    "name_en": "Molten Glass (Glass Mix)",
+    "inputs": [
+      { "resource_id": "glass_mix", "amount": 10 },
+      { "resource_id": "coal", "amount": 4 }
+    ],
+    "outputs": [
+      { "resource_id": "molten_glass", "amount": 24 },
+      { "resource_id": "slag", "amount": 12 },
+      { "resource_id": "exhaust", "amount": 8 }
+    ],
+    "duration": 60,
+    "building_id": "blast_furnace",
+    "research_required": "glass_smelting"
+  },
+  {
+    "id": "bf2_molten_iron_crushed",
+    "name": "鐵水（碎鐵礦）",
+    "name_en": "Molten Iron (Crushed Iron Ore)",
+    "inputs": [
+      { "resource_id": "iron_ore_crushed", "amount": 16 },
+      { "resource_id": "limestone", "amount": 2 },
+      { "resource_id": "coal", "amount": 5 }
+    ],
+    "outputs": [
+      { "resource_id": "molten_iron", "amount": 16 },
+      { "resource_id": "slag", "amount": 6 },
+      { "resource_id": "exhaust", "amount": 12 }
+    ],
+    "duration": 60,
+    "building_id": "blast_furnace_2",
+    "is_default": true,
+    "research_required": "advanced_smelting"
+  },
+  {
+    "id": "bf2_molten_iron_scrap",
+    "name": "鐵水 II（鐵廢料）",
+    "name_en": "Molten Iron II (Iron Scrap)",
+    "inputs": [
+      { "resource_id": "iron_scrap", "amount": 16 },
+      { "resource_id": "coal", "amount": 3 }
+    ],
+    "outputs": [
+      { "resource_id": "molten_iron", "amount": 16 },
+      { "resource_id": "exhaust", "amount": 9 }
+    ],
+    "duration": 60,
+    "building_id": "blast_furnace_2",
+    "research_required": "advanced_smelting"
+  },
+  {
+    "id": "bf2_molten_copper_crushed",
+    "name": "銅水（碎銅礦）",
+    "name_en": "Molten Copper (Crushed Copper Ore)",
+    "inputs": [
+      { "resource_id": "copper_ore_crushed", "amount": 16 },
+      { "resource_id": "sand", "amount": 2 },
+      { "resource_id": "coal", "amount": 5 }
+    ],
+    "outputs": [
+      { "resource_id": "molten_copper", "amount": 16 },
+      { "resource_id": "slag", "amount": 6 },
+      { "resource_id": "exhaust", "amount": 12 }
+    ],
+    "duration": 60,
+    "building_id": "blast_furnace_2",
+    "research_required": "advanced_smelting"
+  },
+  {
+    "id": "bf2_molten_copper_scrap",
+    "name": "銅水 II（銅廢料）",
+    "name_en": "Molten Copper II (Copper Scrap)",
+    "inputs": [
+      { "resource_id": "copper_scrap", "amount": 16 },
+      { "resource_id": "coal", "amount": 3 }
+    ],
+    "outputs": [
+      { "resource_id": "molten_copper", "amount": 16 },
+      { "resource_id": "exhaust", "amount": 9 }
+    ],
+    "duration": 60,
+    "building_id": "blast_furnace_2",
+    "research_required": "advanced_smelting"
+  },
+  {
+    "id": "bf2_molten_glass_mix",
+    "name": "玻璃水 II（玻璃混合料）",
+    "name_en": "Molten Glass II (Glass Mix)",
+    "inputs": [
+      { "resource_id": "glass_mix", "amount": 20 },
+      { "resource_id": "coal", "amount": 5 }
+    ],
+    "outputs": [
+      { "resource_id": "molten_glass", "amount": 16 },
+      { "resource_id": "slag", "amount": 8 },
+      { "resource_id": "exhaust", "amount": 12 }
+    ],
+    "duration": 60,
+    "building_id": "blast_furnace_2",
+    "research_required": "advanced_smelting"
+  },
+  {
+    "id": "bf2_molten_glass_broken",
+    "name": "玻璃水 II（碎玻璃）",
+    "name_en": "Molten Glass II (Broken Glass)",
+    "inputs": [
+      { "resource_id": "broken_glass", "amount": 24 },
+      { "resource_id": "coal", "amount": 3 }
+    ],
+    "outputs": [
+      { "resource_id": "molten_glass", "amount": 16 },
+      { "resource_id": "exhaust", "amount": 9 }
+    ],
+    "duration": 60,
+    "building_id": "blast_furnace_2",
+    "research_required": "advanced_smelting"
+  },
+  {
+    "id": "cast_iron_plate",
+    "name": "鑄造鐵板",
+    "name_en": "Cast Iron Plate",
+    "inputs": [
+      { "resource_id": "molten_iron", "amount": 12 }
+    ],
+    "outputs": [
+      { "resource_id": "iron_plate", "amount": 12 }
+    ],
+    "duration": 60,
+    "building_id": "metal_caster",
+    "is_default": true,
+    "research_required": "iron_smelting_scrap"
+  },
+  {
+    "id": "cast_copper_plate",
+    "name": "鑄造銅板",
+    "name_en": "Cast Copper Plate",
+    "inputs": [
+      { "resource_id": "molten_copper", "amount": 12 }
+    ],
+    "outputs": [
+      { "resource_id": "copper_plate", "amount": 12 }
+    ],
+    "duration": 60,
+    "building_id": "metal_caster",
+    "research_required": "copper_smelting"
+  }
+]
