@@ -3,8 +3,8 @@ pub mod loader;
 use std::collections::HashMap;
 
 use crate::model::{
-    Building, BuildingId, CargoShip, Edict, EdictId, Recipe, RecipeId, Research, ResearchId,
-    Resource, ResourceId, Vehicle, VehicleId,
+    Building, BuildingId, CargoShip, Edict, EdictId, PopulationData, Recipe, RecipeId, Research,
+    ResearchId, Resource, ResourceId, Vehicle, VehicleId,
 };
 
 /// 遊戲全部靜態資料
@@ -19,4 +19,5 @@ pub struct GameData {
     pub research: HashMap<ResearchId, Research>,
     pub edicts: HashMap<EdictId, Edict>,
     pub cargo_ships: Vec<CargoShip>,
+    pub population_data: PopulationData,
 }

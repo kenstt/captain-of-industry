@@ -9,3 +9,4 @@ serde_json = "1.0"
 thiserror = "2"
 rustyline = "15"
 comfy-table = "7"
+dioxus = { version = "0.6", features = ["desktop"] }

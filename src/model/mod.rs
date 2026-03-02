@@ -8,6 +8,8 @@ pub mod difficulty;
 pub mod edict;
 pub mod cargo_ship;
 pub mod results;
+pub mod population;
+pub mod island;
 
 // 方便外部使用的 re-exports
 pub use ids::*;
@@ -20,3 +22,5 @@ pub use difficulty::*;
 pub use edict::*;
 pub use cargo_ship::*;
 pub use results::*;
+pub use population::*;
+pub use island::*;

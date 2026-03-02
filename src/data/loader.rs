@@ -25,6 +25,7 @@ pub fn load_game_data(data_dir: &Path) -> Result<GameData, AppError> {
         |e| e.id.clone(),
     )?;
     let cargo_ships = load_json_file::<Vec<CargoShip>>(&data_dir.join("cargo_ships.json"))?;
+    let population_data = load_json_file::<PopulationData>(&data_dir.join("population.json"))?;
 
     let game_data = GameData {
         resources,
@@ -34,6 +35,7 @@ pub fn load_game_data(data_dir: &Path) -> Result<GameData, AppError> {
         research,
         edicts,
         cargo_ships,
+        population_data,
     };
 
     validate(&game_data)?;

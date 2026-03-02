@@ -1,0 +1,64 @@
+{
+  "comment": "人口消耗參數 — 資料來源: https://wiki.coigame.com/Settlement",
+
+  "food_categories": {
+    "carbs": {
+      "name": "碳水化合物",
+      "name_en": "Carbs",
+      "items": {
+        "potato":  { "per_100_pop_per_month": 4.20 },
+        "corn":    { "per_100_pop_per_month": 3.00 },
+        "bread":   { "per_100_pop_per_month": 2.00 }
+      }
+    },
+    "protein": {
+      "name": "蛋白質",
+      "name_en": "Protein",
+      "items": {
+        "meat":    { "per_100_pop_per_month": 2.70 },
+        "eggs":    { "per_100_pop_per_month": 3.00 },
+        "tofu":    { "per_100_pop_per_month": 1.80 },
+        "sausage": { "per_100_pop_per_month": 3.35 }
+      }
+    },
+    "vitamins": {
+      "name": "維生素",
+      "name_en": "Vitamins",
+      "items": {
+        "vegetables": { "per_100_pop_per_month": 4.20 },
+        "fruit":      { "per_100_pop_per_month": 3.15 }
+      }
+    },
+    "treats": {
+      "name": "零食",
+      "name_en": "Treats",
+      "items": {
+        "snack": { "per_100_pop_per_month": 2.60 },
+        "cake":  { "per_100_pop_per_month": 2.50 }
+      }
+    }
+  },
+
+  "services_per_1000_pop_per_60s": {
+    "electricity_kw":         1.10,
+    "water":                  47.0,
+    "waste_water":            39.2,
+    "household_goods":        10.0,
+    "household_appliances":    7.0,
+    "luxury_goods":            3.6,
+    "consumer_electronics":    3.6,
+    "medical_supplies":        5.0,
+    "computing_tflops":       57.6
+  },
+
+  "waste_per_1000_pop_per_60s": {
+    "base_waste": 29.3
+  },
+
+  "housing_tier_multipliers": {
+    "1": {},
+    "2": { "electricity": 1.10, "water": 1.05, "unity_bonus": 1.50 },
+    "3": { "electricity": 1.20, "water": 1.10, "household_goods": 1.05, "unity_bonus": 1.75 },
+    "4": { "electricity": 1.40, "water": 1.20, "household_goods": 1.10, "household_appliances": 1.10, "luxury_goods": 1.10, "unity_bonus": 2.25 }
+  }
+}
