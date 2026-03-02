@@ -6,20 +6,117 @@
     { "id": "sand", "name": "Sand", "name_zh": "沙", "category": "Mineral" },
     { "id": "rock", "name": "Rock", "name_zh": "岩石", "category": "Mineral" },
     { "id": "limestone", "name": "Limestone", "name_zh": "石灰石", "category": "Mineral" },
+    { "id": "gold_ore", "name": "Gold Ore", "name_zh": "金礦", "category": "Mineral" },
+    { "id": "sulfur", "name": "Sulfur", "name_zh": "硫磺", "category": "Mineral" },
+    { "id": "quartz", "name": "Quartz", "name_zh": "石英", "category": "Mineral" },
+    { "id": "uranium_ore", "name": "Uranium Ore", "name_zh": "鈾礦", "category": "Mineral" },
+
     { "id": "crude_oil", "name": "Crude Oil", "name_zh": "原油", "category": "Liquid" },
     { "id": "water", "name": "Water", "name_zh": "水", "category": "Liquid" },
+    { "id": "seawater", "name": "Seawater", "name_zh": "海水", "category": "Liquid" },
+    { "id": "brine", "name": "Brine", "name_zh": "鹵水", "category": "Liquid" },
+    { "id": "waste_water", "name": "Waste Water", "name_zh": "廢水", "category": "Liquid" },
+    { "id": "sour_water", "name": "Sour Water", "name_zh": "酸水", "category": "Liquid" },
+    { "id": "acid", "name": "Acid", "name_zh": "酸液", "category": "Liquid" },
+    { "id": "ammonia", "name": "Ammonia", "name_zh": "氨", "category": "Liquid" },
+    { "id": "oxygen", "name": "Oxygen", "name_zh": "氧氣", "category": "Liquid" },
+    { "id": "nitrogen", "name": "Nitrogen", "name_zh": "氮氣", "category": "Liquid" },
+    { "id": "hydrogen", "name": "Hydrogen", "name_zh": "氫氣", "category": "Liquid" },
+    { "id": "chlorine", "name": "Chlorine", "name_zh": "氯氣", "category": "Liquid" },
+    { "id": "heavy_oil", "name": "Heavy Oil", "name_zh": "重油", "category": "Liquid" },
+    { "id": "medium_oil", "name": "Medium Oil", "name_zh": "中油", "category": "Liquid" },
+    { "id": "light_oil", "name": "Light Oil", "name_zh": "輕油", "category": "Liquid" },
+    { "id": "naphtha", "name": "Naphtha", "name_zh": "石腦油", "category": "Liquid" },
+    { "id": "fuel_gas", "name": "Fuel Gas", "name_zh": "燃氣", "category": "Liquid" },
+    { "id": "ethanol", "name": "Ethanol", "name_zh": "乙醇", "category": "Liquid" },
+    { "id": "diesel", "name": "Diesel", "name_zh": "柴油", "category": "Liquid" },
+    { "id": "steam_hi", "name": "Steam (High)", "name_zh": "高壓蒸氣", "category": "Liquid" },
+    { "id": "steam_lo", "name": "Steam (Low)", "name_zh": "低壓蒸氣", "category": "Liquid" },
+    { "id": "steam_depleted", "name": "Steam (Depleted)", "name_zh": "乏蒸氣", "category": "Liquid" },
+    { "id": "carbon_dioxide", "name": "Carbon Dioxide", "name_zh": "二氧化碳", "category": "Liquid" },
+
     { "id": "molten_iron", "name": "Molten Iron", "name_zh": "鐵水", "category": "Intermediate" },
     { "id": "molten_copper", "name": "Molten Copper", "name_zh": "銅水", "category": "Intermediate" },
     { "id": "molten_steel", "name": "Molten Steel", "name_zh": "鋼水", "category": "Intermediate" },
     { "id": "molten_glass", "name": "Molten Glass", "name_zh": "玻璃液", "category": "Intermediate" },
-    { "id": "iron_plate", "name": "Iron Plate", "name_zh": "鐵板", "category": "Product" },
-    { "id": "copper_plate", "name": "Copper Plate", "name_zh": "銅板", "category": "Product" },
+    { "id": "molten_silicon", "name": "Molten Silicon", "name_zh": "矽液", "category": "Intermediate" },
+    { "id": "molten_gold", "name": "Molten Gold", "name_zh": "金水", "category": "Intermediate" },
+    { "id": "coke", "name": "Coke", "name_zh": "焦炭", "category": "Intermediate" },
+    { "id": "graphite", "name": "Graphite", "name_zh": "石墨", "category": "Intermediate" },
+    { "id": "glass_mix", "name": "Glass Mix", "name_zh": "玻璃混合料", "category": "Intermediate" },
+    { "id": "iron_ore_crushed", "name": "Iron Ore Crushed", "name_zh": "碎鐵礦", "category": "Intermediate" },
+    { "id": "copper_ore_crushed", "name": "Copper Ore Crushed", "name_zh": "碎銅礦", "category": "Intermediate" },
+    { "id": "iron_scrap", "name": "Iron Scrap", "name_zh": "廢鐵", "category": "Intermediate" },
+    { "id": "copper_scrap", "name": "Copper Scrap", "name_zh": "廢銅", "category": "Intermediate" },
+    { "id": "flour", "name": "Flour", "name_zh": "麵粉", "category": "Intermediate" },
+    { "id": "wood", "name": "Wood", "name_zh": "木材", "category": "Intermediate" },
+    { "id": "woodchips", "name": "Woodchips", "name_zh": "木屑", "category": "Intermediate" },
+    { "id": "biomass", "name": "Biomass", "name_zh": "生物質", "category": "Intermediate" },
+    { "id": "silicon_poly", "name": "Silicon (Poly)", "name_zh": "多晶矽", "category": "Intermediate" },
+    { "id": "silicon_wafer", "name": "Silicon Wafer", "name_zh": "矽晶圓", "category": "Intermediate" },
+    { "id": "pcb", "name": "PCB", "name_zh": "印刷電路板", "category": "Intermediate" },
+    { "id": "microchip", "name": "Microchip", "name_zh": "微晶片", "category": "Intermediate" },
+    { "id": "lens", "name": "Lens", "name_zh": "透鏡", "category": "Intermediate" },
+    { "id": "concrete_slab", "name": "Concrete Slab", "name_zh": "混凝土板", "category": "Intermediate" },
+    { "id": "disinfectant", "name": "Disinfectant", "name_zh": "消毒劑", "category": "Intermediate" },
+    { "id": "tofu", "name": "Tofu", "name_zh": "豆腐", "category": "Intermediate" },
+    { "id": "cooking_oil", "name": "Cooking Oil", "name_zh": "食用油", "category": "Intermediate" },
+    { "id": "sugar", "name": "Sugar", "name_zh": "糖", "category": "Intermediate" },
+    { "id": "animal_feed", "name": "Animal Feed", "name_zh": "動物飼料", "category": "Intermediate" },
+    { "id": "paper", "name": "Paper", "name_zh": "紙", "category": "Intermediate" },
+    { "id": "fertilizer_1", "name": "Fertilizer I", "name_zh": "肥料I", "category": "Intermediate" },
+    { "id": "chemical_fuel", "name": "Chemical Fuel", "name_zh": "化學燃料", "category": "Intermediate" },
+
+    { "id": "iron", "name": "Iron", "name_zh": "鐵", "category": "Product" },
+    { "id": "copper", "name": "Copper", "name_zh": "銅", "category": "Product" },
     { "id": "steel", "name": "Steel", "name_zh": "鋼材", "category": "Product" },
     { "id": "glass", "name": "Glass", "name_zh": "玻璃", "category": "Product" },
-    { "id": "coke", "name": "Coke", "name_zh": "焦炭", "category": "Intermediate" },
+    { "id": "gold", "name": "Gold", "name_zh": "黃金", "category": "Product" },
+    { "id": "aluminum", "name": "Aluminum", "name_zh": "鋁", "category": "Product" },
+    { "id": "concrete", "name": "Concrete", "name_zh": "混凝土", "category": "Product" },
+    { "id": "rubber", "name": "Rubber", "name_zh": "橡膠", "category": "Product" },
+    { "id": "plastic", "name": "Plastic", "name_zh": "塑膠", "category": "Product" },
+    { "id": "electronics", "name": "Electronics", "name_zh": "電子零件", "category": "Product" },
+    { "id": "electronics_2", "name": "Electronics II", "name_zh": "電子零件II", "category": "Product" },
+    { "id": "electronics_3", "name": "Electronics III", "name_zh": "電子零件III", "category": "Product" },
+    { "id": "mechanical_parts", "name": "Mechanical Parts", "name_zh": "機械零件", "category": "Product" },
+    { "id": "construction_parts", "name": "Construction Parts", "name_zh": "建設零件", "category": "Product" },
+    { "id": "construction_parts_2", "name": "Construction Parts II", "name_zh": "建設零件II", "category": "Product" },
+    { "id": "construction_parts_3", "name": "Construction Parts III", "name_zh": "建設零件III", "category": "Product" },
+    { "id": "construction_parts_4", "name": "Construction Parts IV", "name_zh": "建設零件IV", "category": "Product" },
+    { "id": "vehicle_parts", "name": "Vehicle Parts", "name_zh": "車輛零件", "category": "Product" },
+    { "id": "vehicle_parts_2", "name": "Vehicle Parts II", "name_zh": "車輛零件II", "category": "Product" },
+    { "id": "vehicle_parts_3", "name": "Vehicle Parts III", "name_zh": "車輛零件III", "category": "Product" },
+    { "id": "lab_equipment", "name": "Lab Equipment", "name_zh": "實驗設備", "category": "Product" },
+    { "id": "lab_equipment_2", "name": "Lab Equipment II", "name_zh": "實驗設備II", "category": "Product" },
+    { "id": "lab_equipment_3", "name": "Lab Equipment III", "name_zh": "實驗設備III", "category": "Product" },
+    { "id": "lab_equipment_4", "name": "Lab Equipment IV", "name_zh": "實驗設備IV", "category": "Product" },
+    { "id": "household_goods", "name": "Household Goods", "name_zh": "家用品", "category": "Product" },
+    { "id": "household_appliances", "name": "Household Appliances", "name_zh": "家電", "category": "Product" },
+    { "id": "bread", "name": "Bread", "name_zh": "麵包", "category": "Product" },
+    { "id": "food_pack", "name": "Food Pack", "name_zh": "食品包", "category": "Product" },
+    { "id": "medical_equipment", "name": "Medical Equipment", "name_zh": "醫療器材", "category": "Product" },
+    { "id": "medical_supplies", "name": "Medical Supplies", "name_zh": "醫療用品", "category": "Product" },
+    { "id": "solar_cell", "name": "Solar Cell", "name_zh": "太陽能電池", "category": "Product" },
+    { "id": "composite_panel", "name": "Composite Panel", "name_zh": "複合板", "category": "Product" },
+    { "id": "server", "name": "Server", "name_zh": "伺服器", "category": "Product" },
+    { "id": "office_supplies", "name": "Office Supplies", "name_zh": "辦公用品", "category": "Product" },
+
+    { "id": "wheat", "name": "Wheat", "name_zh": "小麥", "category": "Product" },
+    { "id": "corn", "name": "Corn", "name_zh": "玉米", "category": "Product" },
+    { "id": "soybean", "name": "Soybean", "name_zh": "大豆", "category": "Product" },
+    { "id": "potato", "name": "Potato", "name_zh": "馬鈴薯", "category": "Product" },
+    { "id": "vegetables", "name": "Vegetables", "name_zh": "蔬菜", "category": "Product" },
+    { "id": "sugar_cane", "name": "Sugar Cane", "name_zh": "甘蔗", "category": "Product" },
+    { "id": "meat", "name": "Meat", "name_zh": "肉", "category": "Product" },
+    { "id": "eggs", "name": "Eggs", "name_zh": "蛋", "category": "Product" },
+    { "id": "fruit", "name": "Fruit", "name_zh": "水果", "category": "Product" },
+
     { "id": "slag", "name": "Slag", "name_zh": "爐渣", "category": "Waste" },
     { "id": "exhaust", "name": "Exhaust", "name_zh": "廢氣", "category": "Waste" },
-    { "id": "concrete", "name": "Concrete", "name_zh": "混凝土", "category": "Product" },
+    { "id": "sludge", "name": "Sludge", "name_zh": "汙泥", "category": "Waste" },
+    { "id": "broken_glass", "name": "Broken Glass", "name_zh": "碎玻璃", "category": "Waste" },
+
     { "id": "maintenance_1", "name": "Maintenance I", "name_zh": "維護I", "category": "Other" },
     { "id": "maintenance_2", "name": "Maintenance II", "name_zh": "維護II", "category": "Other" },
     { "id": "maintenance_3", "name": "Maintenance III", "name_zh": "維護III", "category": "Other" }
@@ -27,169 +124,11 @@
   "machines": [],
   "recipes": [
     {
-      "id": "molten_iron",
-      "name": "Molten Iron",
-      "name_zh": "鐵水",
-      "inputs": [
-        { "resource_id": "iron_ore", "amount": 12.0 },
-        { "resource_id": "coke", "amount": 3.0 }
-      ],
-      "outputs": [
-        { "resource_id": "molten_iron", "amount": 12.0 },
-        { "resource_id": "slag", "amount": 4.0 }
-      ],
-      "duration": 20.0,
-      "machine_id": "blast_furnace",
-      "tier": 1,
-      "tags": ["smelting", "iron"]
-    },
-    {
-      "id": "molten_copper",
-      "name": "Molten Copper",
-      "name_zh": "銅水",
-      "inputs": [
-        { "resource_id": "copper_ore", "amount": 12.0 }
-      ],
-      "outputs": [
-        { "resource_id": "molten_copper", "amount": 12.0 },
-        { "resource_id": "slag", "amount": 2.0 }
-      ],
-      "duration": 20.0,
-      "machine_id": "blast_furnace",
-      "tier": 1,
-      "tags": ["smelting", "copper"]
-    },
-    {
-      "id": "iron_plate",
-      "name": "Iron Plate",
-      "name_zh": "鐵板",
-      "inputs": [
-        { "resource_id": "molten_iron", "amount": 8.0 }
-      ],
-      "outputs": [
-        { "resource_id": "iron_plate", "amount": 8.0 }
-      ],
-      "duration": 20.0,
-      "machine_id": "cooled_mold",
-      "tier": 1,
-      "tags": ["casting", "iron"]
-    },
-    {
-      "id": "copper_plate",
-      "name": "Copper Plate",
-      "name_zh": "銅板",
-      "inputs": [
-        { "resource_id": "molten_copper", "amount": 8.0 }
-      ],
-      "outputs": [
-        { "resource_id": "copper_plate", "amount": 8.0 }
-      ],
-      "duration": 20.0,
-      "machine_id": "cooled_mold",
-      "tier": 1,
-      "tags": ["casting", "copper"]
-    },
-    {
-      "id": "molten_steel",
-      "name": "Molten Steel",
-      "name_zh": "鋼水",
-      "inputs": [
-        { "resource_id": "iron_ore", "amount": 6.0 },
-        { "resource_id": "coal", "amount": 2.0 }
-      ],
-      "outputs": [
-        { "resource_id": "molten_steel", "amount": 4.0 },
-        { "resource_id": "exhaust", "amount": 4.0 }
-      ],
-      "duration": 20.0,
-      "machine_id": "arc_furnace",
-      "tier": 2,
-      "tags": ["smelting", "steel"]
-    },
-    {
-      "id": "steel",
-      "name": "Steel",
-      "name_zh": "鋼材",
-      "inputs": [
-        { "resource_id": "molten_steel", "amount": 8.0 }
-      ],
-      "outputs": [
-        { "resource_id": "steel", "amount": 8.0 }
-      ],
-      "duration": 20.0,
-      "machine_id": "metal_caster",
-      "tier": 2,
-      "tags": ["casting", "steel"]
-    },
-    {
-      "id": "coke",
-      "name": "Coke",
-      "name_zh": "焦炭",
-      "inputs": [
-        { "resource_id": "coal", "amount": 6.0 }
-      ],
-      "outputs": [
-        { "resource_id": "coke", "amount": 4.0 }
-      ],
-      "duration": 20.0,
-      "machine_id": "distillery",
-      "tier": 1,
-      "tags": ["processing"]
-    },
-    {
-      "id": "concrete",
-      "name": "Concrete",
-      "name_zh": "混凝土",
-      "inputs": [
-        { "resource_id": "rock", "amount": 6.0 },
-        { "resource_id": "water", "amount": 4.0 }
-      ],
-      "outputs": [
-        { "resource_id": "concrete", "amount": 4.0 }
-      ],
-      "duration": 20.0,
-      "machine_id": "assembly_line",
-      "tier": 1,
-      "tags": ["construction"]
-    },
-    {
-      "id": "molten_glass",
-      "name": "Molten Glass",
-      "name_zh": "玻璃液",
-      "inputs": [
-        { "resource_id": "sand", "amount": 8.0 }
-      ],
-      "outputs": [
-        { "resource_id": "molten_glass", "amount": 8.0 }
-      ],
-      "duration": 20.0,
-      "machine_id": "glass_maker",
-      "tier": 2,
-      "tags": ["smelting", "glass"]
-    },
-    {
-      "id": "glass",
-      "name": "Glass",
-      "name_zh": "玻璃",
-      "inputs": [
-        { "resource_id": "molten_glass", "amount": 8.0 }
-      ],
-      "outputs": [
-        { "resource_id": "glass", "amount": 8.0 }
-      ],
-      "duration": 20.0,
-      "machine_id": "cooled_mold",
-      "tier": 2,
-      "tags": ["casting", "glass"]
-    },
-    {
       "id": "mine_iron_ore",
       "name": "Mine Iron Ore",
       "name_zh": "開採鐵礦",
       "inputs": [],
-      "outputs": [
-        { "resource_id": "iron_ore", "amount": 6.0 }
-      ],
+      "outputs": [{ "resource_id": "iron_ore", "amount": 6.0 }],
       "duration": 20.0,
       "machine_id": "excavator_t1",
       "tier": 1,
@@ -200,9 +139,7 @@
       "name": "Mine Copper Ore",
       "name_zh": "開採銅礦",
       "inputs": [],
-      "outputs": [
-        { "resource_id": "copper_ore", "amount": 6.0 }
-      ],
+      "outputs": [{ "resource_id": "copper_ore", "amount": 6.0 }],
       "duration": 20.0,
       "machine_id": "excavator_t1",
       "tier": 1,
@@ -213,9 +150,7 @@
       "name": "Mine Coal",
       "name_zh": "開採煤炭",
       "inputs": [],
-      "outputs": [
-        { "resource_id": "coal", "amount": 6.0 }
-      ],
+      "outputs": [{ "resource_id": "coal", "amount": 6.0 }],
       "duration": 20.0,
       "machine_id": "excavator_t1",
       "tier": 1,
@@ -226,9 +161,7 @@
       "name": "Mine Rock",
       "name_zh": "開採岩石",
       "inputs": [],
-      "outputs": [
-        { "resource_id": "rock", "amount": 6.0 }
-      ],
+      "outputs": [{ "resource_id": "rock", "amount": 6.0 }],
       "duration": 20.0,
       "machine_id": "excavator_t1",
       "tier": 1,
@@ -239,9 +172,7 @@
       "name": "Mine Sand",
       "name_zh": "開採沙",
       "inputs": [],
-      "outputs": [
-        { "resource_id": "sand", "amount": 6.0 }
-      ],
+      "outputs": [{ "resource_id": "sand", "amount": 6.0 }],
       "duration": 20.0,
       "machine_id": "excavator_t1",
       "tier": 1,
@@ -252,9 +183,7 @@
       "name": "Mine Limestone",
       "name_zh": "開採石灰石",
       "inputs": [],
-      "outputs": [
-        { "resource_id": "limestone", "amount": 6.0 }
-      ],
+      "outputs": [{ "resource_id": "limestone", "amount": 6.0 }],
       "duration": 20.0,
       "machine_id": "excavator_t1",
       "tier": 1,
@@ -265,9 +194,7 @@
       "name": "Pump Crude Oil",
       "name_zh": "抽取原油",
       "inputs": [],
-      "outputs": [
-        { "resource_id": "crude_oil", "amount": 4.0 }
-      ],
+      "outputs": [{ "resource_id": "crude_oil", "amount": 4.0 }],
       "duration": 20.0,
       "machine_id": "oil_pump",
       "tier": 1,
@@ -278,13 +205,895 @@
       "name": "Pump Water",
       "name_zh": "抽取水",
       "inputs": [],
-      "outputs": [
-        { "resource_id": "water", "amount": 8.0 }
-      ],
+      "outputs": [{ "resource_id": "water", "amount": 8.0 }],
       "duration": 20.0,
       "machine_id": "water_pump",
       "tier": 1,
       "tags": ["mining"]
+    },
+
+    {
+      "id": "crush_iron_ore",
+      "name": "Crush Iron Ore",
+      "name_zh": "粉碎鐵礦",
+      "inputs": [{ "resource_id": "iron_ore", "amount": 12.0 }],
+      "outputs": [{ "resource_id": "iron_ore_crushed", "amount": 12.0 }],
+      "duration": 20.0,
+      "machine_id": "crusher",
+      "tier": 1,
+      "tags": ["processing"]
+    },
+    {
+      "id": "crush_copper_ore",
+      "name": "Crush Copper Ore",
+      "name_zh": "粉碎銅礦",
+      "inputs": [{ "resource_id": "copper_ore", "amount": 12.0 }],
+      "outputs": [{ "resource_id": "copper_ore_crushed", "amount": 12.0 }],
+      "duration": 20.0,
+      "machine_id": "crusher",
+      "tier": 1,
+      "tags": ["processing"]
+    },
+    {
+      "id": "glass_mix",
+      "name": "Glass Mix",
+      "name_zh": "玻璃混合料",
+      "inputs": [
+        { "resource_id": "sand", "amount": 6.0 },
+        { "resource_id": "limestone", "amount": 2.0 }
+      ],
+      "outputs": [{ "resource_id": "glass_mix", "amount": 6.0 }],
+      "duration": 20.0,
+      "machine_id": "crusher",
+      "tier": 1,
+      "tags": ["processing"]
+    },
+
+    {
+      "id": "blast_furnace_iron",
+      "name": "Smelt Iron (Blast Furnace)",
+      "name_zh": "高爐煉鐵",
+      "inputs": [
+        { "resource_id": "iron_ore", "amount": 10.0 },
+        { "resource_id": "coal", "amount": 4.0 }
+      ],
+      "outputs": [
+        { "resource_id": "molten_iron", "amount": 8.0 },
+        { "resource_id": "slag", "amount": 4.0 },
+        { "resource_id": "exhaust", "amount": 8.0 }
+      ],
+      "duration": 60.0,
+      "machine_id": "blast_furnace",
+      "tier": 1,
+      "tags": ["smelting", "iron"]
+    },
+    {
+      "id": "blast_furnace_copper",
+      "name": "Smelt Copper (Blast Furnace)",
+      "name_zh": "高爐煉銅",
+      "inputs": [
+        { "resource_id": "copper_ore", "amount": 10.0 },
+        { "resource_id": "coal", "amount": 4.0 }
+      ],
+      "outputs": [
+        { "resource_id": "molten_copper", "amount": 8.0 },
+        { "resource_id": "slag", "amount": 4.0 },
+        { "resource_id": "exhaust", "amount": 8.0 }
+      ],
+      "duration": 60.0,
+      "machine_id": "blast_furnace",
+      "tier": 1,
+      "tags": ["smelting", "copper"]
+    },
+    {
+      "id": "blast_furnace_glass",
+      "name": "Smelt Glass (Blast Furnace)",
+      "name_zh": "高爐煉玻璃",
+      "inputs": [
+        { "resource_id": "glass_mix", "amount": 10.0 },
+        { "resource_id": "coal", "amount": 4.0 }
+      ],
+      "outputs": [
+        { "resource_id": "molten_glass", "amount": 8.0 },
+        { "resource_id": "slag", "amount": 4.0 },
+        { "resource_id": "exhaust", "amount": 8.0 }
+      ],
+      "duration": 60.0,
+      "machine_id": "blast_furnace",
+      "tier": 1,
+      "tags": ["smelting", "glass"]
+    },
+
+    {
+      "id": "blast_furnace_2_iron",
+      "name": "Smelt Iron (Blast Furnace II)",
+      "name_zh": "高爐II煉鐵",
+      "inputs": [
+        { "resource_id": "iron_ore_crushed", "amount": 16.0 },
+        { "resource_id": "limestone", "amount": 2.0 },
+        { "resource_id": "coal", "amount": 5.0 }
+      ],
+      "outputs": [
+        { "resource_id": "molten_iron", "amount": 16.0 },
+        { "resource_id": "slag", "amount": 6.0 },
+        { "resource_id": "exhaust", "amount": 12.0 }
+      ],
+      "duration": 60.0,
+      "machine_id": "blast_furnace_2",
+      "tier": 2,
+      "tags": ["smelting", "iron"]
+    },
+    {
+      "id": "blast_furnace_2_copper",
+      "name": "Smelt Copper (Blast Furnace II)",
+      "name_zh": "高爐II煉銅",
+      "inputs": [
+        { "resource_id": "copper_ore_crushed", "amount": 16.0 },
+        { "resource_id": "sand", "amount": 2.0 },
+        { "resource_id": "coal", "amount": 5.0 }
+      ],
+      "outputs": [
+        { "resource_id": "molten_copper", "amount": 16.0 },
+        { "resource_id": "slag", "amount": 6.0 },
+        { "resource_id": "exhaust", "amount": 12.0 }
+      ],
+      "duration": 60.0,
+      "machine_id": "blast_furnace_2",
+      "tier": 2,
+      "tags": ["smelting", "copper"]
+    },
+
+    {
+      "id": "arc_furnace_iron",
+      "name": "Smelt Iron (Arc Furnace)",
+      "name_zh": "電弧爐煉鐵",
+      "inputs": [
+        { "resource_id": "iron_ore_crushed", "amount": 8.0 },
+        { "resource_id": "limestone", "amount": 1.0 },
+        { "resource_id": "graphite", "amount": 1.0 }
+      ],
+      "outputs": [
+        { "resource_id": "molten_iron", "amount": 8.0 },
+        { "resource_id": "slag", "amount": 3.0 },
+        { "resource_id": "exhaust", "amount": 2.0 }
+      ],
+      "duration": 60.0,
+      "machine_id": "arc_furnace",
+      "tier": 2,
+      "tags": ["smelting", "iron"]
+    },
+    {
+      "id": "arc_furnace_copper",
+      "name": "Smelt Copper (Arc Furnace)",
+      "name_zh": "電弧爐煉銅",
+      "inputs": [
+        { "resource_id": "copper_ore_crushed", "amount": 8.0 },
+        { "resource_id": "sand", "amount": 1.0 },
+        { "resource_id": "graphite", "amount": 1.0 }
+      ],
+      "outputs": [
+        { "resource_id": "molten_copper", "amount": 8.0 },
+        { "resource_id": "slag", "amount": 3.0 },
+        { "resource_id": "exhaust", "amount": 2.0 }
+      ],
+      "duration": 60.0,
+      "machine_id": "arc_furnace",
+      "tier": 2,
+      "tags": ["smelting", "copper"]
+    },
+    {
+      "id": "arc_furnace_silicon",
+      "name": "Smelt Silicon (Arc Furnace)",
+      "name_zh": "電弧爐煉矽",
+      "inputs": [
+        { "resource_id": "sand", "amount": 16.0 },
+        { "resource_id": "coal", "amount": 4.0 },
+        { "resource_id": "graphite", "amount": 1.0 }
+      ],
+      "outputs": [
+        { "resource_id": "molten_silicon", "amount": 12.0 },
+        { "resource_id": "slag", "amount": 6.0 },
+        { "resource_id": "exhaust", "amount": 8.0 }
+      ],
+      "duration": 60.0,
+      "machine_id": "arc_furnace",
+      "tier": 2,
+      "tags": ["smelting", "silicon"]
+    },
+    {
+      "id": "arc_furnace_glass",
+      "name": "Smelt Glass (Arc Furnace)",
+      "name_zh": "電弧爐煉玻璃",
+      "inputs": [
+        { "resource_id": "glass_mix", "amount": 10.0 },
+        { "resource_id": "graphite", "amount": 1.0 }
+      ],
+      "outputs": [
+        { "resource_id": "molten_glass", "amount": 8.0 },
+        { "resource_id": "slag", "amount": 4.0 },
+        { "resource_id": "exhaust", "amount": 2.0 }
+      ],
+      "duration": 60.0,
+      "machine_id": "arc_furnace",
+      "tier": 2,
+      "tags": ["smelting", "glass"]
+    },
+
+    {
+      "id": "cast_iron",
+      "name": "Cast Iron",
+      "name_zh": "鑄鐵",
+      "inputs": [{ "resource_id": "molten_iron", "amount": 8.0 }],
+      "outputs": [{ "resource_id": "iron", "amount": 8.0 }],
+      "duration": 20.0,
+      "machine_id": "cooled_mold",
+      "tier": 1,
+      "tags": ["casting", "iron"]
+    },
+    {
+      "id": "cast_copper",
+      "name": "Cast Copper",
+      "name_zh": "鑄銅",
+      "inputs": [{ "resource_id": "molten_copper", "amount": 8.0 }],
+      "outputs": [{ "resource_id": "copper", "amount": 8.0 }],
+      "duration": 20.0,
+      "machine_id": "cooled_mold",
+      "tier": 1,
+      "tags": ["casting", "copper"]
+    },
+    {
+      "id": "cast_glass",
+      "name": "Cast Glass",
+      "name_zh": "鑄玻璃",
+      "inputs": [{ "resource_id": "molten_glass", "amount": 8.0 }],
+      "outputs": [{ "resource_id": "glass", "amount": 8.0 }],
+      "duration": 20.0,
+      "machine_id": "cooled_mold",
+      "tier": 1,
+      "tags": ["casting", "glass"]
+    },
+    {
+      "id": "cast_steel",
+      "name": "Cast Steel",
+      "name_zh": "鑄鋼",
+      "inputs": [{ "resource_id": "molten_steel", "amount": 8.0 }],
+      "outputs": [{ "resource_id": "steel", "amount": 8.0 }],
+      "duration": 20.0,
+      "machine_id": "metal_caster",
+      "tier": 2,
+      "tags": ["casting", "steel"]
+    },
+    {
+      "id": "cast_gold",
+      "name": "Cast Gold",
+      "name_zh": "鑄金",
+      "inputs": [{ "resource_id": "molten_gold", "amount": 4.0 }],
+      "outputs": [{ "resource_id": "gold", "amount": 4.0 }],
+      "duration": 20.0,
+      "machine_id": "metal_caster",
+      "tier": 2,
+      "tags": ["casting", "gold"]
+    },
+    {
+      "id": "cast_silicon_poly",
+      "name": "Cast Silicon (Poly)",
+      "name_zh": "鑄多晶矽",
+      "inputs": [{ "resource_id": "molten_silicon", "amount": 8.0 }],
+      "outputs": [{ "resource_id": "silicon_poly", "amount": 8.0 }],
+      "duration": 20.0,
+      "machine_id": "metal_caster",
+      "tier": 2,
+      "tags": ["casting", "silicon"]
+    },
+    {
+      "id": "cast_concrete_slab",
+      "name": "Cast Concrete Slab",
+      "name_zh": "鑄混凝土板",
+      "inputs": [
+        { "resource_id": "concrete", "amount": 4.0 },
+        { "resource_id": "steel", "amount": 1.0 }
+      ],
+      "outputs": [{ "resource_id": "concrete_slab", "amount": 4.0 }],
+      "duration": 20.0,
+      "machine_id": "cooled_mold",
+      "tier": 1,
+      "tags": ["casting"]
+    },
+
+    {
+      "id": "concrete",
+      "name": "Concrete",
+      "name_zh": "混凝土",
+      "inputs": [
+        { "resource_id": "rock", "amount": 6.0 },
+        { "resource_id": "water", "amount": 4.0 }
+      ],
+      "outputs": [{ "resource_id": "concrete", "amount": 4.0 }],
+      "duration": 20.0,
+      "machine_id": "assembly_line",
+      "tier": 1,
+      "tags": ["construction"]
+    },
+    {
+      "id": "coke",
+      "name": "Coke",
+      "name_zh": "焦炭",
+      "inputs": [{ "resource_id": "coal", "amount": 6.0 }],
+      "outputs": [{ "resource_id": "coke", "amount": 4.0 }],
+      "duration": 20.0,
+      "machine_id": "distillery",
+      "tier": 1,
+      "tags": ["processing"]
+    },
+
+    {
+      "id": "basic_diesel",
+      "name": "Diesel (Basic Distiller)",
+      "name_zh": "柴油（基礎蒸餾）",
+      "inputs": [
+        { "resource_id": "crude_oil", "amount": 20.0 },
+        { "resource_id": "coal", "amount": 2.0 }
+      ],
+      "outputs": [
+        { "resource_id": "diesel", "amount": 9.0 },
+        { "resource_id": "waste_water", "amount": 5.0 },
+        { "resource_id": "exhaust", "amount": 12.0 }
+      ],
+      "duration": 60.0,
+      "machine_id": "distillery",
+      "tier": 1,
+      "tags": ["oil", "distillation"]
+    },
+    {
+      "id": "desalination",
+      "name": "Desalination",
+      "name_zh": "海水淡化",
+      "inputs": [
+        { "resource_id": "seawater", "amount": 10.0 },
+        { "resource_id": "coal", "amount": 1.0 }
+      ],
+      "outputs": [
+        { "resource_id": "water", "amount": 6.0 },
+        { "resource_id": "brine", "amount": 4.0 },
+        { "resource_id": "exhaust", "amount": 2.0 }
+      ],
+      "duration": 60.0,
+      "machine_id": "distillery",
+      "tier": 1,
+      "tags": ["processing"]
+    },
+
+    {
+      "id": "graphite",
+      "name": "Graphite",
+      "name_zh": "石墨",
+      "inputs": [
+        { "resource_id": "coal", "amount": 4.0 },
+        { "resource_id": "chlorine", "amount": 12.0 }
+      ],
+      "outputs": [
+        { "resource_id": "graphite", "amount": 12.0 },
+        { "resource_id": "sour_water", "amount": 4.0 }
+      ],
+      "duration": 60.0,
+      "machine_id": "chemical_plant",
+      "tier": 2,
+      "tags": ["chemical"]
+    },
+    {
+      "id": "fertilizer_1",
+      "name": "Fertilizer I",
+      "name_zh": "肥料I",
+      "inputs": [
+        { "resource_id": "ammonia", "amount": 4.0 },
+        { "resource_id": "oxygen", "amount": 6.0 }
+      ],
+      "outputs": [{ "resource_id": "fertilizer_1", "amount": 10.0 }],
+      "duration": 60.0,
+      "machine_id": "chemical_plant",
+      "tier": 2,
+      "tags": ["chemical"]
+    },
+    {
+      "id": "rubber",
+      "name": "Rubber",
+      "name_zh": "橡膠",
+      "inputs": [
+        { "resource_id": "heavy_oil", "amount": 8.0 },
+        { "resource_id": "acid", "amount": 2.0 }
+      ],
+      "outputs": [{ "resource_id": "rubber", "amount": 6.0 }],
+      "duration": 60.0,
+      "machine_id": "chemical_plant",
+      "tier": 2,
+      "tags": ["chemical"]
+    },
+    {
+      "id": "plastic",
+      "name": "Plastic",
+      "name_zh": "塑膠",
+      "inputs": [
+        { "resource_id": "naphtha", "amount": 8.0 },
+        { "resource_id": "acid", "amount": 2.0 }
+      ],
+      "outputs": [{ "resource_id": "plastic", "amount": 6.0 }],
+      "duration": 60.0,
+      "machine_id": "chemical_plant",
+      "tier": 2,
+      "tags": ["chemical"]
+    },
+    {
+      "id": "disinfectant",
+      "name": "Disinfectant",
+      "name_zh": "消毒劑",
+      "inputs": [
+        { "resource_id": "ethanol", "amount": 4.0 },
+        { "resource_id": "chlorine", "amount": 2.0 }
+      ],
+      "outputs": [{ "resource_id": "disinfectant", "amount": 4.0 }],
+      "duration": 60.0,
+      "machine_id": "chemical_plant",
+      "tier": 2,
+      "tags": ["chemical"]
+    },
+
+    {
+      "id": "air_separation",
+      "name": "Air Separation",
+      "name_zh": "空氣分離",
+      "inputs": [],
+      "outputs": [
+        { "resource_id": "oxygen", "amount": 12.0 },
+        { "resource_id": "nitrogen", "amount": 12.0 }
+      ],
+      "duration": 60.0,
+      "machine_id": "air_separator",
+      "tier": 2,
+      "tags": ["processing"]
+    },
+
+    {
+      "id": "bread",
+      "name": "Bread",
+      "name_zh": "麵包",
+      "inputs": [
+        { "resource_id": "flour", "amount": 8.0 },
+        { "resource_id": "water", "amount": 4.0 }
+      ],
+      "outputs": [{ "resource_id": "bread", "amount": 12.0 }],
+      "duration": 60.0,
+      "machine_id": "baking_unit",
+      "tier": 1,
+      "tags": ["food"]
+    },
+    {
+      "id": "food_pack_meat",
+      "name": "Food Pack (Meat)",
+      "name_zh": "食品包（肉類）",
+      "inputs": [
+        { "resource_id": "meat", "amount": 3.0 },
+        { "resource_id": "bread", "amount": 6.0 }
+      ],
+      "outputs": [{ "resource_id": "food_pack", "amount": 4.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_3",
+      "tier": 3,
+      "tags": ["food"]
+    },
+    {
+      "id": "food_pack_eggs",
+      "name": "Food Pack (Eggs)",
+      "name_zh": "食品包（蛋類）",
+      "inputs": [
+        { "resource_id": "eggs", "amount": 3.0 },
+        { "resource_id": "bread", "amount": 6.0 }
+      ],
+      "outputs": [{ "resource_id": "food_pack", "amount": 4.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_3",
+      "tier": 3,
+      "tags": ["food"]
+    },
+    {
+      "id": "food_pack_tofu",
+      "name": "Food Pack (Tofu)",
+      "name_zh": "食品包（豆腐）",
+      "inputs": [
+        { "resource_id": "tofu", "amount": 6.0 },
+        { "resource_id": "vegetables", "amount": 8.0 }
+      ],
+      "outputs": [{ "resource_id": "food_pack", "amount": 4.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_3",
+      "tier": 3,
+      "tags": ["food"]
+    },
+
+    {
+      "id": "mechanical_parts_iron",
+      "name": "Mechanical Parts (Iron)",
+      "name_zh": "機械零件（鐵）",
+      "inputs": [{ "resource_id": "iron", "amount": 5.0 }],
+      "outputs": [{ "resource_id": "mechanical_parts", "amount": 4.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_1",
+      "tier": 1,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "mechanical_parts_steel",
+      "name": "Mechanical Parts (Steel)",
+      "name_zh": "機械零件（鋼）",
+      "inputs": [{ "resource_id": "steel", "amount": 4.0 }],
+      "outputs": [{ "resource_id": "mechanical_parts", "amount": 8.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_3",
+      "tier": 3,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "construction_parts",
+      "name": "Construction Parts",
+      "name_zh": "建設零件",
+      "inputs": [
+        { "resource_id": "iron", "amount": 3.0 },
+        { "resource_id": "wood", "amount": 3.0 },
+        { "resource_id": "concrete_slab", "amount": 4.0 }
+      ],
+      "outputs": [{ "resource_id": "construction_parts", "amount": 4.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_1",
+      "tier": 1,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "construction_parts_2",
+      "name": "Construction Parts II",
+      "name_zh": "建設零件II",
+      "inputs": [
+        { "resource_id": "construction_parts", "amount": 8.0 },
+        { "resource_id": "electronics", "amount": 4.0 }
+      ],
+      "outputs": [{ "resource_id": "construction_parts_2", "amount": 4.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_2",
+      "tier": 2,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "construction_parts_3",
+      "name": "Construction Parts III",
+      "name_zh": "建設零件III",
+      "inputs": [
+        { "resource_id": "construction_parts_2", "amount": 8.0 },
+        { "resource_id": "steel", "amount": 4.0 }
+      ],
+      "outputs": [{ "resource_id": "construction_parts_3", "amount": 4.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_3",
+      "tier": 3,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "construction_parts_4",
+      "name": "Construction Parts IV",
+      "name_zh": "建設零件IV",
+      "inputs": [
+        { "resource_id": "construction_parts_3", "amount": 8.0 },
+        { "resource_id": "electronics_2", "amount": 4.0 }
+      ],
+      "outputs": [{ "resource_id": "construction_parts_4", "amount": 4.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_4",
+      "tier": 4,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "electronics",
+      "name": "Electronics",
+      "name_zh": "電子零件",
+      "inputs": [
+        { "resource_id": "rubber", "amount": 1.0 },
+        { "resource_id": "copper", "amount": 4.0 }
+      ],
+      "outputs": [{ "resource_id": "electronics", "amount": 4.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_2",
+      "tier": 2,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "pcb",
+      "name": "PCB",
+      "name_zh": "印刷電路板",
+      "inputs": [
+        { "resource_id": "glass", "amount": 4.0 },
+        { "resource_id": "plastic", "amount": 4.0 },
+        { "resource_id": "copper", "amount": 2.0 }
+      ],
+      "outputs": [{ "resource_id": "pcb", "amount": 8.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_3",
+      "tier": 3,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "electronics_2",
+      "name": "Electronics II",
+      "name_zh": "電子零件II",
+      "inputs": [
+        { "resource_id": "pcb", "amount": 4.0 },
+        { "resource_id": "electronics", "amount": 8.0 },
+        { "resource_id": "silicon_poly", "amount": 4.0 }
+      ],
+      "outputs": [{ "resource_id": "electronics_2", "amount": 4.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_3",
+      "tier": 3,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "electronics_3",
+      "name": "Electronics III",
+      "name_zh": "電子零件III",
+      "inputs": [
+        { "resource_id": "microchip", "amount": 2.0 },
+        { "resource_id": "electronics_2", "amount": 4.0 }
+      ],
+      "outputs": [{ "resource_id": "electronics_3", "amount": 2.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_4",
+      "tier": 4,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "vehicle_parts",
+      "name": "Vehicle Parts",
+      "name_zh": "車輛零件",
+      "inputs": [
+        { "resource_id": "mechanical_parts", "amount": 3.0 },
+        { "resource_id": "electronics", "amount": 1.0 }
+      ],
+      "outputs": [{ "resource_id": "vehicle_parts", "amount": 2.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_2",
+      "tier": 2,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "vehicle_parts_2",
+      "name": "Vehicle Parts II",
+      "name_zh": "車輛零件II",
+      "inputs": [
+        { "resource_id": "vehicle_parts", "amount": 4.0 },
+        { "resource_id": "steel", "amount": 2.0 },
+        { "resource_id": "glass", "amount": 1.0 }
+      ],
+      "outputs": [{ "resource_id": "vehicle_parts_2", "amount": 2.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_3",
+      "tier": 3,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "vehicle_parts_3",
+      "name": "Vehicle Parts III",
+      "name_zh": "車輛零件III",
+      "inputs": [
+        { "resource_id": "vehicle_parts_2", "amount": 4.0 },
+        { "resource_id": "electronics_2", "amount": 1.0 }
+      ],
+      "outputs": [{ "resource_id": "vehicle_parts_3", "amount": 2.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_3",
+      "tier": 3,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "lab_equipment",
+      "name": "Lab Equipment",
+      "name_zh": "實驗設備",
+      "inputs": [
+        { "resource_id": "mechanical_parts", "amount": 4.0 },
+        { "resource_id": "electronics", "amount": 2.0 }
+      ],
+      "outputs": [{ "resource_id": "lab_equipment", "amount": 6.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_2",
+      "tier": 2,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "lab_equipment_2",
+      "name": "Lab Equipment II",
+      "name_zh": "實驗設備II",
+      "inputs": [
+        { "resource_id": "lab_equipment", "amount": 6.0 },
+        { "resource_id": "paper", "amount": 2.0 },
+        { "resource_id": "glass", "amount": 2.0 }
+      ],
+      "outputs": [{ "resource_id": "lab_equipment_2", "amount": 6.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_3",
+      "tier": 3,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "lab_equipment_3",
+      "name": "Lab Equipment III",
+      "name_zh": "實驗設備III",
+      "inputs": [
+        { "resource_id": "lab_equipment_2", "amount": 6.0 },
+        { "resource_id": "electronics_2", "amount": 1.0 }
+      ],
+      "outputs": [{ "resource_id": "lab_equipment_3", "amount": 6.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_3",
+      "tier": 3,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "lab_equipment_4",
+      "name": "Lab Equipment IV",
+      "name_zh": "實驗設備IV",
+      "inputs": [
+        { "resource_id": "lab_equipment_3", "amount": 8.0 },
+        { "resource_id": "electronics_3", "amount": 1.0 }
+      ],
+      "outputs": [{ "resource_id": "lab_equipment_4", "amount": 8.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_4",
+      "tier": 4,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "household_goods",
+      "name": "Household Goods",
+      "name_zh": "家用品",
+      "inputs": [
+        { "resource_id": "glass", "amount": 4.0 },
+        { "resource_id": "steel", "amount": 2.0 },
+        { "resource_id": "wood", "amount": 4.0 }
+      ],
+      "outputs": [{ "resource_id": "household_goods", "amount": 8.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_2",
+      "tier": 2,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "household_appliances",
+      "name": "Household Appliances",
+      "name_zh": "家電",
+      "inputs": [
+        { "resource_id": "electronics", "amount": 8.0 },
+        { "resource_id": "electronics_2", "amount": 4.0 },
+        { "resource_id": "steel", "amount": 4.0 }
+      ],
+      "outputs": [{ "resource_id": "household_appliances", "amount": 12.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_3",
+      "tier": 3,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "medical_equipment",
+      "name": "Medical Equipment",
+      "name_zh": "醫療器材",
+      "inputs": [
+        { "resource_id": "steel", "amount": 4.0 },
+        { "resource_id": "plastic", "amount": 4.0 }
+      ],
+      "outputs": [{ "resource_id": "medical_equipment", "amount": 4.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_3",
+      "tier": 3,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "medical_supplies",
+      "name": "Medical Supplies",
+      "name_zh": "醫療用品",
+      "inputs": [
+        { "resource_id": "medical_equipment", "amount": 4.0 },
+        { "resource_id": "disinfectant", "amount": 4.0 }
+      ],
+      "outputs": [{ "resource_id": "medical_supplies", "amount": 8.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_3",
+      "tier": 3,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "solar_cell",
+      "name": "Solar Cell",
+      "name_zh": "太陽能電池",
+      "inputs": [
+        { "resource_id": "steel", "amount": 1.0 },
+        { "resource_id": "silicon_poly", "amount": 12.0 },
+        { "resource_id": "glass", "amount": 4.0 }
+      ],
+      "outputs": [{ "resource_id": "solar_cell", "amount": 8.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_3",
+      "tier": 3,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "composite_panel",
+      "name": "Composite Panel",
+      "name_zh": "複合板",
+      "inputs": [
+        { "resource_id": "aluminum", "amount": 8.0 },
+        { "resource_id": "steel", "amount": 1.0 },
+        { "resource_id": "plastic", "amount": 2.0 }
+      ],
+      "outputs": [{ "resource_id": "composite_panel", "amount": 8.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_3",
+      "tier": 3,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "server",
+      "name": "Server",
+      "name_zh": "伺服器",
+      "inputs": [
+        { "resource_id": "steel", "amount": 2.0 },
+        { "resource_id": "electronics_3", "amount": 4.0 }
+      ],
+      "outputs": [{ "resource_id": "server", "amount": 2.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_4",
+      "tier": 4,
+      "tags": ["assembly"]
+    },
+    {
+      "id": "office_supplies",
+      "name": "Office Supplies",
+      "name_zh": "辦公用品",
+      "inputs": [
+        { "resource_id": "paper", "amount": 3.0 },
+        { "resource_id": "household_goods", "amount": 2.0 },
+        { "resource_id": "electronics_2", "amount": 1.0 }
+      ],
+      "outputs": [{ "resource_id": "office_supplies", "amount": 6.0 }],
+      "duration": 60.0,
+      "machine_id": "assembly_3",
+      "tier": 3,
+      "tags": ["assembly"]
+    },
+
+    {
+      "id": "boiler_coal",
+      "name": "Steam (Coal Boiler)",
+      "name_zh": "蒸氣（燃煤鍋爐）",
+      "inputs": [
+        { "resource_id": "water", "amount": 8.0 },
+        { "resource_id": "coal", "amount": 5.0 }
+      ],
+      "outputs": [
+        { "resource_id": "steam_hi", "amount": 8.0 },
+        { "resource_id": "exhaust", "amount": 10.0 }
+      ],
+      "duration": 60.0,
+      "machine_id": "boiler",
+      "tier": 1,
+      "tags": ["power"]
+    },
+    {
+      "id": "boiler_gas",
+      "name": "Steam (Gas Boiler)",
+      "name_zh": "蒸氣（燃氣鍋爐）",
+      "inputs": [
+        { "resource_id": "water", "amount": 8.0 },
+        { "resource_id": "fuel_gas", "amount": 12.0 }
+      ],
+      "outputs": [{ "resource_id": "steam_hi", "amount": 8.0 }],
+      "duration": 60.0,
+      "machine_id": "boiler_gas",
+      "tier": 2,
+      "tags": ["power"]
     }
   ]
 }

@@ -13,6 +13,16 @@
       "computing": 0.0
     },
     {
+      "id": "blast_furnace_2",
+      "name": "Blast Furnace II",
+      "name_zh": "高爐II",
+      "power_consumption": 100.0,
+      "category": "smelting",
+      "workers": 3,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 1.0}],
+      "computing": 0.0
+    },
+    {
       "id": "arc_furnace",
       "name": "Arc Furnace",
       "name_zh": "電弧爐",
@@ -41,6 +51,46 @@
       "workers": 2,
       "maintenance": [{"resource_id": "maintenance_1", "amount": 0.5}],
       "computing": 0.0
+    },
+    {
+      "id": "assembly_1",
+      "name": "Assembly I",
+      "name_zh": "組裝線I",
+      "power_consumption": 60.0,
+      "category": "assembly",
+      "workers": 2,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 0.3}],
+      "computing": 0.0
+    },
+    {
+      "id": "assembly_2",
+      "name": "Assembly II",
+      "name_zh": "組裝線II",
+      "power_consumption": 100.0,
+      "category": "assembly",
+      "workers": 4,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 0.5}, {"resource_id": "maintenance_2", "amount": 0.2}],
+      "computing": 0.0
+    },
+    {
+      "id": "assembly_3",
+      "name": "Assembly III",
+      "name_zh": "組裝線III",
+      "power_consumption": 150.0,
+      "category": "assembly",
+      "workers": 6,
+      "maintenance": [{"resource_id": "maintenance_2", "amount": 0.5}],
+      "computing": 0.0
+    },
+    {
+      "id": "assembly_4",
+      "name": "Assembly IV",
+      "name_zh": "組裝線IV",
+      "power_consumption": 200.0,
+      "category": "assembly",
+      "workers": 8,
+      "maintenance": [{"resource_id": "maintenance_2", "amount": 0.5}, {"resource_id": "maintenance_3", "amount": 0.3}],
+      "computing": 1.0
     },
     {
       "id": "assembly_line",
@@ -98,6 +148,46 @@
       "name_zh": "廢氣淨化器",
       "power_consumption": 60.0,
       "category": "processing",
+      "workers": 1,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 0.3}],
+      "computing": 0.0
+    },
+    {
+      "id": "air_separator",
+      "name": "Air Separator",
+      "name_zh": "空氣分離機",
+      "power_consumption": 80.0,
+      "category": "processing",
+      "workers": 1,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 0.5}],
+      "computing": 0.0
+    },
+    {
+      "id": "baking_unit",
+      "name": "Baking Unit",
+      "name_zh": "烘焙機",
+      "power_consumption": 40.0,
+      "category": "food",
+      "workers": 2,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 0.3}],
+      "computing": 0.0
+    },
+    {
+      "id": "boiler",
+      "name": "Boiler",
+      "name_zh": "鍋爐",
+      "power_consumption": 0.0,
+      "category": "power",
+      "workers": 1,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 0.3}],
+      "computing": 0.0
+    },
+    {
+      "id": "boiler_gas",
+      "name": "Gas Boiler",
+      "name_zh": "燃氣鍋爐",
+      "power_consumption": 0.0,
+      "category": "power",
       "workers": 1,
       "maintenance": [{"resource_id": "maintenance_1", "amount": 0.3}],
       "computing": 0.0
