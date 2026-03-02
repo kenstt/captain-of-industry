@@ -13,22 +13,42 @@ fn format_count(v: f64) -> String {
     }
 }
 
-fn recipe_label(r: &Recipe) -> String {
+fn recipe_label(r: &Recipe, data: &GameData) -> String {
     let base = r
         .name_zh
         .as_deref()
         .map(|zh| format!("{} ({})", zh, r.name))
         .unwrap_or_else(|| r.name.clone());
-    if r.tier > 0 {
-        format!("[T{}] {}", r.tier, base)
-    } else {
+
+    let machine_name = data
+        .machines
+        .iter()
+        .find(|m| m.id == r.machine_id)
+        .and_then(|m| {
+            m.name_zh
+                .as_deref()
+                .map(|zh| format!("{} ({})", zh, m.name))
+                .or(Some(m.name.clone()))
+        })
+        .unwrap_or_default();
+
+    let with_machine = if machine_name.is_empty() {
         base
+    } else {
+        format!("{} - {}", base, machine_name)
+    };
+
+    if r.tier > 0 {
+        format!("[T{}] {}", r.tier, with_machine)
+    } else {
+        with_machine
     }
 }
 
 pub struct BalanceEntry {
     pub recipe_id: String,
     pub machine_count: String,
+    pub selected_tag: Option<String>,
 }
 
 pub struct BalanceViewState {
@@ -43,6 +63,7 @@ impl Default for BalanceViewState {
             entries: vec![BalanceEntry {
                 recipe_id: String::new(),
                 machine_count: "1".to_string(),
+                selected_tag: None,
             }],
             report: None,
             last_fingerprint: String::new(),
@@ -54,34 +75,77 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &mut BalanceViewState, data: 
     ui.heading(t!("balance_title"));
     ui.separator();
 
+    // Collect all unique tags from recipes
+    let mut all_tags: Vec<String> = data
+        .recipes
+        .iter()
+        .flat_map(|r| r.tags.iter().cloned())
+        .collect::<std::collections::BTreeSet<_>>()
+        .into_iter()
+        .collect();
+    all_tags.sort();
+
     // Recipe entry rows
     let mut to_remove: Option<usize> = None;
 
     for (i, entry) in state.entries.iter_mut().enumerate() {
         ui.horizontal(|ui| {
-            // Recipe dropdown
+            // Tag filter dropdown
+            let tag_label = entry
+                .selected_tag
+                .as_deref()
+                .unwrap_or(&t!("all_tags").to_string())
+                .to_string();
+
+            egui::ComboBox::from_id_salt(format!("balance_tag_{i}"))
+                .selected_text(&tag_label)
+                .width(120.0)
+                .show_ui(ui, |ui| {
+                    // "All" option
+                    let is_all = entry.selected_tag.is_none();
+                    if ui
+                        .selectable_label(is_all, t!("all_tags").to_string())
+                        .clicked()
+                    {
+                        entry.selected_tag = None;
+                    }
+                    // Individual tags
+                    for tag in &all_tags {
+                        let selected = entry.selected_tag.as_deref() == Some(tag.as_str());
+                        if ui.selectable_label(selected, tag).clicked() {
+                            entry.selected_tag = Some(tag.clone());
+                        }
+                    }
+                });
+
+            // Recipe dropdown — filtered by selected tag
             let selected_label = if entry.recipe_id.is_empty() {
                 t!("select_recipe").to_string()
             } else {
                 data.recipes
                     .iter()
                     .find(|r| r.id == entry.recipe_id)
-                    .map(|r| recipe_label(r))
+                    .map(|r| recipe_label(r, data))
                     .unwrap_or_else(|| entry.recipe_id.clone())
             };
 
             egui::ComboBox::from_id_salt(format!("balance_recipe_{i}"))
                 .selected_text(&selected_label)
-                .width(250.0)
+                .width(350.0)
                 .show_ui(ui, |ui| {
                     for recipe in &data.recipes {
-                        let label = recipe_label(recipe);
+                        // Apply tag filter
+                        if let Some(ref tag) = entry.selected_tag {
+                            if !recipe.tags.contains(tag) {
+                                continue;
+                            }
+                        }
+                        let label = recipe_label(recipe, data);
                         ui.selectable_value(&mut entry.recipe_id, recipe.id.clone(), &label);
                     }
                 });
 
             // Machine count input
-            ui.label(t!("machine_count"));
             if ui.small_button("-").clicked() {
                 if let Ok(v) = entry.machine_count.parse::<f64>() {
                     let new_v = (v - 1.0).max(0.0);
@@ -108,11 +172,17 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &mut BalanceViewState, data: 
         }
     }
 
-    // Add recipe entry button
-    if ui.button(t!("add_recipe_entry")).clicked() {
+    // Auto-add blank entry if the last entry already has a recipe selected
+    if state
+        .entries
+        .last()
+        .map(|e| !e.recipe_id.is_empty())
+        .unwrap_or(true)
+    {
         state.entries.push(BalanceEntry {
             recipe_id: String::new(),
             machine_count: "1".to_string(),
+            selected_tag: None,
         });
     }
 

@@ -101,5 +101,8 @@
 
   "add_recipe_entry": "+ 新增配方",
   "machine_count": "機器數量",
-  "calculate_balance": "計算平衡"
+  "calculate_balance": "計算平衡",
+
+  "filter_tag": "篩選分類",
+  "all_tags": "全部"
 }

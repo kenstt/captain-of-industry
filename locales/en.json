@@ -101,5 +101,8 @@
 
   "add_recipe_entry": "+ Add Recipe",
   "machine_count": "Machine Count",
-  "calculate_balance": "Calculate Balance"
+  "calculate_balance": "Calculate Balance",
+
+  "filter_tag": "Filter Tag",
+  "all_tags": "All"
 }
