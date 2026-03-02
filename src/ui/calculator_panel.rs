@@ -150,6 +150,29 @@ pub fn show_calculator_panel(
         };
         ui.label(format!("{}: {}", t!("machine"), result.machine_name));
         ui.label(machines_display);
+        ui.label(format!(
+            "{}: {:.1} kW",
+            t!("power_consumption"),
+            result.total_power
+        ));
+        ui.label(format!(
+            "{}: {}",
+            t!("workers"),
+            format_f64(result.total_workers)
+        ));
+        if result.total_computing > 0.0 {
+            ui.label(format!(
+                "{}: {} TFLOPs",
+                t!("computing"),
+                format_f64(result.total_computing)
+            ));
+        }
+        if !result.maintenance_costs.is_empty() {
+            ui.label(format!("{}:", t!("maintenance")));
+            for mc in &result.maintenance_costs {
+                ui.label(format!("  {}: {}/month", mc.resource_id.0, format_f64(mc.amount)));
+            }
+        }
 
         ui.separator();
         ui.strong(t!("input_rates"));

@@ -7,70 +7,100 @@
       "name": "Blast Furnace",
       "name_zh": "高爐",
       "power_consumption": 60.0,
-      "category": "smelting"
+      "category": "smelting",
+      "workers": 2,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 0.5}],
+      "computing": 0.0
     },
     {
       "id": "arc_furnace",
       "name": "Arc Furnace",
       "name_zh": "電弧爐",
       "power_consumption": 120.0,
-      "category": "smelting"
+      "category": "smelting",
+      "workers": 3,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 1.0}],
+      "computing": 0.0
     },
     {
       "id": "cooled_mold",
       "name": "Cooled Mold",
       "name_zh": "冷卻鑄模",
       "power_consumption": 40.0,
-      "category": "casting"
+      "category": "casting",
+      "workers": 1,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 0.3}],
+      "computing": 0.0
     },
     {
       "id": "metal_caster",
       "name": "Metal Caster",
       "name_zh": "金屬鑄造機",
       "power_consumption": 80.0,
-      "category": "casting"
+      "category": "casting",
+      "workers": 2,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 0.5}],
+      "computing": 0.0
     },
     {
       "id": "assembly_line",
       "name": "Assembly Line",
       "name_zh": "組裝線",
       "power_consumption": 100.0,
-      "category": "assembly"
+      "category": "assembly",
+      "workers": 4,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 0.5}, {"resource_id": "maintenance_2", "amount": 0.2}],
+      "computing": 0.0
     },
     {
       "id": "chemical_plant",
       "name": "Chemical Plant",
       "name_zh": "化學廠",
       "power_consumption": 150.0,
-      "category": "chemical"
+      "category": "chemical",
+      "workers": 3,
+      "maintenance": [{"resource_id": "maintenance_2", "amount": 0.5}],
+      "computing": 1.0
     },
     {
       "id": "crusher",
       "name": "Crusher",
       "name_zh": "粉碎機",
       "power_consumption": 40.0,
-      "category": "processing"
+      "category": "processing",
+      "workers": 1,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 0.3}],
+      "computing": 0.0
     },
     {
       "id": "distillery",
       "name": "Distillery",
       "name_zh": "蒸餾塔",
       "power_consumption": 100.0,
-      "category": "chemical"
+      "category": "chemical",
+      "workers": 2,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 0.5}],
+      "computing": 0.0
     },
     {
       "id": "glass_maker",
       "name": "Glass Maker",
       "name_zh": "玻璃製造機",
       "power_consumption": 80.0,
-      "category": "smelting"
+      "category": "smelting",
+      "workers": 2,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 0.5}],
+      "computing": 0.0
     },
     {
       "id": "exhaust_scrubber",
       "name": "Exhaust Scrubber",
       "name_zh": "廢氣淨化器",
       "power_consumption": 60.0,
-      "category": "processing"
+      "category": "processing",
+      "workers": 1,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 0.3}],
+      "computing": 0.0
     }
   ]
 }

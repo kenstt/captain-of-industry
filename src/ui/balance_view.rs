@@ -74,6 +74,8 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &BalanceViewState) {
             ui.strong(t!("count"));
             ui.strong(t!("machines_needed_ceil"));
             ui.strong(t!("power_consumption"));
+            ui.strong(t!("workers"));
+            ui.strong(t!("computing"));
             ui.end_row();
 
             for mt in &report.machine_totals {
@@ -81,6 +83,12 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &BalanceViewState) {
                 ui.label(format!("{:.2}", mt.count));
                 ui.label(format!("{}", mt.count_ceil));
                 ui.label(format!("{:.1} kW", mt.total_power));
+                ui.label(format!("{}", mt.total_workers));
+                ui.label(if mt.total_computing > 0.0 {
+                    format!("{:.1}", mt.total_computing)
+                } else {
+                    "-".to_string()
+                });
                 ui.end_row();
             }
         });
@@ -91,4 +99,16 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &BalanceViewState) {
         t!("total_power"),
         report.total_power
     ));
+    ui.label(format!(
+        "{}: {:.0}",
+        t!("total_workers"),
+        report.total_workers
+    ));
+    if report.total_computing > 0.0 {
+        ui.label(format!(
+            "{}: {:.1} TFLOPs",
+            t!("total_computing"),
+            report.total_computing
+        ));
+    }
 }

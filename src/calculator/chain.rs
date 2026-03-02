@@ -89,6 +89,19 @@ fn build_chain_node(
 
     visited.remove(recipe_id);
 
+    let machines_ceil = machines_needed.ceil() as f64;
+    let power = machine.power_consumption * machines_ceil;
+    let workers = machine.workers as f64 * machines_ceil;
+    let computing = machine.computing * machines_ceil;
+    let maintenance_costs: Vec<Ingredient> = machine
+        .maintenance
+        .iter()
+        .map(|m| Ingredient {
+            resource_id: m.resource_id.clone(),
+            amount: m.amount * machines_ceil,
+        })
+        .collect();
+
     Some(ChainNode {
         recipe_id: recipe_id.to_string(),
         recipe_name: recipe.name.clone(),
@@ -97,6 +110,10 @@ fn build_chain_node(
         inputs,
         outputs,
         children,
+        power,
+        workers,
+        computing,
+        maintenance_costs,
     })
 }
 

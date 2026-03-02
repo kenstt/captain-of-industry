@@ -88,5 +88,14 @@
   "cat_intermediate": "中間產物",
   "cat_product": "成品",
   "cat_waste": "廢料",
-  "cat_other": "其他"
+  "cat_other": "其他",
+
+  "workers": "人力",
+  "computing": "算力（TFLOPs）",
+  "maintenance": "維護",
+  "total_workers": "總人力",
+  "total_computing": "總算力",
+  "maintenance_cost": "維護消耗",
+  "add_maintenance": "+ 新增維護物品",
+  "per_month": "/月"
 }

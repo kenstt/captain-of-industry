@@ -210,7 +210,7 @@ impl eframe::App for App {
                 }
                 Tab::RecipeEditor => {
                     if let Some(recipe) =
-                        recipe_editor::show_recipe_editor(ui, &mut self.editor_state, &self.data)
+                        recipe_editor::show_recipe_editor(ui, &mut self.editor_state, &mut self.data)
                     {
                         // Update or add recipe to data
                         if let Some(existing) =

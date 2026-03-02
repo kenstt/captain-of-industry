@@ -88,5 +88,14 @@
   "cat_intermediate": "Intermediate",
   "cat_product": "Product",
   "cat_waste": "Waste",
-  "cat_other": "Other"
+  "cat_other": "Other",
+
+  "workers": "Workers",
+  "computing": "Computing (TFLOPs)",
+  "maintenance": "Maintenance",
+  "total_workers": "Total Workers",
+  "total_computing": "Total Computing",
+  "maintenance_cost": "Maintenance Cost",
+  "add_maintenance": "+ Add Maintenance",
+  "per_month": "/month"
 }

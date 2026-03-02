@@ -72,29 +72,103 @@ pub fn analyze_balance(node: &ChainNode, data: &GameData) -> BalanceReport {
 
     // Build machine tallies
     let mut total_power = 0.0;
+    let mut total_workers = 0.0;
+    let mut total_computing = 0.0;
     let machine_totals: Vec<MachineTally> = machine_counts
         .into_iter()
         .map(|(mid, (name, count))| {
-            let power_per = machines_map
-                .get(&mid)
-                .map(|m| m.power_consumption)
-                .unwrap_or(0.0);
-            let tp = power_per * count.ceil() as f64;
+            let machine = machines_map.get(&mid);
+            let power_per = machine.map(|m| m.power_consumption).unwrap_or(0.0);
+            let workers_per = machine.map(|m| m.workers).unwrap_or(0);
+            let computing_per = machine.map(|m| m.computing).unwrap_or(0.0);
+            let count_ceil = count.ceil() as u32;
+
+            let tp = power_per * count_ceil as f64;
+            let tw = workers_per * count_ceil;
+            let tc = computing_per * count_ceil as f64;
+
             total_power += tp;
+            total_workers += tw as f64;
+            total_computing += tc;
+
+            // Compute maintenance costs for this machine type
+            let maintenance_costs: Vec<Ingredient> = machine
+                .map(|m| {
+                    m.maintenance
+                        .iter()
+                        .map(|mi| Ingredient {
+                            resource_id: mi.resource_id.clone(),
+                            amount: mi.amount * count_ceil as f64,
+                        })
+                        .collect()
+                })
+                .unwrap_or_default();
+
+            // Add maintenance to consumption in resource balances
+            for mc in &maintenance_costs {
+                // Find existing balance entry or we'll add after
+                if let Some(rb) = resource_balances
+                    .iter_mut()
+                    .find(|rb| rb.resource_id == mc.resource_id)
+                {
+                    rb.consumption_rate += mc.amount;
+                    rb.net_rate = rb.production_rate - rb.consumption_rate;
+                    rb.status = if rb.net_rate < -0.001 {
+                        BalanceStatus::Deficit
+                    } else if rb.net_rate > 0.001 {
+                        BalanceStatus::Surplus
+                    } else {
+                        BalanceStatus::Balanced
+                    };
+                } else {
+                    let name = resources_map
+                        .get(&mc.resource_id)
+                        .map(|r| r.name.clone())
+                        .unwrap_or_else(|| mc.resource_id.0.clone());
+                    resource_balances.push(ResourceBalance {
+                        resource_id: mc.resource_id.clone(),
+                        resource_name: name,
+                        production_rate: 0.0,
+                        consumption_rate: mc.amount,
+                        net_rate: -mc.amount,
+                        status: BalanceStatus::Deficit,
+                    });
+                }
+            }
+
             MachineTally {
                 machine_id: mid,
                 machine_name: name,
                 count,
-                count_ceil: count.ceil() as u32,
+                count_ceil,
                 total_power: tp,
+                total_workers: tw,
+                total_computing: tc,
+                maintenance_costs,
             }
         })
         .collect();
+
+    // Re-sort after adding maintenance consumption
+    resource_balances.sort_by(|a, b| {
+        let order = |s: &BalanceStatus| -> i32 {
+            match s {
+                BalanceStatus::Deficit | BalanceStatus::Bottleneck => 0,
+                BalanceStatus::Balanced => 1,
+                BalanceStatus::Surplus => 2,
+            }
+        };
+        order(&a.status)
+            .cmp(&order(&b.status))
+            .then_with(|| a.net_rate.partial_cmp(&b.net_rate).unwrap_or(std::cmp::Ordering::Equal))
+    });
 
     BalanceReport {
         resource_balances,
         machine_totals,
         total_power,
+        total_workers,
+        total_computing,
     }
 }
 

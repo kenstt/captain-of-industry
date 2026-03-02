@@ -181,9 +181,16 @@ fn show_chain_node(
     let node_key = format!("{}_{}", node.recipe_id, depth);
     let is_expanded = expanded.contains(&node_key);
 
+    let mut extras = format!("{:.1}kW", node.power);
+    if node.workers > 0.0 {
+        extras.push_str(&format!(" | {}W", node.workers as u32));
+    }
+    if node.computing > 0.0 {
+        extras.push_str(&format!(" | {:.1}TF", node.computing));
+    }
     let header = format!(
-        "{}{} -> {:.2} x {}",
-        indent, node.recipe_name, node.machines_needed, node.machine_name
+        "{}{} -> {:.2} x {} [{}]",
+        indent, node.recipe_name, node.machines_needed, node.machine_name, extras
     );
 
     let toggle = if node.children.is_empty() {

@@ -19,7 +19,10 @@
     { "id": "coke", "name": "Coke", "name_zh": "焦炭", "category": "Intermediate" },
     { "id": "slag", "name": "Slag", "name_zh": "爐渣", "category": "Waste" },
     { "id": "exhaust", "name": "Exhaust", "name_zh": "廢氣", "category": "Waste" },
-    { "id": "concrete", "name": "Concrete", "name_zh": "混凝土", "category": "Product" }
+    { "id": "concrete", "name": "Concrete", "name_zh": "混凝土", "category": "Product" },
+    { "id": "maintenance_1", "name": "Maintenance I", "name_zh": "維護I", "category": "Other" },
+    { "id": "maintenance_2", "name": "Maintenance II", "name_zh": "維護II", "category": "Other" },
+    { "id": "maintenance_3", "name": "Maintenance III", "name_zh": "維護III", "category": "Other" }
   ],
   "machines": [],
   "recipes": [

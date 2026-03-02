@@ -124,7 +124,7 @@ impl RecipeEditorState {
 pub fn show_recipe_editor(
     ui: &mut egui::Ui,
     state: &mut RecipeEditorState,
-    data: &GameData,
+    data: &mut GameData,
 ) -> Option<Recipe> {
     let mut saved_recipe = None;
 
@@ -186,6 +186,78 @@ pub fn show_recipe_editor(
             ui.text_edit_singleline(&mut state.tags);
             ui.end_row();
         });
+
+    // Machine properties editor (workers, maintenance, computing)
+    if !state.machine_id.is_empty() {
+        ui.separator();
+        ui.strong(format!("{} - {}", t!("machine"), &state.machine_id));
+
+        if let Some(machine) = data.machines.iter_mut().find(|m| m.id == state.machine_id) {
+            egui::Grid::new("machine_props_grid")
+                .num_columns(2)
+                .spacing([10.0, 6.0])
+                .show(ui, |ui| {
+                    ui.label(t!("power_consumption"));
+                    let mut power_str = machine.power_consumption.to_string();
+                    if ui.text_edit_singleline(&mut power_str).changed() {
+                        if let Ok(v) = power_str.parse::<f64>() {
+                            machine.power_consumption = v;
+                        }
+                    }
+                    ui.end_row();
+
+                    ui.label(t!("workers"));
+                    let mut workers_str = machine.workers.to_string();
+                    if ui.text_edit_singleline(&mut workers_str).changed() {
+                        if let Ok(v) = workers_str.parse::<u32>() {
+                            machine.workers = v;
+                        }
+                    }
+                    ui.end_row();
+
+                    ui.label(t!("computing"));
+                    let mut computing_str = machine.computing.to_string();
+                    if ui.text_edit_singleline(&mut computing_str).changed() {
+                        if let Ok(v) = computing_str.parse::<f64>() {
+                            machine.computing = v;
+                        }
+                    }
+                    ui.end_row();
+                });
+
+            // Maintenance items
+            ui.label(t!("maintenance"));
+            let mut maint_to_remove = None;
+            for (i, item) in machine.maintenance.iter_mut().enumerate() {
+                ui.horizontal(|ui| {
+                    ui.label(format!("{}:", t!("resource")));
+                    ui.text_edit_singleline(&mut item.resource_id.0);
+                    ui.label(format!("{}:", t!("amount")));
+                    let mut amt_str = item.amount.to_string();
+                    if ui
+                        .add(egui::TextEdit::singleline(&mut amt_str).desired_width(60.0))
+                        .changed()
+                    {
+                        if let Ok(v) = amt_str.parse::<f64>() {
+                            item.amount = v;
+                        }
+                    }
+                    if ui.small_button(t!("remove")).clicked() {
+                        maint_to_remove = Some(i);
+                    }
+                });
+            }
+            if let Some(i) = maint_to_remove {
+                machine.maintenance.remove(i);
+            }
+            if ui.button(t!("add_maintenance")).clicked() {
+                machine.maintenance.push(crate::data::models::MaintenanceItem {
+                    resource_id: ResourceId("maintenance_1".to_string()),
+                    amount: 0.5,
+                });
+            }
+        }
+    }
 
     ui.separator();
 

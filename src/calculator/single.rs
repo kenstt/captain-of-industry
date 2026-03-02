@@ -37,11 +37,28 @@ pub fn calculate_single(
         })
         .collect();
 
+    let machines_ceil = machines_needed.ceil() as f64;
+    let total_power = machine.power_consumption * machines_ceil;
+    let total_workers = machine.workers as f64 * machines_ceil;
+    let total_computing = machine.computing * machines_ceil;
+    let maintenance_costs: Vec<Ingredient> = machine
+        .maintenance
+        .iter()
+        .map(|m| Ingredient {
+            resource_id: m.resource_id.clone(),
+            amount: m.amount * machines_ceil,
+        })
+        .collect();
+
     Some(CalculationResult {
         recipe_name: recipe.name.clone(),
         machine_name: machine.name.clone(),
         machines_needed,
         inputs,
         outputs,
+        total_power,
+        total_workers,
+        total_computing,
+        maintenance_costs,
     })
 }

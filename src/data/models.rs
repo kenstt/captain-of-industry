@@ -83,6 +83,12 @@ pub struct Recipe {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct MaintenanceItem {
+    pub resource_id: ResourceId,
+    pub amount: f64,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Machine {
     pub id: String,
     pub name: String,
@@ -92,6 +98,12 @@ pub struct Machine {
     pub power_consumption: f64,
     #[serde(default)]
     pub category: String,
+    #[serde(default)]
+    pub workers: u32,
+    #[serde(default)]
+    pub maintenance: Vec<MaintenanceItem>,
+    #[serde(default)]
+    pub computing: f64,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
@@ -153,6 +165,10 @@ pub struct CalculationResult {
     pub machines_needed: f64,
     pub inputs: Vec<Ingredient>,
     pub outputs: Vec<Ingredient>,
+    pub total_power: f64,
+    pub total_workers: f64,
+    pub total_computing: f64,
+    pub maintenance_costs: Vec<Ingredient>,
 }
 
 /// A node in the production chain tree
@@ -165,6 +181,10 @@ pub struct ChainNode {
     pub inputs: Vec<Ingredient>,
     pub outputs: Vec<Ingredient>,
     pub children: Vec<ChainChild>,
+    pub power: f64,
+    pub workers: f64,
+    pub computing: f64,
+    pub maintenance_costs: Vec<Ingredient>,
 }
 
 #[derive(Debug, Clone)]
@@ -188,6 +208,8 @@ pub struct BalanceReport {
     pub resource_balances: Vec<ResourceBalance>,
     pub machine_totals: Vec<MachineTally>,
     pub total_power: f64,
+    pub total_workers: f64,
+    pub total_computing: f64,
 }
 
 #[derive(Debug, Clone)]
@@ -215,4 +237,7 @@ pub struct MachineTally {
     pub count: f64,
     pub count_ceil: u32,
     pub total_power: f64,
+    pub total_workers: u32,
+    pub total_computing: f64,
+    pub maintenance_costs: Vec<Ingredient>,
 }
