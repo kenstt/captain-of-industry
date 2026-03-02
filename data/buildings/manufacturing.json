@@ -1,6 +1,23 @@
 [
   {
     "id": "maintenance_depot",
+    "name": "維護站(基礎)",
+    "name_en": "Maintenance Depot",
+    "category": "Manufacturing",
+    "footprint": { "width": 7, "height": 6 },
+    "construction_costs": [
+      { "resource_id": "construction_parts_1", "amount": 40 }
+    ],
+    "workers": 6,
+    "base_electricity_kw": 100,
+    "available_recipes": [
+      "produce_maintenance_0"
+    ],
+    "research_required": "maintenance_0",
+    "checked": true
+  },
+  {
+    "id": "maintenance_depot_1",
     "name": "維護站",
     "name_en": "Maintenance Depot",
     "category": "Manufacturing",
@@ -8,11 +25,13 @@
     "construction_costs": [
       { "resource_id": "construction_parts_2", "amount": 50 }
     ],
-    "workers": 20,
-    "base_electricity_kw": 250,
+    "workers": 12,
+    "base_electricity_kw": 200,
     "available_recipes": [
-      "produce_maintenance_1"
+      "produce_maintenance_1",
+      "produce_maintenance_1R"
     ],
-    "research_required": "maintenance_2"
+    "research_required": "maintenance_1",
+    "checked": true
   }
 ]

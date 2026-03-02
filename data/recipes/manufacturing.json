@@ -1,19 +1,75 @@
 [
   {
-    "id": "produce_maintenance_1",
+    "id": "produce_maintenance_0",
     "name": "生產維護 I",
     "name_en": "Produce Maintenance I",
     "inputs": [
-      { "resource_id": "mechanical_parts", "amount": 8 },
-      { "resource_id": "electronics", "amount": 4 }
+      { "resource_id": "mechanical_parts", "amount": 12 },
+      { "resource_id": "electronics", "amount": 6 }
     ],
     "outputs": [
-      { "resource_id": "maintenance_1", "amount": 160 },
-      { "resource_id": "recyclables", "amount": 6 }
+      { "resource_id": "maintenance_1", "amount": 220 }
     ],
     "duration": 60,
     "building_id": "maintenance_depot",
     "is_default": true,
-    "research_required": "maintenance_2"
+    "research_required": "maintenance_0",
+    "checked": true
+  },
+  {
+    "id": "produce_maintenance_1",
+    "name": "生產維護 I",
+    "name_en": "Produce Maintenance I",
+    "inputs": [
+      {
+        "resource_id": "mechanical_parts",
+        "amount": 24
+      },
+      {
+        "resource_id": "electronics",
+        "amount": 12
+      }
+    ],
+    "outputs": [
+      {
+        "resource_id": "maintenance_1",
+        "amount": 480
+      }
+    ],
+    "duration": 60,
+    "building_id": "maintenance_depot_1",
+    "is_default": false,
+    "research_required": "maintenance_1",
+    "checked": true
+  },
+  {
+    "id": "produce_maintenance_1R",
+    "name": "生產維護 I + R",
+    "name_en": "Produce Maintenance I + R",
+    "inputs": [
+      {
+        "resource_id": "mechanical_parts",
+        "amount": 24
+      },
+      {
+        "resource_id": "electronics",
+        "amount": 12
+      }
+    ],
+    "outputs": [
+      {
+        "resource_id": "maintenance_1",
+        "amount": 480
+      },
+      {
+        "resource_id": "recyclables",
+        "amount": 18
+      }
+    ],
+    "duration": 60,
+    "building_id": "maintenance_depot_1",
+    "is_default": true,
+    "research_required": "maintenance_1",
+    "checked": true
   }
 ]

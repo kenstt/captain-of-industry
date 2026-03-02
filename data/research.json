@@ -29,9 +29,15 @@
     "prerequisites": ["iron_smelting_ore", "copper_smelting"]
   },
   {
-    "id": "maintenance_2",
-    "name": "維護 II",
-    "name_en": "Maintenance II",
-    "prerequisites": ["iron_smelting_scrap"]
+    "id": "maintenance_0",
+    "name": "維護 I",
+    "name_en": "Maintenance I",
+    "prerequisites": []
+  },
+  {
+    "id": "maintenance_1",
+    "name": "維護 I",
+    "name_en": "Maintenance I",
+    "prerequisites": ["maintenance_0"]
   }
 ]
