@@ -2,8 +2,8 @@ use super::models::GameData;
 use std::path::Path;
 
 pub fn load_from_json(path: &Path) -> Result<GameData, String> {
-    let content =
-        std::fs::read_to_string(path).map_err(|e| format!("Failed to read {}: {}", path.display(), e))?;
+    let content = std::fs::read_to_string(path)
+        .map_err(|e| format!("Failed to read {}: {}", path.display(), e))?;
     serde_json::from_str(&content).map_err(|e| format!("Failed to parse {}: {}", path.display(), e))
 }
 
@@ -50,25 +50,22 @@ pub fn load_builtin_data() -> GameData {
     data
 }
 
-fn load_from_json_files(
-    recipes_path: &Path,
-    machines_path: &Path,
-) -> Result<GameData, String> {
+fn load_from_json_files(recipes_path: &Path, machines_path: &Path) -> Result<GameData, String> {
     let mut data = GameData::default();
 
     if recipes_path.exists() {
         let content = std::fs::read_to_string(recipes_path)
             .map_err(|e| format!("Failed to read recipes: {}", e))?;
-        let loaded: GameData =
-            serde_json::from_str(&content).map_err(|e| format!("Failed to parse recipes: {}", e))?;
+        let loaded: GameData = serde_json::from_str(&content)
+            .map_err(|e| format!("Failed to parse recipes: {}", e))?;
         data = data.merge(loaded);
     }
 
     if machines_path.exists() {
         let content = std::fs::read_to_string(machines_path)
             .map_err(|e| format!("Failed to read machines: {}", e))?;
-        let loaded: GameData =
-            serde_json::from_str(&content).map_err(|e| format!("Failed to parse machines: {}", e))?;
+        let loaded: GameData = serde_json::from_str(&content)
+            .map_err(|e| format!("Failed to parse machines: {}", e))?;
         data = data.merge(loaded);
     }
 

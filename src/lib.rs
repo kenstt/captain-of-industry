@@ -1,5 +1,5 @@
-pub mod data;
 pub mod calculator;
+pub mod data;
 
 // Re-export core types for backward compatibility
 pub use data::models::{
@@ -35,58 +35,12 @@ impl Calculator {
         recipe_id: &str,
         target_output_per_min: f64,
     ) -> Option<CalculationResult> {
-        let recipe = self.recipes.get(recipe_id)?;
-
-        let primary_output = recipe.outputs.first()?;
-        let output_per_duration = primary_output.amount;
-        let durations_per_min = 60.0 / recipe.duration;
-        let single_machine_output_per_min = output_per_duration * durations_per_min;
-
-        let machines_needed = target_output_per_min / single_machine_output_per_min;
-
-        let mut inputs = Vec::new();
-        for input in &recipe.inputs {
-            let rate_per_min = (input.amount * durations_per_min) * machines_needed;
-            inputs.push(Ingredient {
-                resource_id: input.resource_id.clone(),
-                amount: rate_per_min,
-            });
-        }
-
-        let mut outputs = Vec::new();
-        for output in &recipe.outputs {
-            let rate_per_min = (output.amount * durations_per_min) * machines_needed;
-            outputs.push(Ingredient {
-                resource_id: output.resource_id.clone(),
-                amount: rate_per_min,
-            });
-        }
-
-        let machine = self.machines.get(&recipe.machine_id)?;
-        let machines_ceil = machines_needed.ceil() as f64;
-        let total_power = machine.power_consumption * machines_ceil;
-        let total_workers = machine.workers as f64 * machines_ceil;
-        let total_computing = machine.computing * machines_ceil;
-        let maintenance_costs: Vec<Ingredient> = machine
-            .maintenance
-            .iter()
-            .map(|m| Ingredient {
-                resource_id: m.resource_id.clone(),
-                amount: m.amount * machines_ceil,
-            })
-            .collect();
-
-        Some(CalculationResult {
-            recipe_name: recipe.name.clone(),
-            machine_name: machine.name.clone(),
-            machines_needed,
-            inputs,
-            outputs,
-            total_power,
-            total_workers,
-            total_computing,
-            maintenance_costs,
-        })
+        let data = GameData {
+            resources: vec![],
+            recipes: self.recipes.values().cloned().collect(),
+            machines: self.machines.values().cloned().collect(),
+        };
+        calculator::single::calculate_single(&data, recipe_id, target_output_per_min, 0)
     }
 }
 
@@ -245,14 +199,9 @@ mod tests {
             ],
         };
 
-        let chain = calculator::chain::calculate_chain(
-            &data,
-            "iron_plate",
-            60.0,
-            0,
-            &HashSet::new(),
-        )
-        .unwrap();
+        let chain =
+            calculator::chain::calculate_chain(&data, "iron_plate", 60.0, 0, &HashSet::new())
+                .unwrap();
 
         // 60 iron plate/min needs 1 smelter (10 per 10s = 60/min)
         assert_eq!(chain.machines_needed, 1.0);
@@ -303,14 +252,8 @@ mod tests {
             }],
         };
 
-        let chain = calculator::chain::calculate_chain(
-            &data,
-            "copper",
-            60.0,
-            0,
-            &HashSet::new(),
-        )
-        .unwrap();
+        let chain =
+            calculator::chain::calculate_chain(&data, "copper", 60.0, 0, &HashSet::new()).unwrap();
 
         let report = calculator::balance::analyze_balance(&chain, &data);
 

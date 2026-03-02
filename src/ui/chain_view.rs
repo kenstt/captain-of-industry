@@ -3,8 +3,9 @@ use std::collections::HashSet;
 use eframe::egui;
 use rust_i18n::t;
 
-use crate::calculator::chain;
+use crate::calculator::{balance, chain};
 use crate::data::models::*;
+use crate::ui::{balance_widgets, theme};
 
 pub struct ChainViewState {
     pub selected_recipe_id: Option<String>,
@@ -13,6 +14,7 @@ pub struct ChainViewState {
     pub supplied_resources: HashSet<ResourceId>,
     pub supply_input: String,
     pub chain_result: Option<ChainNode>,
+    pub balance_report: Option<BalanceReport>,
     pub expanded_nodes: HashSet<String>,
 }
 
@@ -25,16 +27,13 @@ impl Default for ChainViewState {
             supplied_resources: HashSet::new(),
             supply_input: String::new(),
             chain_result: None,
+            balance_report: None,
             expanded_nodes: HashSet::new(),
         }
     }
 }
 
-pub fn show_chain_view(
-    ui: &mut egui::Ui,
-    state: &mut ChainViewState,
-    data: &GameData,
-) {
+pub fn show_chain_view(ui: &mut egui::Ui, state: &mut ChainViewState, data: &GameData) {
     ui.heading(t!("chain_title"));
     ui.separator();
 
@@ -72,6 +71,7 @@ pub fn show_chain_view(
                         state.selected_recipe_id = Some(recipe.id.clone());
                         state.primary_output_index = 0;
                         state.chain_result = None;
+                        state.balance_report = None;
                     }
                 }
             });
@@ -102,6 +102,7 @@ pub fn show_chain_view(
                                 {
                                     state.primary_output_index = i;
                                     state.chain_result = None;
+                                    state.balance_report = None;
                                 }
                             }
                         });
@@ -155,6 +156,10 @@ pub fn show_chain_view(
                     state.primary_output_index,
                     &state.supplied_resources,
                 );
+                state.balance_report = state
+                    .chain_result
+                    .as_ref()
+                    .map(|node| balance::analyze_balance(node, data));
                 state.expanded_nodes.clear();
             }
         }
@@ -168,7 +173,74 @@ pub fn show_chain_view(
             .show(ui, |ui| {
                 show_chain_node(ui, node, 0, &mut state.expanded_nodes);
             });
+
+        if let Some(ref report) = state.balance_report {
+            ui.separator();
+            show_chain_balance(ui, report);
+        }
     }
+}
+
+fn show_chain_balance(ui: &mut egui::Ui, report: &BalanceReport) {
+    ui.heading(t!("balance_title"));
+    ui.label(format!(
+        "{}: {:.1} kW",
+        t!("total_power"),
+        report.total_power
+    ));
+    ui.label(format!(
+        "{}: {:.0}",
+        t!("total_workers"),
+        report.total_workers
+    ));
+    if report.total_computing > 0.0 {
+        ui.label(format!(
+            "{}: {:.1} TFLOPs",
+            t!("total_computing"),
+            report.total_computing
+        ));
+    }
+
+    if let Some(bottleneck) = report
+        .resource_balances
+        .iter()
+        .find(|r| matches!(r.status, BalanceStatus::Bottleneck | BalanceStatus::Deficit))
+    {
+        ui.colored_label(
+            theme::bottleneck_color(),
+            format!(
+                "{}: {} ({:.2}/min)",
+                t!("bottleneck"),
+                bottleneck.resource_name,
+                bottleneck.net_rate
+            ),
+        );
+    }
+
+    ui.separator();
+    ui.strong(t!("resource_name"));
+    egui::Grid::new("chain_balance_preview")
+        .striped(true)
+        .min_col_width(80.0)
+        .show(ui, |ui| {
+            ui.strong(t!("resource_name"));
+            ui.strong(format!("{} (/min)", t!("net_rate")));
+            ui.strong(t!("status"));
+            ui.end_row();
+
+            for rb in report
+                .resource_balances
+                .iter()
+                .filter(|rb| rb.status != BalanceStatus::Balanced)
+                .take(10)
+            {
+                let (color, status_text) = balance_widgets::balance_status_visual(&rb.status);
+                ui.label(&rb.resource_name);
+                ui.colored_label(color, format!("{:.2}", rb.net_rate));
+                ui.colored_label(color, &status_text);
+                ui.end_row();
+            }
+        });
 }
 
 fn show_chain_node(
@@ -187,6 +259,10 @@ fn show_chain_node(
     }
     if node.computing > 0.0 {
         extras.push_str(&format!(" | {:.1}TF", node.computing));
+    }
+    if !node.maintenance_costs.is_empty() {
+        let total_maintenance: f64 = node.maintenance_costs.iter().map(|m| m.amount).sum();
+        extras.push_str(&format!(" | M:{:.1}/mo", total_maintenance));
     }
     let header = format!(
         "{}{} -> {:.2} x {} [{}]",

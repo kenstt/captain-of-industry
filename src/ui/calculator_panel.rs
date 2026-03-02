@@ -24,11 +24,7 @@ impl Default for CalculatorPanelState {
     }
 }
 
-pub fn show_calculator_panel(
-    ui: &mut egui::Ui,
-    state: &mut CalculatorPanelState,
-    data: &GameData,
-) {
+pub fn show_calculator_panel(ui: &mut egui::Ui, state: &mut CalculatorPanelState, data: &GameData) {
     ui.heading(t!("nav_calculator"));
     ui.separator();
 
@@ -119,12 +115,8 @@ pub fn show_calculator_panel(
     if ui.button(t!("calculate")).clicked() {
         if let Some(ref recipe_id) = state.selected_recipe_id {
             if let Ok(target) = state.target_output.parse::<f64>() {
-                state.result = single::calculate_single(
-                    data,
-                    recipe_id,
-                    target,
-                    state.primary_output_index,
-                );
+                state.result =
+                    single::calculate_single(data, recipe_id, target, state.primary_output_index);
             }
         }
     }
@@ -170,24 +162,26 @@ pub fn show_calculator_panel(
         if !result.maintenance_costs.is_empty() {
             ui.label(format!("{}:", t!("maintenance")));
             for mc in &result.maintenance_costs {
-                ui.label(format!("  {}: {}/month", mc.resource_id.0, format_f64(mc.amount)));
+                ui.label(format!(
+                    "  {}: {}/month",
+                    mc.resource_id.0,
+                    format_f64(mc.amount)
+                ));
             }
         }
 
         ui.separator();
         ui.strong(t!("input_rates"));
-        egui::Grid::new("calc_inputs")
-            .striped(true)
-            .show(ui, |ui| {
-                ui.strong(t!("resource"));
-                ui.strong(t!("amount"));
+        egui::Grid::new("calc_inputs").striped(true).show(ui, |ui| {
+            ui.strong(t!("resource"));
+            ui.strong(t!("amount"));
+            ui.end_row();
+            for input in &result.inputs {
+                ui.label(&input.resource_id.0);
+                ui.label(format!("{}/min", format_f64(input.amount)));
                 ui.end_row();
-                for input in &result.inputs {
-                    ui.label(&input.resource_id.0);
-                    ui.label(format!("{}/min", format_f64(input.amount)));
-                    ui.end_row();
-                }
-            });
+            }
+        });
 
         ui.separator();
         ui.strong(t!("output_rates"));

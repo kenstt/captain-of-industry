@@ -26,30 +26,6 @@ impl Default for ResourceCategory {
     }
 }
 
-impl ResourceCategory {
-    pub fn all() -> &'static [ResourceCategory] {
-        &[
-            ResourceCategory::Mineral,
-            ResourceCategory::Liquid,
-            ResourceCategory::Intermediate,
-            ResourceCategory::Product,
-            ResourceCategory::Waste,
-            ResourceCategory::Other,
-        ]
-    }
-
-    pub fn i18n_key(&self) -> &'static str {
-        match self {
-            ResourceCategory::Mineral => "cat_mineral",
-            ResourceCategory::Liquid => "cat_liquid",
-            ResourceCategory::Intermediate => "cat_intermediate",
-            ResourceCategory::Product => "cat_product",
-            ResourceCategory::Waste => "cat_waste",
-            ResourceCategory::Other => "cat_other",
-        }
-    }
-}
-
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Resource {
     pub id: ResourceId,
@@ -182,6 +158,7 @@ pub struct CalculationResult {
 pub struct ChainNode {
     pub recipe_id: String,
     pub recipe_name: String,
+    pub machine_id: String,
     pub machine_name: String,
     pub machines_needed: f64,
     pub inputs: Vec<Ingredient>,

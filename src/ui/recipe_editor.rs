@@ -36,27 +36,6 @@ impl Default for RecipeEditorState {
 }
 
 impl RecipeEditorState {
-    pub fn load_recipe(&mut self, recipe: &Recipe) {
-        self.editing = true;
-        self.recipe_id = recipe.id.clone();
-        self.name_en = recipe.name.clone();
-        self.name_zh = recipe.name_zh.clone().unwrap_or_default();
-        self.machine_id = recipe.machine_id.clone();
-        self.duration = recipe.duration.to_string();
-        self.tier = recipe.tier.to_string();
-        self.tags = recipe.tags.join(", ");
-        self.inputs = recipe
-            .inputs
-            .iter()
-            .map(|i| (i.resource_id.0.clone(), i.amount.to_string()))
-            .collect();
-        self.outputs = recipe
-            .outputs
-            .iter()
-            .map(|o| (o.resource_id.0.clone(), o.amount.to_string()))
-            .collect();
-    }
-
     pub fn clear(&mut self) {
         *self = Self::default();
     }
@@ -252,10 +231,12 @@ pub fn show_recipe_editor(
                 machine.maintenance.remove(i);
             }
             if ui.button(t!("add_maintenance")).clicked() {
-                machine.maintenance.push(crate::data::models::MaintenanceItem {
-                    resource_id: ResourceId("maintenance_1".to_string()),
-                    amount: 0.5,
-                });
+                machine
+                    .maintenance
+                    .push(crate::data::models::MaintenanceItem {
+                        resource_id: ResourceId("maintenance_1".to_string()),
+                        amount: 0.5,
+                    });
             }
         }
     }

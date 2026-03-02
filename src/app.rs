@@ -76,9 +76,9 @@ impl App {
                 "/System/Library/Fonts/Supplemental/Arial Unicode.ttf",
                 "/System/Library/Fonts/PingFang.ttc",
                 // Windows
-                "C:/Windows/Fonts/msjh.ttc",       // Microsoft JhengHei (繁體)
-                "C:/Windows/Fonts/msyh.ttc",       // Microsoft YaHei (簡體)
-                "C:/Windows/Fonts/simsun.ttc",     // SimSun
+                "C:/Windows/Fonts/msjh.ttc", // Microsoft JhengHei (繁體)
+                "C:/Windows/Fonts/msyh.ttc", // Microsoft YaHei (簡體)
+                "C:/Windows/Fonts/simsun.ttc", // SimSun
                 // Linux
                 "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
                 "/usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc",
@@ -209,9 +209,11 @@ impl eframe::App for App {
                     recipe_browser::show_recipe_browser(ui, &mut self.browser_state, &self.data);
                 }
                 Tab::RecipeEditor => {
-                    if let Some(recipe) =
-                        recipe_editor::show_recipe_editor(ui, &mut self.editor_state, &mut self.data)
-                    {
+                    if let Some(recipe) = recipe_editor::show_recipe_editor(
+                        ui,
+                        &mut self.editor_state,
+                        &mut self.data,
+                    ) {
                         // Update or add recipe to data
                         if let Some(existing) =
                             self.data.recipes.iter_mut().find(|r| r.id == recipe.id)
@@ -223,21 +225,13 @@ impl eframe::App for App {
                     }
                 }
                 Tab::Calculator => {
-                    calculator_panel::show_calculator_panel(
-                        ui,
-                        &mut self.calc_state,
-                        &self.data,
-                    );
+                    calculator_panel::show_calculator_panel(ui, &mut self.calc_state, &self.data);
                 }
                 Tab::ProductionChain => {
                     chain_view::show_chain_view(ui, &mut self.chain_state, &self.data);
                 }
                 Tab::ResourceBalance => {
-                    balance_view::show_balance_view(
-                        ui,
-                        &mut self.balance_state,
-                        &self.data,
-                    );
+                    balance_view::show_balance_view(ui, &mut self.balance_state, &self.data);
                 }
             }
         });

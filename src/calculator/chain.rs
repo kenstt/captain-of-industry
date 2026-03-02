@@ -12,7 +12,14 @@ pub fn calculate_chain(
     supplied: &HashSet<ResourceId>,
 ) -> Option<ChainNode> {
     let mut visited = HashSet::new();
-    build_chain_node(data, recipe_id, target_output_per_min, primary_output_index, supplied, &mut visited)
+    build_chain_node(
+        data,
+        recipe_id,
+        target_output_per_min,
+        primary_output_index,
+        supplied,
+        &mut visited,
+    )
 }
 
 fn build_chain_node(
@@ -105,6 +112,7 @@ fn build_chain_node(
     Some(ChainNode {
         recipe_id: recipe_id.to_string(),
         recipe_name: recipe.name.clone(),
+        machine_id: recipe.machine_id.clone(),
         machine_name: machine.name.clone(),
         machines_needed,
         inputs,
