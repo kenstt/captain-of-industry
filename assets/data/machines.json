@@ -193,6 +193,66 @@
       "computing": 0.0
     },
     {
+      "id": "hp_turbine",
+      "name": "High-Pressure Turbine",
+      "name_zh": "高壓渦輪",
+      "power_consumption": 0.0,
+      "category": "power",
+      "workers": 2,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 2.0}],
+      "computing": 0.0
+    },
+    {
+      "id": "hp_turbine_2",
+      "name": "High-Pressure Turbine II",
+      "name_zh": "高壓渦輪II",
+      "power_consumption": 0.0,
+      "category": "power",
+      "workers": 2,
+      "maintenance": [{"resource_id": "maintenance_2", "amount": 2.0}],
+      "computing": 0.0
+    },
+    {
+      "id": "lp_turbine",
+      "name": "Low-Pressure Turbine",
+      "name_zh": "低壓渦輪",
+      "power_consumption": 0.0,
+      "category": "power",
+      "workers": 2,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 2.0}],
+      "computing": 0.0
+    },
+    {
+      "id": "lp_turbine_2",
+      "name": "Low-Pressure Turbine II",
+      "name_zh": "低壓渦輪II",
+      "power_consumption": 0.0,
+      "category": "power",
+      "workers": 2,
+      "maintenance": [{"resource_id": "maintenance_2", "amount": 2.0}],
+      "computing": 0.0
+    },
+    {
+      "id": "power_generator",
+      "name": "Power Generator",
+      "name_zh": "發電機",
+      "power_consumption": 0.0,
+      "category": "power",
+      "workers": 0,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 1.0}],
+      "computing": 0.0
+    },
+    {
+      "id": "power_generator_2",
+      "name": "Power Generator II",
+      "name_zh": "發電機II",
+      "power_consumption": 0.0,
+      "category": "power",
+      "workers": 0,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 8.0}],
+      "computing": 0.0
+    },
+    {
       "id": "excavator_t1",
       "name": "Excavator T1",
       "name_zh": "挖掘機 T1",

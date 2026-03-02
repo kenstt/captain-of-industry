@@ -117,6 +117,9 @@
     { "id": "sludge", "name": "Sludge", "name_zh": "汙泥", "category": "Waste" },
     { "id": "broken_glass", "name": "Broken Glass", "name_zh": "碎玻璃", "category": "Waste" },
 
+    { "id": "mechanical_power", "name": "Mechanical Power (MW)", "name_zh": "動能 (MW)", "category": "Other" },
+    { "id": "electricity", "name": "Electricity (MW)", "name_zh": "電力 (MW)", "category": "Other" },
+
     { "id": "maintenance_1", "name": "Maintenance I", "name_zh": "維護I", "category": "Other" },
     { "id": "maintenance_2", "name": "Maintenance II", "name_zh": "維護II", "category": "Other" },
     { "id": "maintenance_3", "name": "Maintenance III", "name_zh": "維護III", "category": "Other" }
@@ -1092,6 +1095,85 @@
       "outputs": [{ "resource_id": "steam_hi", "amount": 8.0 }],
       "duration": 60.0,
       "machine_id": "boiler_gas",
+      "tier": 2,
+      "tags": ["power"]
+    },
+
+    {
+      "id": "hp_turbine",
+      "name": "High-Pressure Turbine",
+      "name_zh": "高壓渦輪",
+      "inputs": [{ "resource_id": "steam_hi", "amount": 4.0 }],
+      "outputs": [
+        { "resource_id": "steam_lo", "amount": 4.0 },
+        { "resource_id": "mechanical_power", "amount": 1.0 }
+      ],
+      "duration": 60.0,
+      "machine_id": "hp_turbine",
+      "tier": 1,
+      "tags": ["power"]
+    },
+    {
+      "id": "hp_turbine_2",
+      "name": "High-Pressure Turbine II",
+      "name_zh": "高壓渦輪II",
+      "inputs": [{ "resource_id": "steam_hi", "amount": 8.0 }],
+      "outputs": [
+        { "resource_id": "steam_lo", "amount": 8.0 },
+        { "resource_id": "mechanical_power", "amount": 2.0 }
+      ],
+      "duration": 60.0,
+      "machine_id": "hp_turbine_2",
+      "tier": 2,
+      "tags": ["power"]
+    },
+    {
+      "id": "lp_turbine",
+      "name": "Low-Pressure Turbine",
+      "name_zh": "低壓渦輪",
+      "inputs": [{ "resource_id": "steam_lo", "amount": 4.0 }],
+      "outputs": [
+        { "resource_id": "steam_depleted", "amount": 4.0 },
+        { "resource_id": "mechanical_power", "amount": 1.0 }
+      ],
+      "duration": 60.0,
+      "machine_id": "lp_turbine",
+      "tier": 1,
+      "tags": ["power"]
+    },
+    {
+      "id": "lp_turbine_2",
+      "name": "Low-Pressure Turbine II",
+      "name_zh": "低壓渦輪II",
+      "inputs": [{ "resource_id": "steam_lo", "amount": 8.0 }],
+      "outputs": [
+        { "resource_id": "steam_depleted", "amount": 8.0 },
+        { "resource_id": "mechanical_power", "amount": 2.0 }
+      ],
+      "duration": 60.0,
+      "machine_id": "lp_turbine_2",
+      "tier": 2,
+      "tags": ["power"]
+    },
+    {
+      "id": "power_generator",
+      "name": "Power Generator",
+      "name_zh": "發電機",
+      "inputs": [{ "resource_id": "mechanical_power", "amount": 0.5 }],
+      "outputs": [{ "resource_id": "electricity", "amount": 0.3 }],
+      "duration": 60.0,
+      "machine_id": "power_generator",
+      "tier": 1,
+      "tags": ["power"]
+    },
+    {
+      "id": "power_generator_2",
+      "name": "Power Generator II",
+      "name_zh": "發電機II",
+      "inputs": [{ "resource_id": "mechanical_power", "amount": 3.0 }],
+      "outputs": [{ "resource_id": "electricity", "amount": 2.5 }],
+      "duration": 60.0,
+      "machine_id": "power_generator_2",
       "tier": 2,
       "tags": ["power"]
     }
