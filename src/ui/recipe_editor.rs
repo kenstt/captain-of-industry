@@ -62,7 +62,6 @@ impl RecipeEditorState {
             .map(|o| (o.resource_id.0.clone(), o.amount.to_string()))
             .collect();
     }
-
     pub fn clear(&mut self) {
         *self = Self::default();
     }
@@ -270,10 +269,12 @@ pub fn show_recipe_editor(
                 machine.maintenance.remove(i);
             }
             if ui.button(t!("add_maintenance")).clicked() {
-                machine.maintenance.push(crate::data::models::MaintenanceItem {
-                    resource_id: ResourceId("maintenance_1".to_string()),
-                    amount: 0.5,
-                });
+                machine
+                    .maintenance
+                    .push(crate::data::models::MaintenanceItem {
+                        resource_id: ResourceId("maintenance_1".to_string()),
+                        amount: 0.5,
+                    });
             }
         }
     }

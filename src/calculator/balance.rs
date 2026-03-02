@@ -1,8 +1,19 @@
+//! 資源平衡分析器。
+//!
+//! 提供兩種入口：
+//! - `analyze_balance`：從產線鏈樹分析
+//! - `analyze_balance_from_recipes`：從「配方 + 機器數」清單分析
+
 use std::collections::HashMap;
 
 use crate::data::models::*;
 
-/// Analyze resource balance across an entire production chain.
+/// 針對完整產線鏈進行資源平衡分析。
+///
+/// 會輸出：
+/// - 各資源生產/消耗/淨值與狀態
+/// - 機器數量匯總與總電力/人力/算力
+/// - 維護成本對應的額外消耗
 pub fn analyze_balance(node: &ChainNode, data: &GameData) -> BalanceReport {
     let mut production: HashMap<ResourceId, f64> = HashMap::new();
     let mut consumption: HashMap<ResourceId, f64> = HashMap::new();
@@ -59,9 +70,11 @@ pub fn analyze_balance(node: &ChainNode, data: &GameData) -> BalanceReport {
                 BalanceStatus::Surplus => 2,
             }
         };
-        order(&a.status)
-            .cmp(&order(&b.status))
-            .then_with(|| a.net_rate.partial_cmp(&b.net_rate).unwrap_or(std::cmp::Ordering::Equal))
+        order(&a.status).cmp(&order(&b.status)).then_with(|| {
+            a.net_rate
+                .partial_cmp(&b.net_rate)
+                .unwrap_or(std::cmp::Ordering::Equal)
+        })
     });
 
     // Mark the worst deficit as bottleneck
@@ -161,9 +174,11 @@ pub fn analyze_balance(node: &ChainNode, data: &GameData) -> BalanceReport {
                 BalanceStatus::Surplus => 2,
             }
         };
-        order(&a.status)
-            .cmp(&order(&b.status))
-            .then_with(|| a.net_rate.partial_cmp(&b.net_rate).unwrap_or(std::cmp::Ordering::Equal))
+        order(&a.status).cmp(&order(&b.status)).then_with(|| {
+            a.net_rate
+                .partial_cmp(&b.net_rate)
+                .unwrap_or(std::cmp::Ordering::Equal)
+        })
     });
 
     let total_maintenance = aggregate_maintenance(&machine_totals);
@@ -291,9 +306,11 @@ pub fn analyze_balance_from_recipes(
                 BalanceStatus::Surplus => 2,
             }
         };
-        order(&a.status)
-            .cmp(&order(&b.status))
-            .then_with(|| a.net_rate.partial_cmp(&b.net_rate).unwrap_or(std::cmp::Ordering::Equal))
+        order(&a.status).cmp(&order(&b.status)).then_with(|| {
+            a.net_rate
+                .partial_cmp(&b.net_rate)
+                .unwrap_or(std::cmp::Ordering::Equal)
+        })
     });
 
     // Mark the worst deficit as bottleneck
@@ -390,9 +407,11 @@ pub fn analyze_balance_from_recipes(
                 BalanceStatus::Surplus => 2,
             }
         };
-        order(&a.status)
-            .cmp(&order(&b.status))
-            .then_with(|| a.net_rate.partial_cmp(&b.net_rate).unwrap_or(std::cmp::Ordering::Equal))
+        order(&a.status).cmp(&order(&b.status)).then_with(|| {
+            a.net_rate
+                .partial_cmp(&b.net_rate)
+                .unwrap_or(std::cmp::Ordering::Equal)
+        })
     });
 
     let total_maintenance = aggregate_maintenance(&machine_totals);
@@ -415,7 +434,7 @@ fn collect_rates(
     machine_counts: &mut HashMap<String, (String, f64)>,
     total_unity: &mut f64,
 ) {
-    // This node produces its outputs and consumes its inputs
+    // 節點本身：產出 + 消耗。
     for output in &node.outputs {
         *production.entry(output.resource_id.clone()).or_insert(0.0) += output.amount;
     }
@@ -426,15 +445,72 @@ fn collect_rates(
     *total_unity += node.unity;
 
     // Accumulate machine count
+    // 以 machine_id 聚合機器數，確保後續查表一致。
     let entry = machine_counts
-        .entry(node.recipe_id.clone())
+        .entry(node.machine_id.clone())
         .or_insert_with(|| (node.machine_name.clone(), 0.0));
     entry.1 += node.machines_needed;
 
-    // Recurse into children
+    // 遞迴累計子節點。
     for child in &node.children {
         if let ChainSource::Recipe(ref child_node) = child.source {
             collect_rates(child_node, production, consumption, machine_counts, total_unity);
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn sample_chain_node() -> ChainNode {
+        ChainNode {
+            recipe_id: "iron_ingot_recipe".to_string(),
+            recipe_name: "Iron Ingot".to_string(),
+            machine_id: "arc_furnace".to_string(),
+            machine_name: "Arc Furnace".to_string(),
+            machines_needed: 1.5,
+            inputs: vec![Ingredient {
+                resource_id: ResourceId("iron_ore".to_string()),
+                amount: 90.0,
+            }],
+            outputs: vec![Ingredient {
+                resource_id: ResourceId("iron_ingot".to_string()),
+                amount: 60.0,
+            }],
+            children: vec![],
+            power: 0.0,
+            workers: 0.0,
+            computing: 0.0,
+            maintenance_costs: vec![],
+        }
+    }
+
+    #[test]
+    fn analyze_balance_uses_machine_id_for_machine_totals() {
+        let data = GameData {
+            resources: vec![],
+            recipes: vec![],
+            machines: vec![Machine {
+                id: "arc_furnace".to_string(),
+                name: "Arc Furnace".to_string(),
+                name_zh: None,
+                power_consumption: 120.0,
+                category: String::new(),
+                workers: 3,
+                maintenance: vec![],
+                computing: 0.0,
+            }],
+        };
+
+        let report = analyze_balance(&sample_chain_node(), &data);
+
+        assert_eq!(report.machine_totals.len(), 1);
+        assert_eq!(report.machine_totals[0].machine_id, "arc_furnace");
+        assert_eq!(report.machine_totals[0].count_ceil, 2);
+        assert_eq!(report.machine_totals[0].total_power, 240.0);
+        assert_eq!(report.machine_totals[0].total_workers, 6);
+        assert_eq!(report.total_power, 240.0);
+        assert_eq!(report.total_workers, 6.0);
     }
 }

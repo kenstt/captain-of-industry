@@ -21,11 +21,7 @@ impl Default for RecipeBrowserState {
     }
 }
 
-pub fn show_recipe_browser(
-    ui: &mut egui::Ui,
-    state: &mut RecipeBrowserState,
-    data: &GameData,
-) {
+pub fn show_recipe_browser(ui: &mut egui::Ui, state: &mut RecipeBrowserState, data: &GameData) {
     ui.heading(t!("recipe_browser"));
     ui.separator();
 
@@ -46,7 +42,10 @@ pub fn show_recipe_browser(
                     .unwrap_or(&t!("filter_all")),
             )
             .show_ui(ui, |ui| {
-                if ui.selectable_label(state.selected_machine_filter.is_none(), t!("filter_all")).clicked() {
+                if ui
+                    .selectable_label(state.selected_machine_filter.is_none(), t!("filter_all"))
+                    .clicked()
+                {
                     state.selected_machine_filter = None;
                 }
                 for machine in &data.machines {
@@ -72,7 +71,10 @@ pub fn show_recipe_browser(
                     .unwrap_or_else(|| t!("filter_all").to_string()),
             )
             .show_ui(ui, |ui| {
-                if ui.selectable_label(state.selected_tier_filter.is_none(), t!("filter_all")).clicked() {
+                if ui
+                    .selectable_label(state.selected_tier_filter.is_none(), t!("filter_all"))
+                    .clicked()
+                {
                     state.selected_tier_filter = None;
                 }
                 let mut tiers: Vec<u32> = data.recipes.iter().map(|r| r.tier).collect();

@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::calculator::balance;
 use crate::data::models::*;
+use crate::ui::balance_widgets;
 use crate::ui::theme;
 
 #[derive(Serialize, Deserialize)]
@@ -558,12 +559,7 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &mut BalanceViewState, data: 
             ui.end_row();
 
             for rb in &report.resource_balances {
-                let (color, status_text) = match rb.status {
-                    BalanceStatus::Surplus => (theme::surplus_color(), t!("surplus")),
-                    BalanceStatus::Deficit => (theme::deficit_color(), t!("deficit")),
-                    BalanceStatus::Balanced => (theme::balanced_color(), t!("balanced")),
-                    BalanceStatus::Bottleneck => (theme::bottleneck_color(), t!("bottleneck")),
-                };
+                let (color, status_text) = balance_widgets::balance_status_visual(&rb.status);
 
                 let res_name = resources_map
                     .get(&rb.resource_id)
@@ -575,7 +571,7 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &mut BalanceViewState, data: 
                 ui.label(format!("{:.2}", rb.production_rate));
                 ui.label(format!("{:.2}", rb.consumption_rate));
                 ui.colored_label(color, format!("{:.2}", rb.net_rate));
-                ui.colored_label(color, status_text);
+                ui.colored_label(color, &status_text);
                 ui.end_row();
             }
         });

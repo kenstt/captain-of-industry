@@ -1,6 +1,13 @@
+//! 專案核心資料模型。
+//!
+//! 這個模組定義了：
+//! - 遊戲資料（資源、配方、機器）的序列化結構
+//! - 計算結果（單配方、產線鏈、資源平衡）所需的中間模型
+
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
+/// 資源唯一識別碼（例如 `iron_ore`）。
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
 pub struct ResourceId(pub String);
 
@@ -10,6 +17,7 @@ impl std::fmt::Display for ResourceId {
     }
 }
 
+/// 資源分類，用於 UI 篩選與顯示。
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum ResourceCategory {
     Mineral,
@@ -59,37 +67,56 @@ impl ResourceCategory {
     }
 }
 
+/// 遊戲內可被消耗或產出的資源。
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Resource {
+    /// 資源 ID（穩定鍵值）。
     pub id: ResourceId,
+    /// 英文顯示名稱。
     pub name: String,
     #[serde(default)]
+    /// 中文顯示名稱（可選）。
     pub name_zh: Option<String>,
     #[serde(default)]
+    /// 資源分類。
     pub category: ResourceCategory,
 }
 
+/// 配方中的投入/產出項目。
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Ingredient {
+    /// 對應資源 ID。
     pub resource_id: ResourceId,
+    /// 每次配方循環的數量。
     pub amount: f64,
 }
 
+/// 生產配方定義。
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Recipe {
+    /// 配方 ID（穩定鍵值）。
     pub id: String,
+    /// 英文名稱。
     pub name: String,
     #[serde(default)]
+    /// 中文名稱（可選）。
     pub name_zh: Option<String>,
+    /// 投入清單。
     pub inputs: Vec<Ingredient>,
+    /// 產出清單。
     pub outputs: Vec<Ingredient>,
+    /// 一次循環所需秒數。
     pub duration: f64,
+    /// 使用機器 ID。
     pub machine_id: String,
     #[serde(default)]
+    /// 科技等級。
     pub tier: u32,
     #[serde(default)]
+    /// 標籤，用於 UI 篩選。
     pub tags: Vec<String>,
     #[serde(default = "default_output_multiplier")]
+    /// 產出倍率（主要用於平衡分析）。
     pub output_multiplier: f64,
     #[serde(default)]
     pub unity_consumption: f64,
@@ -101,12 +128,14 @@ fn default_output_multiplier() -> f64 {
     1.0
 }
 
+/// 機器維護項目（通常以月為單位）。
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct MaintenanceItem {
     pub resource_id: ResourceId,
     pub amount: f64,
 }
 
+/// 生產機器定義。
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Machine {
     pub id: String,
@@ -125,6 +154,7 @@ pub struct Machine {
     pub computing: f64,
 }
 
+/// 整包遊戲資料，可由 JSON 載入。
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
 pub struct GameData {
     #[serde(default)]
@@ -136,18 +166,22 @@ pub struct GameData {
 }
 
 impl GameData {
+    /// 建立 `recipe_id -> Recipe` 的唯讀查詢表。
     pub fn recipes_map(&self) -> HashMap<String, &Recipe> {
         self.recipes.iter().map(|r| (r.id.clone(), r)).collect()
     }
 
+    /// 建立 `machine_id -> Machine` 的唯讀查詢表。
     pub fn machines_map(&self) -> HashMap<String, &Machine> {
         self.machines.iter().map(|m| (m.id.clone(), m)).collect()
     }
 
+    /// 建立 `resource_id -> Resource` 的唯讀查詢表。
     pub fn resources_map(&self) -> HashMap<ResourceId, &Resource> {
         self.resources.iter().map(|r| (r.id.clone(), r)).collect()
     }
 
+    /// 合併資料：僅追加不存在的 ID，不覆蓋既有內容。
     pub fn merge(mut self, other: GameData) -> GameData {
         // Merge by adding non-duplicate entries from other
         let existing_recipe_ids: std::collections::HashSet<_> =
@@ -176,7 +210,7 @@ impl GameData {
     }
 }
 
-/// Result of a single recipe calculation
+/// 單一配方計算結果（目標：每分鐘產出）。
 #[derive(Debug, Clone)]
 pub struct CalculationResult {
     pub recipe_name: String,
@@ -191,11 +225,12 @@ pub struct CalculationResult {
     pub maintenance_costs: Vec<Ingredient>,
 }
 
-/// A node in the production chain tree
+/// 產線鏈中的節點（對應一個配方）。
 #[derive(Debug, Clone)]
 pub struct ChainNode {
     pub recipe_id: String,
     pub recipe_name: String,
+    pub machine_id: String,
     pub machine_name: String,
     pub machines_needed: f64,
     pub inputs: Vec<Ingredient>,
@@ -208,6 +243,7 @@ pub struct ChainNode {
     pub maintenance_costs: Vec<Ingredient>,
 }
 
+/// 上游資源來源描述。
 #[derive(Debug, Clone)]
 pub struct ChainChild {
     pub resource_id: ResourceId,
@@ -215,6 +251,7 @@ pub struct ChainChild {
     pub source: ChainSource,
 }
 
+/// 產線鏈節點的來源類型。
 #[derive(Debug, Clone)]
 pub enum ChainSource {
     Recipe(ChainNode),
@@ -223,7 +260,7 @@ pub enum ChainSource {
     CycleDetected,
 }
 
-/// Resource balance report
+/// 資源平衡分析報告。
 #[derive(Debug, Clone)]
 pub struct BalanceReport {
     pub resource_balances: Vec<ResourceBalance>,
@@ -243,6 +280,7 @@ pub struct ExternalFlows {
     pub consumptions_per_min: Vec<Ingredient>,
 }
 
+/// 單一資源的生產/消耗與淨值結果。
 #[derive(Debug, Clone)]
 pub struct ResourceBalance {
     pub resource_id: ResourceId,
@@ -253,6 +291,7 @@ pub struct ResourceBalance {
     pub status: BalanceStatus,
 }
 
+/// 平衡狀態分類。
 #[derive(Debug, Clone, PartialEq)]
 pub enum BalanceStatus {
     Surplus,
@@ -261,6 +300,7 @@ pub enum BalanceStatus {
     Bottleneck,
 }
 
+/// 機器統計匯總（同機種聚合）。
 #[derive(Debug, Clone)]
 pub struct MachineTally {
     pub machine_id: String,
