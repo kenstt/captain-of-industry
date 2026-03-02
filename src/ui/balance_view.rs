@@ -5,6 +5,21 @@ use crate::calculator::balance;
 use crate::data::models::*;
 use crate::ui::theme;
 
+fn format_count(v: f64) -> String {
+    if v.fract() == 0.0 {
+        format!("{}", v as i64)
+    } else {
+        format!("{}", v)
+    }
+}
+
+fn recipe_label(r: &Recipe) -> String {
+    r.name_zh
+        .as_deref()
+        .map(|zh| format!("{} ({})", zh, r.name))
+        .unwrap_or_else(|| r.name.clone())
+}
+
 pub struct BalanceEntry {
     pub recipe_id: String,
     pub machine_count: String,
@@ -43,7 +58,7 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &mut BalanceViewState, data: 
                 data.recipes
                     .iter()
                     .find(|r| r.id == entry.recipe_id)
-                    .map(|r| r.name.clone())
+                    .map(|r| recipe_label(r))
                     .unwrap_or_else(|| entry.recipe_id.clone())
             };
 
@@ -52,13 +67,25 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &mut BalanceViewState, data: 
                 .width(250.0)
                 .show_ui(ui, |ui| {
                     for recipe in &data.recipes {
-                        ui.selectable_value(&mut entry.recipe_id, recipe.id.clone(), &recipe.name);
+                        let label = recipe_label(recipe);
+                        ui.selectable_value(&mut entry.recipe_id, recipe.id.clone(), &label);
                     }
                 });
 
             // Machine count input
             ui.label(t!("machine_count"));
+            if ui.small_button("-").clicked() {
+                if let Ok(v) = entry.machine_count.parse::<f64>() {
+                    let new_v = (v - 1.0).max(0.0);
+                    entry.machine_count = format_count(new_v);
+                }
+            }
             ui.add(egui::TextEdit::singleline(&mut entry.machine_count).desired_width(60.0));
+            if ui.small_button("+").clicked() {
+                if let Ok(v) = entry.machine_count.parse::<f64>() {
+                    entry.machine_count = format_count(v + 1.0);
+                }
+            }
 
             // Delete button
             if ui.button(t!("remove")).clicked() {
@@ -105,11 +132,14 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &mut BalanceViewState, data: 
 
     ui.separator();
 
-    // Report display (same as before)
+    // Report display
     let Some(ref report) = state.report else {
         ui.label(t!("no_results"));
         return;
     };
+
+    let resources_map = data.resources_map();
+    let machines_map = data.machines_map();
 
     // Resource balance table
     egui::Grid::new("balance_table")
@@ -117,9 +147,9 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &mut BalanceViewState, data: 
         .min_col_width(80.0)
         .show(ui, |ui| {
             ui.strong(t!("resource_name"));
-            ui.strong(t!("production_rate"));
-            ui.strong(t!("consumption_rate"));
-            ui.strong(t!("net_rate"));
+            ui.strong(format!("{} (/min)", t!("production_rate")));
+            ui.strong(format!("{} (/min)", t!("consumption_rate")));
+            ui.strong(format!("{} (/min)", t!("net_rate")));
             ui.strong(t!("status"));
             ui.end_row();
 
@@ -131,10 +161,16 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &mut BalanceViewState, data: 
                     BalanceStatus::Bottleneck => (theme::bottleneck_color(), t!("bottleneck")),
                 };
 
-                ui.label(&rb.resource_name);
-                ui.label(format!("{:.2}/min", rb.production_rate));
-                ui.label(format!("{:.2}/min", rb.consumption_rate));
-                ui.colored_label(color, format!("{:.2}/min", rb.net_rate));
+                let res_name = resources_map
+                    .get(&rb.resource_id)
+                    .and_then(|r| r.name_zh.as_deref())
+                    .map(|zh| format!("{} ({})", zh, rb.resource_name))
+                    .unwrap_or_else(|| rb.resource_name.clone());
+
+                ui.label(res_name);
+                ui.label(format!("{:.2}", rb.production_rate));
+                ui.label(format!("{:.2}", rb.consumption_rate));
+                ui.colored_label(color, format!("{:.2}", rb.net_rate));
                 ui.colored_label(color, status_text);
                 ui.end_row();
             }
@@ -151,16 +187,22 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &mut BalanceViewState, data: 
             ui.strong(t!("machine_name"));
             ui.strong(t!("count"));
             ui.strong(t!("machines_needed_ceil"));
-            ui.strong(t!("power_consumption"));
+            ui.strong(format!("{} (kW)", t!("power_consumption")));
             ui.strong(t!("workers"));
-            ui.strong(t!("computing"));
+            ui.strong(format!("{} (TFLOPs)", t!("computing")));
             ui.end_row();
 
             for mt in &report.machine_totals {
-                ui.label(&mt.machine_name);
+                let machine_name = machines_map
+                    .get(mt.machine_id.as_str())
+                    .and_then(|m| m.name_zh.as_deref())
+                    .map(|zh| format!("{} ({})", zh, mt.machine_name))
+                    .unwrap_or_else(|| mt.machine_name.clone());
+
+                ui.label(machine_name);
                 ui.label(format!("{:.2}", mt.count));
                 ui.label(format!("{}", mt.count_ceil));
-                ui.label(format!("{:.1} kW", mt.total_power));
+                ui.label(format!("{:.1}", mt.total_power));
                 ui.label(format!("{}", mt.total_workers));
                 ui.label(if mt.total_computing > 0.0 {
                     format!("{:.1}", mt.total_computing)
