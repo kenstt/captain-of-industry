@@ -106,5 +106,7 @@
   "filter_tag": "篩選分類",
   "all_tags": "全部",
   "maintenance_per_month": "維護 (/月)",
-  "total_maintenance": "總維護"
+  "total_maintenance": "總維護",
+  "save_balance_config": "儲存配置",
+  "load_balance_config": "讀取配置"
 }

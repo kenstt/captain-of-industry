@@ -1,9 +1,22 @@
 use eframe::egui;
 use rust_i18n::t;
+use serde::{Deserialize, Serialize};
 
 use crate::calculator::balance;
 use crate::data::models::*;
 use crate::ui::theme;
+
+#[derive(Serialize, Deserialize)]
+struct BalanceConfig {
+    entries: Vec<BalanceConfigEntry>,
+}
+
+#[derive(Serialize, Deserialize)]
+struct BalanceConfigEntry {
+    recipe_id: String,
+    machine_count: String,
+    selected_tag: Option<String>,
+}
 
 fn format_maintenance(
     costs: &[Ingredient],
@@ -110,6 +123,61 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &mut BalanceViewState, data: 
         .into_iter()
         .collect();
     all_tags.sort();
+
+    // Save/Load config buttons
+    ui.horizontal(|ui| {
+        if ui.button(t!("save_balance_config")).clicked() {
+            let config = BalanceConfig {
+                entries: state
+                    .entries
+                    .iter()
+                    .filter(|e| !e.recipe_id.is_empty())
+                    .map(|e| BalanceConfigEntry {
+                        recipe_id: e.recipe_id.clone(),
+                        machine_count: e.machine_count.clone(),
+                        selected_tag: e.selected_tag.clone(),
+                    })
+                    .collect(),
+            };
+            if let Some(path) = rfd::FileDialog::new()
+                .add_filter("JSON", &["json"])
+                .set_file_name("balance_config.json")
+                .save_file()
+            {
+                if let Ok(json) = serde_json::to_string_pretty(&config) {
+                    let _ = std::fs::write(path, json);
+                }
+            }
+        }
+        if ui.button(t!("load_balance_config")).clicked() {
+            if let Some(path) = rfd::FileDialog::new()
+                .add_filter("JSON", &["json"])
+                .pick_file()
+            {
+                if let Ok(contents) = std::fs::read_to_string(&path) {
+                    if let Ok(config) = serde_json::from_str::<BalanceConfig>(&contents) {
+                        state.entries = config
+                            .entries
+                            .into_iter()
+                            .map(|e| BalanceEntry {
+                                recipe_id: e.recipe_id,
+                                machine_count: e.machine_count,
+                                selected_tag: e.selected_tag,
+                            })
+                            .collect();
+                        if state.entries.is_empty() {
+                            state.entries.push(BalanceEntry {
+                                recipe_id: String::new(),
+                                machine_count: "1".to_string(),
+                                selected_tag: None,
+                            });
+                        }
+                        state.last_fingerprint = String::new();
+                    }
+                }
+            }
+        }
+    });
 
     // Recipe entry rows
     let mut to_remove: Option<usize> = None;

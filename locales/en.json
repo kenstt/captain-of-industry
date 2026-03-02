@@ -106,5 +106,7 @@
   "filter_tag": "Filter Tag",
   "all_tags": "All",
   "maintenance_per_month": "Maintenance (/month)",
-  "total_maintenance": "Total Maintenance"
+  "total_maintenance": "Total Maintenance",
+  "save_balance_config": "Save Config",
+  "load_balance_config": "Load Config"
 }
