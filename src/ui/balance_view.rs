@@ -644,4 +644,16 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &mut BalanceViewState, data: 
             format_maintenance(&report.total_maintenance, &resources_map)
         ));
     }
+
+    let unity_color = if report.total_unity < 0.0 {
+        theme::deficit_color()
+    } else if report.total_unity > 0.0 {
+        theme::surplus_color()
+    } else {
+        theme::balanced_color()
+    };
+    ui.horizontal(|ui| {
+        ui.label(format!("{}: ", t!("total_unity")));
+        ui.colored_label(unity_color, format!("{:.2}", report.total_unity));
+    });
 }

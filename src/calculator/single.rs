@@ -41,6 +41,7 @@ pub fn calculate_single(
     let total_power = machine.power_consumption * machines_ceil;
     let total_workers = machine.workers as f64 * machines_ceil;
     let total_computing = machine.computing * machines_ceil;
+    let total_unity = (recipe.unity_production - recipe.unity_consumption) * machines_needed;
     let maintenance_costs: Vec<Ingredient> = machine
         .maintenance
         .iter()
@@ -59,6 +60,7 @@ pub fn calculate_single(
         total_power,
         total_workers,
         total_computing,
+        total_unity,
         maintenance_costs,
     })
 }

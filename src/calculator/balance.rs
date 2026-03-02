@@ -7,8 +7,9 @@ pub fn analyze_balance(node: &ChainNode, data: &GameData) -> BalanceReport {
     let mut production: HashMap<ResourceId, f64> = HashMap::new();
     let mut consumption: HashMap<ResourceId, f64> = HashMap::new();
     let mut machine_counts: HashMap<String, (String, f64)> = HashMap::new();
+    let mut total_unity = 0.0;
 
-    collect_rates(node, &mut production, &mut consumption, &mut machine_counts);
+    collect_rates(node, &mut production, &mut consumption, &mut machine_counts, &mut total_unity);
 
     let machines_map = data.machines_map();
 
@@ -74,6 +75,7 @@ pub fn analyze_balance(node: &ChainNode, data: &GameData) -> BalanceReport {
     let mut total_power = 0.0;
     let mut total_workers = 0.0;
     let mut total_computing = 0.0;
+    // total_unity is handled in collect_rates for analyze_balance
     let machine_totals: Vec<MachineTally> = machine_counts
         .into_iter()
         .map(|(mid, (name, count))| {
@@ -144,6 +146,7 @@ pub fn analyze_balance(node: &ChainNode, data: &GameData) -> BalanceReport {
                 total_power: tp,
                 total_workers: tw,
                 total_computing: tc,
+                total_unity: 0.0, // Individually not attributed here
                 maintenance_costs,
             }
         })
@@ -171,6 +174,7 @@ pub fn analyze_balance(node: &ChainNode, data: &GameData) -> BalanceReport {
         total_power,
         total_workers,
         total_computing,
+        total_unity,
         total_maintenance,
     }
 }
@@ -205,6 +209,7 @@ pub fn analyze_balance_from_recipes(
 
     let mut production: HashMap<ResourceId, f64> = HashMap::new();
     let mut consumption: HashMap<ResourceId, f64> = HashMap::new();
+    let mut total_unity = 0.0;
 
     // Apply external supplies/consumptions (per minute)
     for ing in &external.supplies_per_min {
@@ -231,6 +236,8 @@ pub fn analyze_balance_from_recipes(
             *production.entry(output.resource_id.clone()).or_insert(0.0) +=
                 output.amount * rate_multiplier * recipe.output_multiplier;
         }
+
+        total_unity += (recipe.unity_production - recipe.unity_consumption) * machine_count;
 
         let machine_name = machines_map
             .get(recipe.machine_id.as_str())
@@ -300,6 +307,7 @@ pub fn analyze_balance_from_recipes(
     let mut total_power = 0.0;
     let mut total_workers = 0.0;
     let mut total_computing = 0.0;
+    // total_unity is already calculated from recipes
     let machine_totals: Vec<MachineTally> = machine_counts
         .into_iter()
         .map(|(mid, (name, count))| {
@@ -367,6 +375,7 @@ pub fn analyze_balance_from_recipes(
                 total_power: tp,
                 total_workers: tw,
                 total_computing: tc,
+                total_unity: 0.0,
                 maintenance_costs,
             }
         })
@@ -394,6 +403,7 @@ pub fn analyze_balance_from_recipes(
         total_power,
         total_workers,
         total_computing,
+        total_unity,
         total_maintenance,
     }
 }
@@ -403,6 +413,7 @@ fn collect_rates(
     production: &mut HashMap<ResourceId, f64>,
     consumption: &mut HashMap<ResourceId, f64>,
     machine_counts: &mut HashMap<String, (String, f64)>,
+    total_unity: &mut f64,
 ) {
     // This node produces its outputs and consumes its inputs
     for output in &node.outputs {
@@ -411,6 +422,8 @@ fn collect_rates(
     for input in &node.inputs {
         *consumption.entry(input.resource_id.clone()).or_insert(0.0) += input.amount;
     }
+
+    *total_unity += node.unity;
 
     // Accumulate machine count
     let entry = machine_counts
@@ -421,7 +434,7 @@ fn collect_rates(
     // Recurse into children
     for child in &node.children {
         if let ChainSource::Recipe(ref child_node) = child.source {
-            collect_rates(child_node, production, consumption, machine_counts);
+            collect_rates(child_node, production, consumption, machine_counts, total_unity);
         }
     }
 }

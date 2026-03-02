@@ -8,8 +8,8 @@
       "name_zh": "高爐",
       "power_consumption": 60.0,
       "category": "smelting",
-      "workers": 2,
-      "maintenance": [{"resource_id": "maintenance_1", "amount": 0.5}],
+      "workers": 8,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 0}],
       "computing": 0.0
     },
     {
@@ -46,7 +46,7 @@
       "id": "metal_caster",
       "name": "Metal Caster",
       "name_zh": "金屬鑄造機",
-      "power_consumption": 80.0,
+      "power_consumption": 0,
       "category": "casting",
       "workers": 2,
       "maintenance": [{"resource_id": "maintenance_1", "amount": 0.5}],
@@ -290,6 +290,76 @@
       "category": "mining",
       "workers": 1,
       "maintenance": [{"resource_id": "maintenance_1", "amount": 0.2}],
+      "computing": 0.0
+    },
+    {
+      "id": "wood_kiln",
+      "name": "Wood Kiln",
+      "name_zh": "燒炭爐",
+      "power_consumption": 0.0,
+      "category": "smelting",
+      "workers": 2,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 0}],
+      "computing": 0.0
+    },
+    {
+      "id": "diesel_generator",
+      "name": "Diesel Generator",
+      "name_zh": "柴油發電機",
+      "power_consumption": 0.0,
+      "category": "power",
+      "workers": 2,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 4}],
+      "computing": 0.0
+    },
+    {
+      "id": "research_lab",
+      "name": "Research Lab",
+      "name_zh": "研究實驗室",
+      "power_consumption": 40.0,
+      "category": "research",
+      "workers": 6,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 0.5}],
+      "computing": 0.0
+    },
+    {
+      "id": "research_lab_2",
+      "name": "Research Lab II",
+      "name_zh": "研究實驗室 II",
+      "power_consumption": 200.0,
+      "category": "research",
+      "workers": 12,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 5.4}],
+      "computing": 0.0
+    },
+    {
+      "id": "research_lab_3",
+      "name": "Research Lab III",
+      "name_zh": "研究實驗室 III",
+      "power_consumption": 80.0,
+      "category": "research",
+      "workers": 8,
+      "maintenance": [{"resource_id": "maintenance_2", "amount": 1.0}],
+      "computing": 0.0
+    },
+    {
+      "id": "research_lab_4",
+      "name": "Research Lab IV",
+      "name_zh": "研究實驗室 IV",
+      "power_consumption": 160.0,
+      "category": "research",
+      "workers": 10,
+      "maintenance": [{"resource_id": "maintenance_2", "amount": 2.0}],
+      "computing": 2.0
+    },
+    {
+      "id": "settlement",
+      "name": "Settlement",
+      "name_zh": "居住區",
+      "power_consumption": 0.0,
+      "category": "population",
+      "workers": 0,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 0.5}],
       "computing": 0.0
     }
   ]

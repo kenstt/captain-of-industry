@@ -85,6 +85,7 @@ impl Calculator {
             total_power,
             total_workers,
             total_computing,
+            total_unity: (recipe.unity_production - recipe.unity_consumption) * machines_needed,
             maintenance_costs,
         })
     }
@@ -124,6 +125,8 @@ mod tests {
             tier: 0,
             tags: vec![],
             output_multiplier: 1.0,
+            unity_consumption: 0.0,
+            unity_production: 0.0,
         });
 
         let result = calc.calculate_requirements("copper", 120.0).unwrap();
@@ -168,6 +171,8 @@ mod tests {
             tier: 0,
             tags: vec![],
             output_multiplier: 1.0,
+            unity_consumption: 0.0,
+            unity_production: 0.0,
         });
 
         let result = calc.calculate_requirements("cracking", 36.0).unwrap();
@@ -223,6 +228,8 @@ mod tests {
                     tier: 0,
                     tags: vec![],
                     output_multiplier: 1.0,
+                    unity_consumption: 0.0,
+                    unity_production: 0.0,
                 },
                 Recipe {
                     id: "molten_iron".to_string(),
@@ -241,6 +248,8 @@ mod tests {
                     tier: 0,
                     tags: vec![],
                     output_multiplier: 1.0,
+                    unity_consumption: 0.0,
+                    unity_production: 0.0,
                 },
             ],
         };
@@ -300,6 +309,8 @@ mod tests {
                 tier: 0,
                 tags: vec![],
                 output_multiplier: 1.0,
+                unity_consumption: 0.0,
+                unity_production: 0.0,
             }],
         };
 

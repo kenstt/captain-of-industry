@@ -93,6 +93,7 @@ fn build_chain_node(
     let power = machine.power_consumption * machines_ceil;
     let workers = machine.workers as f64 * machines_ceil;
     let computing = machine.computing * machines_ceil;
+    let unity = (recipe.unity_production - recipe.unity_consumption) * machines_needed;
     let maintenance_costs: Vec<Ingredient> = machine
         .maintenance
         .iter()
@@ -113,6 +114,7 @@ fn build_chain_node(
         power,
         workers,
         computing,
+        unity,
         maintenance_costs,
     })
 }

@@ -12,6 +12,8 @@ pub struct RecipeEditorState {
     pub duration: String,
     pub tier: String,
     pub tags: String,
+    pub unity_consumption: String,
+    pub unity_production: String,
     pub inputs: Vec<(String, String)>,  // (resource_id, amount)
     pub outputs: Vec<(String, String)>, // (resource_id, amount)
     pub status_message: Option<String>,
@@ -28,6 +30,8 @@ impl Default for RecipeEditorState {
             duration: "10".to_string(),
             tier: "0".to_string(),
             tags: String::new(),
+            unity_consumption: "0".to_string(),
+            unity_production: "0".to_string(),
             inputs: vec![("".to_string(), "1".to_string())],
             outputs: vec![("".to_string(), "1".to_string())],
             status_message: None,
@@ -45,6 +49,8 @@ impl RecipeEditorState {
         self.duration = recipe.duration.to_string();
         self.tier = recipe.tier.to_string();
         self.tags = recipe.tags.join(", ");
+        self.unity_consumption = recipe.unity_consumption.to_string();
+        self.unity_production = recipe.unity_production.to_string();
         self.inputs = recipe
             .inputs
             .iter()
@@ -64,6 +70,8 @@ impl RecipeEditorState {
     pub fn build_recipe(&self) -> Option<Recipe> {
         let duration: f64 = self.duration.parse().ok()?;
         let tier: u32 = self.tier.parse().unwrap_or(0);
+        let unity_consumption: f64 = self.unity_consumption.parse().unwrap_or(0.0);
+        let unity_production: f64 = self.unity_production.parse().unwrap_or(0.0);
 
         if self.recipe_id.is_empty() || self.name_en.is_empty() || self.machine_id.is_empty() {
             return None;
@@ -117,6 +125,8 @@ impl RecipeEditorState {
             tier,
             tags,
             output_multiplier: 1.0,
+            unity_consumption,
+            unity_production,
         })
     }
 }
@@ -185,6 +195,14 @@ pub fn show_recipe_editor(
 
             ui.label(t!("tags"));
             ui.text_edit_singleline(&mut state.tags);
+            ui.end_row();
+
+            ui.label(format!("{} (Cons.)", t!("unity")));
+            ui.text_edit_singleline(&mut state.unity_consumption);
+            ui.end_row();
+
+            ui.label(format!("{} (Prod.)", t!("unity")));
+            ui.text_edit_singleline(&mut state.unity_production);
             ui.end_row();
         });
 

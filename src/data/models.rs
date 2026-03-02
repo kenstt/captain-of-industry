@@ -91,6 +91,10 @@ pub struct Recipe {
     pub tags: Vec<String>,
     #[serde(default = "default_output_multiplier")]
     pub output_multiplier: f64,
+    #[serde(default)]
+    pub unity_consumption: f64,
+    #[serde(default)]
+    pub unity_production: f64,
 }
 
 fn default_output_multiplier() -> f64 {
@@ -183,6 +187,7 @@ pub struct CalculationResult {
     pub total_power: f64,
     pub total_workers: f64,
     pub total_computing: f64,
+    pub total_unity: f64,
     pub maintenance_costs: Vec<Ingredient>,
 }
 
@@ -199,6 +204,7 @@ pub struct ChainNode {
     pub power: f64,
     pub workers: f64,
     pub computing: f64,
+    pub unity: f64,
     pub maintenance_costs: Vec<Ingredient>,
 }
 
@@ -225,6 +231,7 @@ pub struct BalanceReport {
     pub total_power: f64,
     pub total_workers: f64,
     pub total_computing: f64,
+    pub total_unity: f64,
     pub total_maintenance: Vec<Ingredient>,
 }
 
@@ -263,5 +270,6 @@ pub struct MachineTally {
     pub total_power: f64,
     pub total_workers: u32,
     pub total_computing: f64,
+    pub total_unity: f64,
     pub maintenance_costs: Vec<Ingredient>,
 }

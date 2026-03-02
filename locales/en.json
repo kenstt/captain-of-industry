@@ -120,5 +120,7 @@
   "rate_per_min": "Rate (/min)",
   "add": "Add",
   "resource_category_filter": "Resource Category",
-  "all_categories": "All"
+  "all_categories": "All",
+  "total_unity": "Total Unity",
+  "unity": "Unity"
 }

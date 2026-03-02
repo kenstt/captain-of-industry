@@ -120,5 +120,7 @@
   "rate_per_min": "速率（每分鐘）",
   "add": "新增",
   "resource_category_filter": "資源類別",
-  "all_categories": "全部"
+  "all_categories": "全部",
+  "total_unity": "總凝聚力",
+  "unity": "凝聚力"
 }

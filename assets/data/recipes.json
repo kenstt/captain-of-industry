@@ -122,7 +122,8 @@
 
     { "id": "maintenance_1", "name": "Maintenance I", "name_zh": "維護I", "category": "Other" },
     { "id": "maintenance_2", "name": "Maintenance II", "name_zh": "維護II", "category": "Other" },
-    { "id": "maintenance_3", "name": "Maintenance III", "name_zh": "維護III", "category": "Other" }
+    { "id": "maintenance_3", "name": "Maintenance III", "name_zh": "維護III", "category": "Other" },
+    { "id": "research_point", "name": "Research Point", "name_zh": "研究點數", "category": "Other" }
   ],
   "machines": [],
   "recipes": [
@@ -136,6 +137,50 @@
       "machine_id": "excavator_t1",
       "tier": 1,
       "tags": ["mining"]
+    },
+    {
+      "id": "research_1",
+      "name": "Research I",
+      "name_zh": "研究 I",
+      "inputs": [{ "resource_id": "lab_equipment", "amount": 6.0 }],
+      "outputs": [{ "resource_id": "research_point", "amount": 60.0 }],
+      "duration": 60.0,
+      "machine_id": "research_lab",
+      "tier": 1,
+      "tags": ["research"]
+    },
+    {
+      "id": "research_2",
+      "name": "Research II",
+      "name_zh": "研究 II",
+      "inputs": [{ "resource_id": "lab_equipment_2", "amount": 6.0 }],
+      "outputs": [{ "resource_id": "research_point", "amount": 60.0 }],
+      "duration": 60.0,
+      "machine_id": "research_lab_2",
+      "tier": 2,
+      "tags": ["research"]
+    },
+    {
+      "id": "research_3",
+      "name": "Research III",
+      "name_zh": "研究 III",
+      "inputs": [{ "resource_id": "lab_equipment_3", "amount": 6.0 }],
+      "outputs": [{ "resource_id": "research_point", "amount": 60.0 }],
+      "duration": 60.0,
+      "machine_id": "research_lab_3",
+      "tier": 3,
+      "tags": ["research"]
+    },
+    {
+      "id": "research_4",
+      "name": "Research IV",
+      "name_zh": "研究 IV",
+      "inputs": [{ "resource_id": "lab_equipment_4", "amount": 8.0 }],
+      "outputs": [{ "resource_id": "research_point", "amount": 80.0 }],
+      "duration": 60.0,
+      "machine_id": "research_lab_4",
+      "tier": 4,
+      "tags": ["research"]
     },
     {
       "id": "mine_copper_ore",
@@ -1176,6 +1221,52 @@
       "machine_id": "power_generator_2",
       "tier": 2,
       "tags": ["power"]
+    },
+    {
+      "id": "burn_wood_to_coal",
+      "name": "Burn Wood to Coal",
+      "name_zh": "燒木炭",
+      "inputs": [{ "resource_id": "wood", "amount": 24.0 }],
+      "outputs": [{ "resource_id": "coal", "amount": 12.0 }],
+      "duration": 60.0,
+      "machine_id": "wood_kiln",
+      "tier": 1,
+      "tags": ["fuel"]
+    },
+    {
+      "id": "diesel_generator",
+      "name": "Diesel Generator",
+      "name_zh": "柴油發電",
+      "inputs": [{ "resource_id": "diesel", "amount": 12.0 }],
+      "outputs": [{ "resource_id": "electricity", "amount": 0.48 }],
+      "duration": 60.0,
+      "machine_id": "diesel_generator",
+      "tier": 1,
+      "tags": ["power"]
+    },
+    {
+      "id": "settlement_water",
+      "name": "Settlement Water",
+      "name_zh": "居住區供水",
+      "inputs": [{ "resource_id": "water", "amount": 10.0 }],
+      "outputs": [],
+      "duration": 60.0,
+      "machine_id": "settlement",
+      "tier": 1,
+      "tags": ["population"],
+      "unity_production": 0.5
+    },
+    {
+      "id": "settlement_food_basic",
+      "name": "Settlement Food (Basic)",
+      "name_zh": "居住區食物 (基礎)",
+      "inputs": [{ "resource_id": "potato", "amount": 10.0 }],
+      "outputs": [],
+      "duration": 60.0,
+      "machine_id": "settlement",
+      "tier": 1,
+      "tags": ["population"],
+      "unity_production": 1.0
     }
   ]
 }
