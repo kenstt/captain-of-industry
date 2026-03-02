@@ -247,7 +247,7 @@ pub fn Balance() -> Element {
                             value: "{add_count}",
                             oninput: move |e| add_count.set(e.value()),
                             min: "0.01",
-                            step: "0.5",
+                            step: "1",
                         }
                     }
                     button {
@@ -303,7 +303,7 @@ pub fn Balance() -> Element {
                                                 class: "inline-input",
                                                 value: "{count_val}",
                                                 min: "0.01",
-                                                step: "0.5",
+                                                step: "1",
                                                 oninput: move |e| {
                                                     if let Ok(v) = e.value().parse::<f64>() {
                                                         if v > 0.0 {
