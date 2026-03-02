@@ -123,6 +123,7 @@ mod tests {
             machine_id: "furnace".to_string(),
             tier: 0,
             tags: vec![],
+            output_multiplier: 1.0,
         });
 
         let result = calc.calculate_requirements("copper", 120.0).unwrap();
@@ -166,6 +167,7 @@ mod tests {
             machine_id: "cracking".to_string(),
             tier: 0,
             tags: vec![],
+            output_multiplier: 1.0,
         });
 
         let result = calc.calculate_requirements("cracking", 36.0).unwrap();
@@ -220,6 +222,7 @@ mod tests {
                     machine_id: "smelter".to_string(),
                     tier: 0,
                     tags: vec![],
+                    output_multiplier: 1.0,
                 },
                 Recipe {
                     id: "molten_iron".to_string(),
@@ -237,6 +240,7 @@ mod tests {
                     machine_id: "furnace".to_string(),
                     tier: 0,
                     tags: vec![],
+                    output_multiplier: 1.0,
                 },
             ],
         };
@@ -295,6 +299,7 @@ mod tests {
                 machine_id: "furnace".to_string(),
                 tier: 0,
                 tags: vec![],
+                output_multiplier: 1.0,
             }],
         };
 

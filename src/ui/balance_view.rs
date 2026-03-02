@@ -14,10 +14,16 @@ fn format_count(v: f64) -> String {
 }
 
 fn recipe_label(r: &Recipe) -> String {
-    r.name_zh
+    let base = r
+        .name_zh
         .as_deref()
         .map(|zh| format!("{} ({})", zh, r.name))
-        .unwrap_or_else(|| r.name.clone())
+        .unwrap_or_else(|| r.name.clone());
+    if r.tier > 0 {
+        format!("[T{}] {}", r.tier, base)
+    } else {
+        base
+    }
 }
 
 pub struct BalanceEntry {

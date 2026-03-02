@@ -80,6 +80,12 @@ pub struct Recipe {
     pub tier: u32,
     #[serde(default)]
     pub tags: Vec<String>,
+    #[serde(default = "default_output_multiplier")]
+    pub output_multiplier: f64,
+}
+
+fn default_output_multiplier() -> f64 {
+    1.0
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]

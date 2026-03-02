@@ -116,6 +116,7 @@ impl RecipeEditorState {
             machine_id: self.machine_id.clone(),
             tier,
             tags,
+            output_multiplier: 1.0,
         })
     }
 }

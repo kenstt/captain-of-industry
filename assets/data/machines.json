@@ -101,6 +101,46 @@
       "workers": 1,
       "maintenance": [{"resource_id": "maintenance_1", "amount": 0.3}],
       "computing": 0.0
+    },
+    {
+      "id": "excavator_t1",
+      "name": "Excavator T1",
+      "name_zh": "挖掘機 T1",
+      "power_consumption": 50.0,
+      "category": "mining",
+      "workers": 1,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 0.3}],
+      "computing": 0.0
+    },
+    {
+      "id": "excavator_t2",
+      "name": "Excavator T2",
+      "name_zh": "挖掘機 T2",
+      "power_consumption": 80.0,
+      "category": "mining",
+      "workers": 2,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 0.5}],
+      "computing": 0.0
+    },
+    {
+      "id": "oil_pump",
+      "name": "Oil Pump",
+      "name_zh": "油泵",
+      "power_consumption": 60.0,
+      "category": "mining",
+      "workers": 1,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 0.3}],
+      "computing": 0.0
+    },
+    {
+      "id": "water_pump",
+      "name": "Water Pump",
+      "name_zh": "水泵",
+      "power_consumption": 30.0,
+      "category": "mining",
+      "workers": 1,
+      "maintenance": [{"resource_id": "maintenance_1", "amount": 0.2}],
+      "computing": 0.0
     }
   ]
 }

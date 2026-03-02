@@ -198,7 +198,7 @@ pub fn analyze_balance_from_recipes(
         }
         for output in &recipe.outputs {
             *production.entry(output.resource_id.clone()).or_insert(0.0) +=
-                output.amount * rate_multiplier;
+                output.amount * rate_multiplier * recipe.output_multiplier;
         }
 
         let machine_name = machines_map

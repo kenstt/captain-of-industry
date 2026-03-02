@@ -181,6 +181,110 @@
       "machine_id": "cooled_mold",
       "tier": 2,
       "tags": ["casting", "glass"]
+    },
+    {
+      "id": "mine_iron_ore",
+      "name": "Mine Iron Ore",
+      "name_zh": "開採鐵礦",
+      "inputs": [],
+      "outputs": [
+        { "resource_id": "iron_ore", "amount": 6.0 }
+      ],
+      "duration": 20.0,
+      "machine_id": "excavator_t1",
+      "tier": 1,
+      "tags": ["mining"]
+    },
+    {
+      "id": "mine_copper_ore",
+      "name": "Mine Copper Ore",
+      "name_zh": "開採銅礦",
+      "inputs": [],
+      "outputs": [
+        { "resource_id": "copper_ore", "amount": 6.0 }
+      ],
+      "duration": 20.0,
+      "machine_id": "excavator_t1",
+      "tier": 1,
+      "tags": ["mining"]
+    },
+    {
+      "id": "mine_coal",
+      "name": "Mine Coal",
+      "name_zh": "開採煤炭",
+      "inputs": [],
+      "outputs": [
+        { "resource_id": "coal", "amount": 6.0 }
+      ],
+      "duration": 20.0,
+      "machine_id": "excavator_t1",
+      "tier": 1,
+      "tags": ["mining"]
+    },
+    {
+      "id": "mine_rock",
+      "name": "Mine Rock",
+      "name_zh": "開採岩石",
+      "inputs": [],
+      "outputs": [
+        { "resource_id": "rock", "amount": 6.0 }
+      ],
+      "duration": 20.0,
+      "machine_id": "excavator_t1",
+      "tier": 1,
+      "tags": ["mining"]
+    },
+    {
+      "id": "mine_sand",
+      "name": "Mine Sand",
+      "name_zh": "開採沙",
+      "inputs": [],
+      "outputs": [
+        { "resource_id": "sand", "amount": 6.0 }
+      ],
+      "duration": 20.0,
+      "machine_id": "excavator_t1",
+      "tier": 1,
+      "tags": ["mining"]
+    },
+    {
+      "id": "mine_limestone",
+      "name": "Mine Limestone",
+      "name_zh": "開採石灰石",
+      "inputs": [],
+      "outputs": [
+        { "resource_id": "limestone", "amount": 6.0 }
+      ],
+      "duration": 20.0,
+      "machine_id": "excavator_t1",
+      "tier": 1,
+      "tags": ["mining"]
+    },
+    {
+      "id": "pump_crude_oil",
+      "name": "Pump Crude Oil",
+      "name_zh": "抽取原油",
+      "inputs": [],
+      "outputs": [
+        { "resource_id": "crude_oil", "amount": 4.0 }
+      ],
+      "duration": 20.0,
+      "machine_id": "oil_pump",
+      "tier": 1,
+      "tags": ["mining"]
+    },
+    {
+      "id": "pump_water",
+      "name": "Pump Water",
+      "name_zh": "抽取水",
+      "inputs": [],
+      "outputs": [
+        { "resource_id": "water", "amount": 8.0 }
+      ],
+      "duration": 20.0,
+      "machine_id": "water_pump",
+      "tier": 1,
+      "tags": ["mining"]
     }
   ]
 }
