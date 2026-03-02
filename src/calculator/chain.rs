@@ -1,9 +1,17 @@
+//! 產線鏈計算器。
+//!
+//! 由目標配方往上游遞迴展開，直到遇到：
+//! - 使用者標記為已供應的資源
+//! - 找不到上游配方的原料
+//! - 偵測到循環依賴
+
 use std::collections::HashSet;
 
 use crate::data::models::*;
 
-/// Calculate a full production chain by recursively tracing upstream recipes.
-/// `supplied` contains resource IDs that the user has marked as already available.
+/// 計算完整產線鏈（遞迴追溯上游配方）。
+///
+/// `supplied` 代表使用者已外部供應的資源，遇到時不再向上展開。
 pub fn calculate_chain(
     data: &GameData,
     recipe_id: &str,
@@ -57,7 +65,7 @@ fn build_chain_node(
         })
         .collect();
 
-    // Mark this recipe as visited for cycle detection
+    // 記錄訪問路徑，用於循環偵測。
     visited.insert(recipe_id.to_string());
 
     let mut children = Vec::new();
@@ -125,7 +133,7 @@ fn build_chain_node(
     })
 }
 
-/// Find a recipe that produces the given resource. Returns the recipe and the output index.
+/// 尋找可產生指定資源的配方，回傳 `(配方, 該資源在 outputs 的索引)`。
 fn find_recipe_for_resource<'a>(
     data: &'a GameData,
     resource_id: &ResourceId,

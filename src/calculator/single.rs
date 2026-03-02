@@ -1,7 +1,18 @@
+//! 單配方計算器。
+//!
+//! 輸入目標產率（每分鐘），輸出所需機器數與投入/產出速率。
+
 use crate::data::models::{CalculationResult, GameData, Ingredient};
 
-/// Calculate requirements for a single recipe given a target output rate (per minute).
-/// `primary_output_index` specifies which output to target (for multi-output recipes).
+/// 計算單一配方在目標產率下的需求。
+///
+/// - `target_output_per_min`：目標主產物速率（每分鐘）
+/// - `primary_output_index`：多產物配方時，指定目標主產物索引
+///
+/// 回傳值包含：
+/// - 精確機器數（未進位）
+/// - 對應投入/產出速率（每分鐘）
+/// - 進位後機器數導出的電力、人力、算力與維護成本
 pub fn calculate_single(
     data: &GameData,
     recipe_id: &str,

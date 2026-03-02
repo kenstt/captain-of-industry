@@ -1,8 +1,19 @@
+//! 資源平衡分析器。
+//!
+//! 提供兩種入口：
+//! - `analyze_balance`：從產線鏈樹分析
+//! - `analyze_balance_from_recipes`：從「配方 + 機器數」清單分析
+
 use std::collections::HashMap;
 
 use crate::data::models::*;
 
-/// Analyze resource balance across an entire production chain.
+/// 針對完整產線鏈進行資源平衡分析。
+///
+/// 會輸出：
+/// - 各資源生產/消耗/淨值與狀態
+/// - 機器數量匯總與總電力/人力/算力
+/// - 維護成本對應的額外消耗
 pub fn analyze_balance(node: &ChainNode, data: &GameData) -> BalanceReport {
     let mut production: HashMap<ResourceId, f64> = HashMap::new();
     let mut consumption: HashMap<ResourceId, f64> = HashMap::new();
@@ -197,7 +208,7 @@ fn aggregate_maintenance(machine_totals: &[MachineTally]) -> Vec<Ingredient> {
     result
 }
 
-/// Analyze resource balance from a list of (recipe_id, machine_count) entries.
+/// 由 `(recipe_id, machine_count)` 列表分析資源平衡。
 pub fn analyze_balance_from_recipes(entries: &[(String, f64)], data: &GameData) -> BalanceReport {
     let recipes_map = data.recipes_map();
     let machines_map = data.machines_map();
@@ -399,7 +410,7 @@ fn collect_rates(
     consumption: &mut HashMap<ResourceId, f64>,
     machine_counts: &mut HashMap<String, (String, f64)>,
 ) {
-    // This node produces its outputs and consumes its inputs
+    // 節點本身：產出 + 消耗。
     for output in &node.outputs {
         *production.entry(output.resource_id.clone()).or_insert(0.0) += output.amount;
     }
@@ -407,13 +418,13 @@ fn collect_rates(
         *consumption.entry(input.resource_id.clone()).or_insert(0.0) += input.amount;
     }
 
-    // Accumulate machine count by machine_id so lookups in machines_map are correct.
+    // 以 machine_id 聚合機器數，確保後續查表一致。
     let entry = machine_counts
         .entry(node.machine_id.clone())
         .or_insert_with(|| (node.machine_name.clone(), 0.0));
     entry.1 += node.machines_needed;
 
-    // Recurse into children
+    // 遞迴累計子節點。
     for child in &node.children {
         if let ChainSource::Recipe(ref child_node) = child.source {
             collect_rates(child_node, production, consumption, machine_counts);
