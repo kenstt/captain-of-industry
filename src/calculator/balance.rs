@@ -197,6 +197,7 @@ fn aggregate_maintenance(machine_totals: &[MachineTally]) -> Vec<Ingredient> {
 pub fn analyze_balance_from_recipes(
     entries: &[(String, f64)],
     data: &GameData,
+    external: &ExternalFlows,
 ) -> BalanceReport {
     let recipes_map = data.recipes_map();
     let machines_map = data.machines_map();
@@ -204,6 +205,15 @@ pub fn analyze_balance_from_recipes(
 
     let mut production: HashMap<ResourceId, f64> = HashMap::new();
     let mut consumption: HashMap<ResourceId, f64> = HashMap::new();
+
+    // Apply external supplies/consumptions (per minute)
+    for ing in &external.supplies_per_min {
+        *production.entry(ing.resource_id.clone()).or_insert(0.0) += ing.amount;
+    }
+    for ing in &external.consumptions_per_min {
+        *consumption.entry(ing.resource_id.clone()).or_insert(0.0) += ing.amount;
+    }
+
     // machine_id -> (machine_name, total_count)
     let mut machine_counts: HashMap<String, (String, f64)> = HashMap::new();
 

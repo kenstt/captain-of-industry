@@ -9,6 +9,10 @@ use crate::ui::theme;
 #[derive(Serialize, Deserialize)]
 struct BalanceConfig {
     entries: Vec<BalanceConfigEntry>,
+    #[serde(default)]
+    supplies: Vec<ExternalConfigEntry>,
+    #[serde(default)]
+    consumptions: Vec<ExternalConfigEntry>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -16,6 +20,18 @@ struct BalanceConfigEntry {
     recipe_id: String,
     machine_count: String,
     selected_tag: Option<String>,
+}
+
+#[derive(Serialize, Deserialize, Clone)]
+struct ExternalConfigEntry {
+    resource_id: String,
+    rate: String,
+}
+
+#[derive(Clone)]
+pub struct ExternalEntry {
+    resource_id: String,
+    rate: String,
 }
 
 fn format_maintenance(
@@ -84,6 +100,14 @@ fn recipe_label(r: &Recipe, data: &GameData) -> String {
     }
 }
 
+fn resource_label(res: &Resource) -> String {
+    res
+        .name_zh
+        .as_deref()
+        .map(|zh| format!("{} ({})", zh, res.name))
+        .unwrap_or_else(|| res.name.clone())
+}
+
 pub struct BalanceEntry {
     pub recipe_id: String,
     pub machine_count: String,
@@ -92,7 +116,10 @@ pub struct BalanceEntry {
 
 pub struct BalanceViewState {
     pub entries: Vec<BalanceEntry>,
+    pub supplies: Vec<ExternalEntry>,
+    pub consumptions: Vec<ExternalEntry>,
     pub report: Option<BalanceReport>,
+    pub external_category: Option<ResourceCategory>,
     last_fingerprint: String,
 }
 
@@ -104,7 +131,10 @@ impl Default for BalanceViewState {
                 machine_count: "1".to_string(),
                 selected_tag: None,
             }],
+            supplies: vec![ExternalEntry { resource_id: String::new(), rate: String::new() }],
+            consumptions: vec![ExternalEntry { resource_id: String::new(), rate: String::new() }],
             report: None,
+            external_category: None,
             last_fingerprint: String::new(),
         }
     }
@@ -136,6 +166,24 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &mut BalanceViewState, data: 
                         recipe_id: e.recipe_id.clone(),
                         machine_count: e.machine_count.clone(),
                         selected_tag: e.selected_tag.clone(),
+                    })
+                    .collect(),
+                supplies: state
+                    .supplies
+                    .iter()
+                    .filter(|e| !e.resource_id.is_empty() && !e.rate.is_empty())
+                    .map(|e| ExternalConfigEntry {
+                        resource_id: e.resource_id.clone(),
+                        rate: e.rate.clone(),
+                    })
+                    .collect(),
+                consumptions: state
+                    .consumptions
+                    .iter()
+                    .filter(|e| !e.resource_id.is_empty() && !e.rate.is_empty())
+                    .map(|e| ExternalConfigEntry {
+                        resource_id: e.resource_id.clone(),
+                        rate: e.rate.clone(),
                     })
                     .collect(),
             };
@@ -172,6 +220,24 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &mut BalanceViewState, data: 
                                 selected_tag: None,
                             });
                         }
+                        state.supplies = if config.supplies.is_empty() {
+                            vec![ExternalEntry { resource_id: String::new(), rate: String::new() }]
+                        } else {
+                            config
+                                .supplies
+                                .into_iter()
+                                .map(|e| ExternalEntry { resource_id: e.resource_id, rate: e.rate })
+                                .collect()
+                        };
+                        state.consumptions = if config.consumptions.is_empty() {
+                            vec![ExternalEntry { resource_id: String::new(), rate: String::new() }]
+                        } else {
+                            config
+                                .consumptions
+                                .into_iter()
+                                .map(|e| ExternalEntry { resource_id: e.resource_id, rate: e.rate })
+                                .collect()
+                        };
                         state.last_fingerprint = String::new();
                     }
                 }
@@ -225,7 +291,7 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &mut BalanceViewState, data: 
 
             egui::ComboBox::from_id_salt(format!("balance_recipe_{i}"))
                 .selected_text(&selected_label)
-                .width(350.0)
+                .width(450.0)
                 .show_ui(ui, |ui| {
                     for recipe in &data.recipes {
                         // Apply tag filter
@@ -280,13 +346,152 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &mut BalanceViewState, data: 
         });
     }
 
+    // External supplies/consumptions editor
+    ui.separator();
+    ui.heading(t!("external_flows"));
+
+    // Category filter for resources
+    ui.horizontal(|ui| {
+        ui.label(t!("resource_category_filter"));
+        let selected_text = match state.external_category {
+            None => t!("all_categories").to_string(),
+            Some(ref c) => t!(c.i18n_key()).to_string(),
+        };
+        egui::ComboBox::from_id_salt("ext_cat")
+            .selected_text(selected_text)
+            .width(150.0)
+            .show_ui(ui, |ui| {
+                if ui
+                    .selectable_label(state.external_category.is_none(), t!("all_categories"))
+                    .clicked()
+                {
+                    state.external_category = None;
+                }
+                for cat in ResourceCategory::all() {
+                    let is_sel = matches!(state.external_category, Some(ref c) if c == cat);
+                    if ui
+                        .selectable_label(is_sel, t!(cat.i18n_key()))
+                        .clicked()
+                    {
+                        state.external_category = Some(cat.clone());
+                    }
+                }
+            });
+    });
+
+    let mut resources = vec![];
+    for r in &data.resources {
+        let matches_cat = match &state.external_category {
+            Some(c) => &r.category == c,
+            None => true,
+        };
+
+        // If category is Gaseous, we also include Liquid items that look like gas
+        let is_gaseous_match = if let Some(ResourceCategory::Gaseous) = &state.external_category {
+            r.id.0 == "oxygen" || r.id.0 == "hydrogen" || r.id.0 == "nitrogen" || r.id.0 == "chlorine" || r.id.0 == "fuel_gas" || r.id.0 == "carbon_dioxide" || r.id.0 == "ammonia"
+        } else {
+            false
+        };
+
+        // If category is Food, we also include Product/Intermediate items that are food
+        let is_food_match = if let Some(ResourceCategory::Food) = &state.external_category {
+            r.id.0 == "bread" || r.id.0 == "tofu" || r.id.0 == "food_pack" || r.id.0 == "cooking_oil" || r.id.0 == "sugar" || r.id.0 == "flour"
+        } else {
+            false
+        };
+
+        // If category is Crops, we also include Product items that are crops
+        let is_crops_match = if let Some(ResourceCategory::Crops) = &state.external_category {
+            r.id.0 == "potato" || r.id.0 == "wheat" || r.id.0 == "corn" || r.id.0 == "soybean" || r.id.0 == "sugar_cane" || r.id.0 == "vegetables" || r.id.0 == "fruit" || r.id.0 == "grain"
+        } else {
+            false
+        };
+
+        if matches_cat || is_gaseous_match || is_food_match || is_crops_match {
+            resources.push(r);
+        }
+    }
+
+    // Supplies
+    ui.label(t!("supplies_per_min"));
+    let mut remove_supply: Option<usize> = None;
+    for (i, item) in state.supplies.iter_mut().enumerate() {
+        ui.horizontal(|ui| {
+            let selected_text = if item.resource_id.is_empty() {
+                t!("select_resource").to_string()
+            } else {
+                data.resources
+                    .iter()
+                    .find(|r| r.id.0 == item.resource_id)
+                    .map(resource_label)
+                    .unwrap_or_else(|| item.resource_id.clone())
+            };
+            egui::ComboBox::from_id_salt(format!("supply_res_{}", i))
+                .selected_text(selected_text)
+                .width(300.0)
+                .show_ui(ui, |ui| {
+                    for r in &resources {
+                        ui.selectable_value(&mut item.resource_id, r.id.0.clone(), resource_label(r));
+                    }
+                });
+            ui.add(egui::TextEdit::singleline(&mut item.rate).hint_text(t!("rate_per_min")).desired_width(120.0));
+            if ui.button(t!("remove")).clicked() { remove_supply = Some(i); }
+        });
+    }
+    if let Some(idx) = remove_supply { if state.supplies.len() > 1 { state.supplies.remove(idx); } }
+    if ui.small_button(t!("add")).clicked() { state.supplies.push(ExternalEntry { resource_id: String::new(), rate: String::new() }); }
+
+    ui.separator();
+    ui.label(t!("consumptions_per_min"));
+    let mut remove_cons: Option<usize> = None;
+    for (i, item) in state.consumptions.iter_mut().enumerate() {
+        ui.horizontal(|ui| {
+            let selected_text = if item.resource_id.is_empty() {
+                t!("select_resource").to_string()
+            } else {
+                data.resources
+                    .iter()
+                    .find(|r| r.id.0 == item.resource_id)
+                    .map(resource_label)
+                    .unwrap_or_else(|| item.resource_id.clone())
+            };
+            egui::ComboBox::from_id_salt(format!("cons_res_{}", i))
+                .selected_text(selected_text)
+                .width(300.0)
+                .show_ui(ui, |ui| {
+                    for r in &resources {
+                        ui.selectable_value(&mut item.resource_id, r.id.0.clone(), resource_label(r));
+                    }
+                });
+            ui.add(egui::TextEdit::singleline(&mut item.rate).hint_text(t!("rate_per_min")).desired_width(120.0));
+            if ui.button(t!("remove")).clicked() { remove_cons = Some(i); }
+        });
+    }
+    if let Some(idx) = remove_cons { if state.consumptions.len() > 1 { state.consumptions.remove(idx); } }
+    if ui.small_button(t!("add")).clicked() { state.consumptions.push(ExternalEntry { resource_id: String::new(), rate: String::new() }); }
+
     // Auto-calculate balance only when inputs change
-    let fingerprint: String = state
-        .entries
-        .iter()
-        .map(|e| format!("{}:{}", e.recipe_id, e.machine_count))
-        .collect::<Vec<_>>()
-        .join("|");
+    let fingerprint: String = {
+        let part_entries = state
+            .entries
+            .iter()
+            .map(|e| format!("{}:{}", e.recipe_id, e.machine_count))
+            .collect::<Vec<_>>()
+            .join("|");
+        let part_supplies = state
+            .supplies
+            .iter()
+            .map(|e| format!("{}:{}", e.resource_id, e.rate))
+            .collect::<Vec<_>>()
+            .join("|");
+        let part_cons = state
+            .consumptions
+            .iter()
+            .map(|e| format!("{}:{}", e.resource_id, e.rate))
+            .collect::<Vec<_>>()
+            .join("|");
+        format!("{}||{}||{}", part_entries, part_supplies, part_cons)
+    };
 
     if fingerprint != state.last_fingerprint {
         state.last_fingerprint = fingerprint;
@@ -307,7 +512,25 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &mut BalanceViewState, data: 
         state.report = if parsed.is_empty() {
             None
         } else {
-            Some(balance::analyze_balance_from_recipes(&parsed, data))
+            let external = ExternalFlows {
+                supplies_per_min: state
+                    .supplies
+                    .iter()
+                    .filter_map(|e| {
+                        if e.resource_id.is_empty() { return None; }
+                        e.rate.parse::<f64>().ok().filter(|v| *v > 0.0).map(|amt| Ingredient { resource_id: ResourceId(e.resource_id.clone()), amount: amt })
+                    })
+                    .collect(),
+                consumptions_per_min: state
+                    .consumptions
+                    .iter()
+                    .filter_map(|e| {
+                        if e.resource_id.is_empty() { return None; }
+                        e.rate.parse::<f64>().ok().filter(|v| *v > 0.0).map(|amt| Ingredient { resource_id: ResourceId(e.resource_id.clone()), amount: amt })
+                    })
+                    .collect(),
+            };
+            Some(balance::analyze_balance_from_recipes(&parsed, data, &external))
         };
     }
 

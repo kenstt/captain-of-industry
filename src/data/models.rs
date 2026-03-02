@@ -14,9 +14,12 @@ impl std::fmt::Display for ResourceId {
 pub enum ResourceCategory {
     Mineral,
     Liquid,
+    Gaseous,
+    Food,
     Intermediate,
     Product,
     Waste,
+    Crops,
     Other,
 }
 
@@ -31,9 +34,12 @@ impl ResourceCategory {
         &[
             ResourceCategory::Mineral,
             ResourceCategory::Liquid,
+            ResourceCategory::Gaseous,
+            ResourceCategory::Food,
             ResourceCategory::Intermediate,
             ResourceCategory::Product,
             ResourceCategory::Waste,
+            ResourceCategory::Crops,
             ResourceCategory::Other,
         ]
     }
@@ -42,9 +48,12 @@ impl ResourceCategory {
         match self {
             ResourceCategory::Mineral => "cat_mineral",
             ResourceCategory::Liquid => "cat_liquid",
+            ResourceCategory::Gaseous => "cat_gaseous",
+            ResourceCategory::Food => "cat_food",
             ResourceCategory::Intermediate => "cat_intermediate",
             ResourceCategory::Product => "cat_product",
             ResourceCategory::Waste => "cat_waste",
+            ResourceCategory::Crops => "cat_crops",
             ResourceCategory::Other => "cat_other",
         }
     }
@@ -217,6 +226,14 @@ pub struct BalanceReport {
     pub total_workers: f64,
     pub total_computing: f64,
     pub total_maintenance: Vec<Ingredient>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct ExternalFlows {
+    #[serde(default)]
+    pub supplies_per_min: Vec<Ingredient>,
+    #[serde(default)]
+    pub consumptions_per_min: Vec<Ingredient>,
 }
 
 #[derive(Debug, Clone)]

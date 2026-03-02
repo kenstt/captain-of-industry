@@ -85,9 +85,12 @@
   "tags": "標籤",
   "cat_mineral": "礦物",
   "cat_liquid": "液體",
+  "cat_gaseous": "氣體",
+  "cat_food": "食物",
   "cat_intermediate": "中間產物",
   "cat_product": "成品",
   "cat_waste": "廢料",
+  "cat_crops": "農作物",
   "cat_other": "其他",
 
   "workers": "人力",
@@ -108,5 +111,14 @@
   "maintenance_per_month": "維護 (/月)",
   "total_maintenance": "總維護",
   "save_balance_config": "儲存配置",
-  "load_balance_config": "讀取配置"
+  "load_balance_config": "讀取配置",
+
+  "external_flows": "外部供給 / 外部消耗",
+  "supplies_per_min": "外部供給（每分鐘）",
+  "consumptions_per_min": "外部消耗（每分鐘）",
+  "select_resource": "選擇資源",
+  "rate_per_min": "速率（每分鐘）",
+  "add": "新增",
+  "resource_category_filter": "資源類別",
+  "all_categories": "全部"
 }

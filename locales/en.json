@@ -85,9 +85,12 @@
   "tags": "Tags",
   "cat_mineral": "Mineral",
   "cat_liquid": "Liquid",
+  "cat_gaseous": "Gaseous",
+  "cat_food": "Food",
   "cat_intermediate": "Intermediate",
   "cat_product": "Product",
   "cat_waste": "Waste",
+  "cat_crops": "Crops",
   "cat_other": "Other",
 
   "workers": "Workers",
@@ -108,5 +111,14 @@
   "maintenance_per_month": "Maintenance (/month)",
   "total_maintenance": "Total Maintenance",
   "save_balance_config": "Save Config",
-  "load_balance_config": "Load Config"
+  "load_balance_config": "Load Config",
+
+  "external_flows": "External Supplies / Consumptions",
+  "supplies_per_min": "Supplies (/min)",
+  "consumptions_per_min": "Consumptions (/min)",
+  "select_resource": "Select Resource",
+  "rate_per_min": "Rate (/min)",
+  "add": "Add",
+  "resource_category_filter": "Resource Category",
+  "all_categories": "All"
 }
