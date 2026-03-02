@@ -112,12 +112,12 @@ impl App {
         // Load builtin data
         let data = loader::load_builtin_data();
 
-        // Default to English
-        i18n::set_locale(Locale::En);
+        // Default to Chinese
+        i18n::set_locale(Locale::ZhTW);
 
         Self {
             current_tab: Tab::RecipeBrowser,
-            locale: Locale::En,
+            locale: Locale::ZhTW,
             data,
             browser_state: RecipeBrowserState::default(),
             editor_state: RecipeEditorState::default(),

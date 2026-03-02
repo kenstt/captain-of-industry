@@ -34,6 +34,7 @@ pub struct BalanceEntry {
 pub struct BalanceViewState {
     pub entries: Vec<BalanceEntry>,
     pub report: Option<BalanceReport>,
+    last_fingerprint: String,
 }
 
 impl Default for BalanceViewState {
@@ -44,6 +45,7 @@ impl Default for BalanceViewState {
                 machine_count: "1".to_string(),
             }],
             report: None,
+            last_fingerprint: String::new(),
         }
     }
 }
@@ -106,35 +108,44 @@ pub fn show_balance_view(ui: &mut egui::Ui, state: &mut BalanceViewState, data: 
         }
     }
 
-    ui.horizontal(|ui| {
-        // Add recipe entry button
-        if ui.button(t!("add_recipe_entry")).clicked() {
-            state.entries.push(BalanceEntry {
-                recipe_id: String::new(),
-                machine_count: "1".to_string(),
-            });
-        }
+    // Add recipe entry button
+    if ui.button(t!("add_recipe_entry")).clicked() {
+        state.entries.push(BalanceEntry {
+            recipe_id: String::new(),
+            machine_count: "1".to_string(),
+        });
+    }
 
-        // Calculate button
-        if ui.button(t!("calculate_balance")).clicked() {
-            let parsed: Vec<(String, f64)> = state
-                .entries
-                .iter()
-                .filter(|e| !e.recipe_id.is_empty())
-                .filter_map(|e| {
-                    e.machine_count
-                        .parse::<f64>()
-                        .ok()
-                        .filter(|&v| v > 0.0)
-                        .map(|v| (e.recipe_id.clone(), v))
-                })
-                .collect();
+    // Auto-calculate balance only when inputs change
+    let fingerprint: String = state
+        .entries
+        .iter()
+        .map(|e| format!("{}:{}", e.recipe_id, e.machine_count))
+        .collect::<Vec<_>>()
+        .join("|");
 
-            if !parsed.is_empty() {
-                state.report = Some(balance::analyze_balance_from_recipes(&parsed, data));
-            }
-        }
-    });
+    if fingerprint != state.last_fingerprint {
+        state.last_fingerprint = fingerprint;
+
+        let parsed: Vec<(String, f64)> = state
+            .entries
+            .iter()
+            .filter(|e| !e.recipe_id.is_empty())
+            .filter_map(|e| {
+                e.machine_count
+                    .parse::<f64>()
+                    .ok()
+                    .filter(|&v| v > 0.0)
+                    .map(|v| (e.recipe_id.clone(), v))
+            })
+            .collect();
+
+        state.report = if parsed.is_empty() {
+            None
+        } else {
+            Some(balance::analyze_balance_from_recipes(&parsed, data))
+        };
+    }
 
     ui.separator();
 
