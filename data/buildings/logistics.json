@@ -1,0 +1,16 @@
+[
+  {
+    "id": "conveyor",
+    "name": "傳送帶",
+    "name_en": "Conveyor",
+    "category": "Logistics",
+    "footprint": { "width": 1, "height": 1 },
+    "construction_costs": [
+      { "resource_id": "construction_parts", "amount": 1 }
+    ],
+    "workers": 0,
+    "base_electricity_kw": 1,
+    "available_recipes": [],
+    "research_required": null
+  }
+]

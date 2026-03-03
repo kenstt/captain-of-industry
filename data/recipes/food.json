@@ -1,0 +1,120 @@
+[
+  {
+    "id": "bake_bread",
+    "name": "烘焙麵包",
+    "name_en": "Bake Bread",
+    "inputs": [
+      { "resource_id": "flour", "amount": 8 },
+      { "resource_id": "water", "amount": 4 }
+    ],
+    "outputs": [
+      { "resource_id": "bread", "amount": 12 }
+    ],
+    "duration": 60,
+    "building_id": "baking_unit",
+    "is_default": true,
+    "research_required": "wheat_farming"
+  },
+  {
+    "id": "bake_cake",
+    "name": "烘焙蛋糕",
+    "name_en": "Bake Cake",
+    "inputs": [
+      { "resource_id": "flour", "amount": 5 },
+      { "resource_id": "sugar", "amount": 2 },
+      { "resource_id": "cooking_oil", "amount": 1 },
+      { "resource_id": "eggs", "amount": 1 },
+      { "resource_id": "fruit", "amount": 1 }
+    ],
+    "outputs": [
+      { "resource_id": "cake", "amount": 7 }
+    ],
+    "duration": 60,
+    "building_id": "baking_unit",
+    "research_required": "wheat_farming"
+  },
+  {
+    "id": "process_meat",
+    "name": "加工肉類",
+    "name_en": "Process Meat",
+    "inputs": [
+      { "resource_id": "chicken_carcass", "amount": 10 },
+      { "resource_id": "water", "amount": 3 },
+      { "resource_id": "salt", "amount": 1 }
+    ],
+    "outputs": [
+      { "resource_id": "meat", "amount": 5 },
+      { "resource_id": "meat_trimmings", "amount": 2 },
+      { "resource_id": "animal_feed", "amount": 2 }
+    ],
+    "duration": 60,
+    "building_id": "food_processor",
+    "is_default": true,
+    "research_required": "chicken_farm"
+  },
+  {
+    "id": "process_tofu",
+    "name": "加工豆腐",
+    "name_en": "Process Tofu",
+    "inputs": [
+      { "resource_id": "soybean", "amount": 6 },
+      { "resource_id": "water", "amount": 4 }
+    ],
+    "outputs": [
+      { "resource_id": "tofu", "amount": 8 },
+      { "resource_id": "animal_feed", "amount": 3 }
+    ],
+    "duration": 60,
+    "building_id": "food_processor",
+    "research_required": "soybean_farming"
+  },
+  {
+    "id": "process_sausage",
+    "name": "製作香腸",
+    "name_en": "Make Sausage",
+    "inputs": [
+      { "resource_id": "meat_trimmings", "amount": 8 },
+      { "resource_id": "flour", "amount": 2 },
+      { "resource_id": "salt", "amount": 3 }
+    ],
+    "outputs": [
+      { "resource_id": "sausage", "amount": 8 }
+    ],
+    "duration": 60,
+    "building_id": "food_processor",
+    "research_required": "chicken_farm"
+  },
+  {
+    "id": "process_snack",
+    "name": "製作零食",
+    "name_en": "Make Snack",
+    "inputs": [
+      { "resource_id": "corn", "amount": 8 },
+      { "resource_id": "salt", "amount": 2 },
+      { "resource_id": "cooking_oil", "amount": 1 },
+      { "resource_id": "plastic", "amount": 1 }
+    ],
+    "outputs": [
+      { "resource_id": "snack", "amount": 8 }
+    ],
+    "duration": 60,
+    "building_id": "food_processor",
+    "research_required": "basic_farming"
+  },
+  {
+    "id": "mill_flour",
+    "name": "磨麵粉",
+    "name_en": "Mill Flour",
+    "inputs": [
+      { "resource_id": "wheat", "amount": 10 }
+    ],
+    "outputs": [
+      { "resource_id": "flour", "amount": 10 },
+      { "resource_id": "animal_feed", "amount": 2 }
+    ],
+    "duration": 60,
+    "building_id": "food_processor",
+    "is_default": true,
+    "research_required": "wheat_farming"
+  }
+]

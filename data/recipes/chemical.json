@@ -1,0 +1,84 @@
+[
+  {
+    "id": "crush_iron_ore",
+    "name": "破碎鐵礦",
+    "name_en": "Crush Iron Ore",
+    "inputs": [
+      { "resource_id": "iron_ore", "amount": 16 }
+    ],
+    "outputs": [
+      { "resource_id": "iron_ore_crushed", "amount": 16 }
+    ],
+    "duration": 60,
+    "building_id": "crusher",
+    "is_default": true
+  },
+  {
+    "id": "crush_copper_ore",
+    "name": "破碎銅礦",
+    "name_en": "Crush Copper Ore",
+    "inputs": [
+      { "resource_id": "copper_ore", "amount": 16 }
+    ],
+    "outputs": [
+      { "resource_id": "copper_ore_crushed", "amount": 16 }
+    ],
+    "duration": 60,
+    "building_id": "crusher"
+  },
+  {
+    "id": "crush_rock",
+    "name": "破碎岩石",
+    "name_en": "Crush Rock",
+    "inputs": [
+      { "resource_id": "rock", "amount": 16 }
+    ],
+    "outputs": [
+      { "resource_id": "gravel", "amount": 16 }
+    ],
+    "duration": 60,
+    "building_id": "crusher"
+  },
+  {
+    "id": "pump_groundwater",
+    "name": "抽取地下水",
+    "name_en": "Pump Groundwater",
+    "inputs": [],
+    "outputs": [
+      { "resource_id": "water", "amount": 48 }
+    ],
+    "duration": 60,
+    "building_id": "groundwater_pump",
+    "is_default": true,
+    "research_required": "groundwater_pump"
+  },
+  {
+    "id": "pump_seawater",
+    "name": "抽取海水",
+    "name_en": "Pump Seawater",
+    "inputs": [],
+    "outputs": [
+      { "resource_id": "seawater", "amount": 48 }
+    ],
+    "duration": 60,
+    "building_id": "seawater_pump",
+    "is_default": true
+  },
+  {
+    "id": "treat_wastewater",
+    "name": "處理廢水",
+    "name_en": "Treat Wastewater",
+    "inputs": [
+      { "resource_id": "waste_water", "amount": 48 },
+      { "resource_id": "chlorine", "amount": 2 }
+    ],
+    "outputs": [
+      { "resource_id": "water", "amount": 36 },
+      { "resource_id": "sludge", "amount": 8 }
+    ],
+    "duration": 60,
+    "building_id": "wastewater_treatment",
+    "is_default": true,
+    "research_required": "wastewater_treatment"
+  }
+]

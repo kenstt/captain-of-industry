@@ -1,0 +1,17 @@
+[
+  {
+    "id": "research_lab_1",
+    "name": "研究站",
+    "name_en": "Research Lab",
+    "category": "Research",
+    "footprint": { "width": 6, "height": 6 },
+    "construction_costs": [
+      { "resource_id": "construction_parts_2", "amount": 40 }
+    ],
+    "workers": 15,
+    "base_electricity_kw": 100,
+    "unity_consumption_per_month": 2.0,
+    "available_recipes": [],
+    "research_required": null
+  }
+]

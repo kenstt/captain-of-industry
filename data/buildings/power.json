@@ -1,0 +1,82 @@
+[
+  {
+    "id": "diesel_generator",
+    "name": "柴油發電機",
+    "name_en": "Diesel Generator",
+    "category": "Power",
+    "footprint": { "width": 3, "height": 4 },
+    "construction_costs": [
+      { "resource_id": "construction_parts", "amount": 20 }
+    ],
+    "workers": 2,
+    "base_electricity_kw": -800,
+    "maintenance": {
+      "tier": "Maintenance1",
+      "amount_per_month": 6.0,
+      "idle_fraction": 0.33
+    },
+    "available_recipes": [
+      "diesel_gen_1"
+    ],
+    "research_required": null,
+    "unity_boost": 0.2
+  },
+  {
+    "id": "diesel_generator_2",
+    "name": "柴油發電機 II",
+    "name_en": "Diesel Generator II",
+    "category": "Power",
+    "footprint": { "width": 3, "height": 8 },
+    "construction_costs": [
+      { "resource_id": "construction_parts_3", "amount": 40 }
+    ],
+    "workers": 2,
+    "base_electricity_kw": -5000,
+    "maintenance": {
+      "tier": "Maintenance1",
+      "amount_per_month": 10.0,
+      "idle_fraction": 0.33
+    },
+    "available_recipes": [
+      "diesel_gen_2"
+    ],
+    "research_required": "diesel_advanced",
+    "unity_boost": 0.2
+  },
+  {
+    "id": "boiler_coal",
+    "name": "燃煤鍋爐",
+    "name_en": "Coal Boiler",
+    "category": "Power",
+    "footprint": { "width": 5, "height": 4 },
+    "construction_costs": [
+      { "resource_id": "construction_parts_2", "amount": 40 }
+    ],
+    "workers": 4,
+    "base_electricity_kw": 0,
+    "available_recipes": [
+      "boiler_coal_steam"
+    ],
+    "research_required": null
+  },
+  {
+    "id": "solar_panel",
+    "name": "太陽能板",
+    "name_en": "Solar Panel",
+    "category": "Power",
+    "footprint": { "width": 10, "height": 10 },
+    "construction_costs": [
+      { "resource_id": "construction_parts_4", "amount": 10 },
+      { "resource_id": "solar_cell", "amount": 120 }
+    ],
+    "workers": 0,
+    "base_electricity_kw": -150,
+    "maintenance": {
+      "tier": "Maintenance2",
+      "amount_per_month": 0.2,
+      "idle_fraction": 0.33
+    },
+    "available_recipes": [],
+    "research_required": null
+  }
+]

@@ -1,1 +1,92 @@
-[]
+[
+  {
+    "id": "fuel_save_1",
+    "name": "節油令",
+    "name_en": "Fuel Conservation",
+    "unity_cost_per_month": -0.5,
+    "effects": [
+      { "target": "VehicleFuel", "modifier_type": "Multiply", "value": 0.85 }
+    ]
+  },
+  {
+    "id": "food_save_1",
+    "name": "節食令",
+    "name_en": "Food Rationing",
+    "unity_cost_per_month": -0.5,
+    "effects": [
+      { "target": "FoodConsumption", "modifier_type": "Multiply", "value": 0.80 }
+    ]
+  },
+  {
+    "id": "maintenance_save_1",
+    "name": "維護節約",
+    "name_en": "Maintenance Savings",
+    "unity_cost_per_month": -0.5,
+    "effects": [
+      { "target": "MaintenanceConsumption", "modifier_type": "Multiply", "value": 0.85 }
+    ]
+  },
+  {
+    "id": "feast_1",
+    "name": "盛宴",
+    "name_en": "Feast",
+    "unity_cost_per_month": 2.0,
+    "effects": [
+      { "target": "FoodConsumption", "modifier_type": "Multiply", "value": 1.25 }
+    ]
+  },
+  {
+    "id": "water_save_1",
+    "name": "節水令",
+    "name_en": "Water Conservation",
+    "unity_cost_per_month": -0.5,
+    "effects": [
+      { "target": "WaterConsumption", "modifier_type": "Multiply", "value": 0.85 }
+    ]
+  },
+  {
+    "id": "ship_fuel_save_1",
+    "name": "貨船節油",
+    "name_en": "Ship Fuel Conservation",
+    "unity_cost_per_month": -0.5,
+    "effects": [
+      { "target": "ShipFuel", "modifier_type": "Multiply", "value": 0.85 }
+    ]
+  },
+  {
+    "id": "farm_boost_1",
+    "name": "農業增產",
+    "name_en": "Farm Boost",
+    "unity_cost_per_month": -1.0,
+    "effects": [
+      { "target": "FarmYield", "modifier_type": "Multiply", "value": 1.10 }
+    ]
+  },
+  {
+    "id": "solar_boost_1",
+    "name": "太陽能增產",
+    "name_en": "Solar Boost",
+    "unity_cost_per_month": -0.5,
+    "effects": [
+      { "target": "SolarOutput", "modifier_type": "Multiply", "value": 1.15 }
+    ]
+  },
+  {
+    "id": "household_goods_save_1",
+    "name": "家用品節約",
+    "name_en": "Household Goods Savings",
+    "unity_cost_per_month": -0.5,
+    "effects": [
+      { "target": "HouseholdGoodsConsumption", "modifier_type": "Multiply", "value": 0.85 }
+    ]
+  },
+  {
+    "id": "recycling_boost_1",
+    "name": "回收增效",
+    "name_en": "Recycling Boost",
+    "unity_cost_per_month": -0.5,
+    "effects": [
+      { "target": "RecyclingEfficiency", "modifier_type": "Multiply", "value": 1.15 }
+    ]
+  }
+]

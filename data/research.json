@@ -39,5 +39,77 @@
     "name": "維護 I",
     "name_en": "Maintenance I",
     "prerequisites": ["maintenance_0"]
+  },
+  {
+    "id": "basic_farming",
+    "name": "基礎農業",
+    "name_en": "Basic Farming",
+    "prerequisites": []
+  },
+  {
+    "id": "irrigated_farming",
+    "name": "灌溉農業",
+    "name_en": "Irrigated Farming",
+    "prerequisites": ["basic_farming"]
+  },
+  {
+    "id": "greenhouse",
+    "name": "溫室",
+    "name_en": "Greenhouse",
+    "prerequisites": ["irrigated_farming"]
+  },
+  {
+    "id": "greenhouse_2",
+    "name": "溫室 II",
+    "name_en": "Greenhouse II",
+    "prerequisites": ["greenhouse"]
+  },
+  {
+    "id": "chicken_farm",
+    "name": "養雞場",
+    "name_en": "Chicken Farm",
+    "prerequisites": ["basic_farming"]
+  },
+  {
+    "id": "soybean_farming",
+    "name": "大豆種植",
+    "name_en": "Soybean Farming",
+    "prerequisites": ["basic_farming"]
+  },
+  {
+    "id": "wheat_farming",
+    "name": "小麥種植",
+    "name_en": "Wheat Farming",
+    "prerequisites": ["basic_farming"]
+  },
+  {
+    "id": "diesel_advanced",
+    "name": "進階柴油發電",
+    "name_en": "Advanced Diesel Power",
+    "prerequisites": []
+  },
+  {
+    "id": "concrete_production",
+    "name": "混凝土生產",
+    "name_en": "Concrete Production",
+    "prerequisites": []
+  },
+  {
+    "id": "construction_2",
+    "name": "建設 II",
+    "name_en": "Construction II",
+    "prerequisites": ["concrete_production"]
+  },
+  {
+    "id": "groundwater_pump",
+    "name": "地下水泵",
+    "name_en": "Groundwater Pump",
+    "prerequisites": []
+  },
+  {
+    "id": "wastewater_treatment",
+    "name": "廢水處理",
+    "name_en": "Wastewater Treatment",
+    "prerequisites": ["groundwater_pump"]
   }
 ]

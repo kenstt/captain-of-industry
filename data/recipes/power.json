@@ -1,0 +1,47 @@
+[
+  {
+    "id": "diesel_gen_1",
+    "name": "柴油發電",
+    "name_en": "Diesel Generation",
+    "inputs": [
+      { "resource_id": "diesel", "amount": 3 }
+    ],
+    "outputs": [
+      { "resource_id": "exhaust", "amount": 4 }
+    ],
+    "duration": 60,
+    "building_id": "diesel_generator",
+    "is_default": true
+  },
+  {
+    "id": "diesel_gen_2",
+    "name": "柴油發電 II",
+    "name_en": "Diesel Generation II",
+    "inputs": [
+      { "resource_id": "diesel", "amount": 18 }
+    ],
+    "outputs": [
+      { "resource_id": "exhaust", "amount": 24 }
+    ],
+    "duration": 60,
+    "building_id": "diesel_generator_2",
+    "is_default": true,
+    "research_required": "diesel_advanced"
+  },
+  {
+    "id": "boiler_coal_steam",
+    "name": "燃煤鍋爐蒸氣",
+    "name_en": "Coal Boiler Steam",
+    "inputs": [
+      { "resource_id": "water", "amount": 8 },
+      { "resource_id": "coal", "amount": 5 }
+    ],
+    "outputs": [
+      { "resource_id": "high_pressure_steam", "amount": 8 },
+      { "resource_id": "exhaust", "amount": 10 }
+    ],
+    "duration": 60,
+    "building_id": "boiler_coal",
+    "is_default": true
+  }
+]

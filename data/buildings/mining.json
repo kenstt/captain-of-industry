@@ -1,0 +1,54 @@
+[
+  {
+    "id": "mine_control_tower",
+    "name": "礦場控制塔",
+    "name_en": "Mine Control Tower",
+    "category": "Mining",
+    "footprint": { "width": 4, "height": 4 },
+    "construction_costs": [
+      { "resource_id": "construction_parts", "amount": 20 }
+    ],
+    "workers": 20,
+    "base_electricity_kw": 0,
+    "available_recipes": [],
+    "research_required": null
+  },
+  {
+    "id": "crusher",
+    "name": "破碎機",
+    "name_en": "Crusher",
+    "category": "Mining",
+    "footprint": { "width": 6, "height": 4 },
+    "construction_costs": [
+      { "resource_id": "construction_parts", "amount": 20 }
+    ],
+    "workers": 2,
+    "base_electricity_kw": 300,
+    "maintenance": {
+      "tier": "Maintenance1",
+      "amount_per_month": 2.0,
+      "idle_fraction": 0.33
+    },
+    "available_recipes": [
+      "crush_iron_ore",
+      "crush_copper_ore",
+      "crush_rock"
+    ],
+    "research_required": null
+  },
+  {
+    "id": "coal_mine",
+    "name": "煤礦（世界礦場）",
+    "name_en": "Coal Mine (World Mine)",
+    "category": "Mining",
+    "footprint": { "width": 4, "height": 4 },
+    "construction_costs": [
+      { "resource_id": "construction_parts", "amount": 20 }
+    ],
+    "workers": 25,
+    "base_electricity_kw": 0,
+    "unity_consumption_per_month": 0.5,
+    "available_recipes": [],
+    "research_required": null
+  }
+]

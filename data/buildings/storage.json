@@ -1,0 +1,30 @@
+[
+  {
+    "id": "storage_unit",
+    "name": "倉儲單元",
+    "name_en": "Storage Unit",
+    "category": "Storage",
+    "footprint": { "width": 6, "height": 6 },
+    "construction_costs": [
+      { "resource_id": "construction_parts", "amount": 10 }
+    ],
+    "workers": 0,
+    "base_electricity_kw": 50,
+    "available_recipes": [],
+    "research_required": null
+  },
+  {
+    "id": "fluid_storage",
+    "name": "液體儲槽",
+    "name_en": "Fluid Storage",
+    "category": "Storage",
+    "footprint": { "width": 4, "height": 4 },
+    "construction_costs": [
+      { "resource_id": "construction_parts", "amount": 10 }
+    ],
+    "workers": 0,
+    "base_electricity_kw": 0,
+    "available_recipes": [],
+    "research_required": null
+  }
+]

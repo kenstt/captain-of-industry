@@ -1,0 +1,321 @@
+[
+  {
+    "id": "farm_potato",
+    "name": "種植馬鈴薯",
+    "name_en": "Farm Potato",
+    "inputs": [],
+    "outputs": [
+      { "resource_id": "potato", "amount": 58 }
+    ],
+    "duration": 180,
+    "building_id": "farm",
+    "is_default": true,
+    "research_required": "basic_farming"
+  },
+  {
+    "id": "farm_corn",
+    "name": "種植玉米",
+    "name_en": "Farm Corn",
+    "inputs": [],
+    "outputs": [
+      { "resource_id": "corn", "amount": 66 }
+    ],
+    "duration": 240,
+    "building_id": "farm",
+    "research_required": "basic_farming"
+  },
+  {
+    "id": "farm_wheat",
+    "name": "種植小麥",
+    "name_en": "Farm Wheat",
+    "inputs": [],
+    "outputs": [
+      { "resource_id": "wheat", "amount": 58 }
+    ],
+    "duration": 360,
+    "building_id": "farm",
+    "research_required": "wheat_farming"
+  },
+  {
+    "id": "farm_soybean",
+    "name": "種植大豆",
+    "name_en": "Farm Soybean",
+    "inputs": [],
+    "outputs": [
+      { "resource_id": "soybean", "amount": 22 }
+    ],
+    "duration": 240,
+    "building_id": "farm",
+    "research_required": "soybean_farming"
+  },
+  {
+    "id": "farm_vegetables",
+    "name": "種植蔬菜",
+    "name_en": "Farm Vegetables",
+    "inputs": [],
+    "outputs": [
+      { "resource_id": "vegetables", "amount": 60 }
+    ],
+    "duration": 240,
+    "building_id": "farm",
+    "research_required": "basic_farming"
+  },
+  {
+    "id": "irrigated_potato",
+    "name": "灌溉馬鈴薯",
+    "name_en": "Irrigated Potato",
+    "inputs": [
+      { "resource_id": "water", "amount": 12 }
+    ],
+    "outputs": [
+      { "resource_id": "potato", "amount": 70 }
+    ],
+    "duration": 180,
+    "building_id": "irrigated_farm",
+    "is_default": true,
+    "research_required": "irrigated_farming"
+  },
+  {
+    "id": "irrigated_corn",
+    "name": "灌溉玉米",
+    "name_en": "Irrigated Corn",
+    "inputs": [
+      { "resource_id": "water", "amount": 12 }
+    ],
+    "outputs": [
+      { "resource_id": "corn", "amount": 79 }
+    ],
+    "duration": 240,
+    "building_id": "irrigated_farm",
+    "research_required": "irrigated_farming"
+  },
+  {
+    "id": "irrigated_wheat",
+    "name": "灌溉小麥",
+    "name_en": "Irrigated Wheat",
+    "inputs": [
+      { "resource_id": "water", "amount": 12 }
+    ],
+    "outputs": [
+      { "resource_id": "wheat", "amount": 70 }
+    ],
+    "duration": 360,
+    "building_id": "irrigated_farm",
+    "research_required": "wheat_farming"
+  },
+  {
+    "id": "irrigated_soybean",
+    "name": "灌溉大豆",
+    "name_en": "Irrigated Soybean",
+    "inputs": [
+      { "resource_id": "water", "amount": 12 }
+    ],
+    "outputs": [
+      { "resource_id": "soybean", "amount": 26 }
+    ],
+    "duration": 240,
+    "building_id": "irrigated_farm",
+    "research_required": "soybean_farming"
+  },
+  {
+    "id": "irrigated_vegetables",
+    "name": "灌溉蔬菜",
+    "name_en": "Irrigated Vegetables",
+    "inputs": [
+      { "resource_id": "water", "amount": 12 }
+    ],
+    "outputs": [
+      { "resource_id": "vegetables", "amount": 72 }
+    ],
+    "duration": 240,
+    "building_id": "irrigated_farm",
+    "research_required": "irrigated_farming"
+  },
+  {
+    "id": "greenhouse_potato",
+    "name": "溫室馬鈴薯",
+    "name_en": "Greenhouse Potato",
+    "inputs": [
+      { "resource_id": "water", "amount": 18 }
+    ],
+    "outputs": [
+      { "resource_id": "potato", "amount": 84 }
+    ],
+    "duration": 180,
+    "building_id": "greenhouse",
+    "is_default": true,
+    "research_required": "greenhouse"
+  },
+  {
+    "id": "greenhouse_corn",
+    "name": "溫室玉米",
+    "name_en": "Greenhouse Corn",
+    "inputs": [
+      { "resource_id": "water", "amount": 18 }
+    ],
+    "outputs": [
+      { "resource_id": "corn", "amount": 95 }
+    ],
+    "duration": 240,
+    "building_id": "greenhouse",
+    "research_required": "greenhouse"
+  },
+  {
+    "id": "greenhouse_wheat",
+    "name": "溫室小麥",
+    "name_en": "Greenhouse Wheat",
+    "inputs": [
+      { "resource_id": "water", "amount": 18 }
+    ],
+    "outputs": [
+      { "resource_id": "wheat", "amount": 84 }
+    ],
+    "duration": 360,
+    "building_id": "greenhouse",
+    "research_required": "greenhouse"
+  },
+  {
+    "id": "greenhouse_soybean",
+    "name": "溫室大豆",
+    "name_en": "Greenhouse Soybean",
+    "inputs": [
+      { "resource_id": "water", "amount": 18 }
+    ],
+    "outputs": [
+      { "resource_id": "soybean", "amount": 32 }
+    ],
+    "duration": 240,
+    "building_id": "greenhouse",
+    "research_required": "greenhouse"
+  },
+  {
+    "id": "greenhouse_vegetables",
+    "name": "溫室蔬菜",
+    "name_en": "Greenhouse Vegetables",
+    "inputs": [
+      { "resource_id": "water", "amount": 18 }
+    ],
+    "outputs": [
+      { "resource_id": "vegetables", "amount": 86 }
+    ],
+    "duration": 240,
+    "building_id": "greenhouse",
+    "research_required": "greenhouse"
+  },
+  {
+    "id": "greenhouse_fruit",
+    "name": "溫室水果",
+    "name_en": "Greenhouse Fruit",
+    "inputs": [
+      { "resource_id": "water", "amount": 18 }
+    ],
+    "outputs": [
+      { "resource_id": "fruit", "amount": 40 }
+    ],
+    "duration": 240,
+    "building_id": "greenhouse",
+    "research_required": "greenhouse"
+  },
+  {
+    "id": "greenhouse2_potato",
+    "name": "溫室II馬鈴薯",
+    "name_en": "Greenhouse II Potato",
+    "inputs": [
+      { "resource_id": "water", "amount": 24 }
+    ],
+    "outputs": [
+      { "resource_id": "potato", "amount": 100 }
+    ],
+    "duration": 180,
+    "building_id": "greenhouse_2",
+    "is_default": true,
+    "research_required": "greenhouse_2"
+  },
+  {
+    "id": "greenhouse2_corn",
+    "name": "溫室II玉米",
+    "name_en": "Greenhouse II Corn",
+    "inputs": [
+      { "resource_id": "water", "amount": 24 }
+    ],
+    "outputs": [
+      { "resource_id": "corn", "amount": 114 }
+    ],
+    "duration": 240,
+    "building_id": "greenhouse_2",
+    "research_required": "greenhouse_2"
+  },
+  {
+    "id": "greenhouse2_wheat",
+    "name": "溫室II小麥",
+    "name_en": "Greenhouse II Wheat",
+    "inputs": [
+      { "resource_id": "water", "amount": 24 }
+    ],
+    "outputs": [
+      { "resource_id": "wheat", "amount": 100 }
+    ],
+    "duration": 360,
+    "building_id": "greenhouse_2",
+    "research_required": "greenhouse_2"
+  },
+  {
+    "id": "greenhouse2_soybean",
+    "name": "溫室II大豆",
+    "name_en": "Greenhouse II Soybean",
+    "inputs": [
+      { "resource_id": "water", "amount": 24 }
+    ],
+    "outputs": [
+      { "resource_id": "soybean", "amount": 38 }
+    ],
+    "duration": 240,
+    "building_id": "greenhouse_2",
+    "research_required": "greenhouse_2"
+  },
+  {
+    "id": "greenhouse2_vegetables",
+    "name": "溫室II蔬菜",
+    "name_en": "Greenhouse II Vegetables",
+    "inputs": [
+      { "resource_id": "water", "amount": 24 }
+    ],
+    "outputs": [
+      { "resource_id": "vegetables", "amount": 104 }
+    ],
+    "duration": 240,
+    "building_id": "greenhouse_2",
+    "research_required": "greenhouse_2"
+  },
+  {
+    "id": "greenhouse2_fruit",
+    "name": "溫室II水果",
+    "name_en": "Greenhouse II Fruit",
+    "inputs": [
+      { "resource_id": "water", "amount": 24 }
+    ],
+    "outputs": [
+      { "resource_id": "fruit", "amount": 48 }
+    ],
+    "duration": 240,
+    "building_id": "greenhouse_2",
+    "research_required": "greenhouse_2"
+  },
+  {
+    "id": "chicken_farm_produce",
+    "name": "養雞",
+    "name_en": "Chicken Farming",
+    "inputs": [
+      { "resource_id": "animal_feed", "amount": 15 },
+      { "resource_id": "water", "amount": 18 }
+    ],
+    "outputs": [
+      { "resource_id": "eggs", "amount": 7 },
+      { "resource_id": "chicken_carcass", "amount": 10 }
+    ],
+    "duration": 60,
+    "building_id": "chicken_farm",
+    "is_default": true,
+    "research_required": "chicken_farm"
+  }
+]

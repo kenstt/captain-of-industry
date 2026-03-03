@@ -1,0 +1,65 @@
+[
+  {
+    "id": "groundwater_pump",
+    "name": "地下水泵",
+    "name_en": "Groundwater Pump",
+    "category": "Services",
+    "footprint": { "width": 6, "height": 4 },
+    "construction_costs": [
+      { "resource_id": "construction_parts_2", "amount": 40 }
+    ],
+    "workers": 2,
+    "base_electricity_kw": 120,
+    "maintenance": {
+      "tier": "Maintenance1",
+      "amount_per_month": 3.8,
+      "idle_fraction": 0.33
+    },
+    "available_recipes": [
+      "pump_groundwater"
+    ],
+    "research_required": "groundwater_pump"
+  },
+  {
+    "id": "seawater_pump",
+    "name": "海水泵",
+    "name_en": "Seawater Pump",
+    "category": "Services",
+    "footprint": { "width": 4, "height": 4 },
+    "construction_costs": [
+      { "resource_id": "construction_parts_2", "amount": 50 }
+    ],
+    "workers": 1,
+    "base_electricity_kw": 100,
+    "maintenance": {
+      "tier": "Maintenance1",
+      "amount_per_month": 1.9,
+      "idle_fraction": 0.33
+    },
+    "available_recipes": [
+      "pump_seawater"
+    ],
+    "research_required": null
+  },
+  {
+    "id": "wastewater_treatment",
+    "name": "廢水處理廠",
+    "name_en": "Wastewater Treatment Plant",
+    "category": "Services",
+    "footprint": { "width": 8, "height": 6 },
+    "construction_costs": [
+      { "resource_id": "construction_parts_3", "amount": 140 }
+    ],
+    "workers": 26,
+    "base_electricity_kw": 600,
+    "maintenance": {
+      "tier": "Maintenance1",
+      "amount_per_month": 10.0,
+      "idle_fraction": 0.33
+    },
+    "available_recipes": [
+      "treat_wastewater"
+    ],
+    "research_required": "wastewater_treatment"
+  }
+]

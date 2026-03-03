@@ -1,0 +1,65 @@
+[
+  {
+    "id": "food_processor",
+    "name": "食品加工廠",
+    "name_en": "Food Processor",
+    "category": "FoodProduction",
+    "footprint": { "width": 7, "height": 7 },
+    "construction_costs": [
+      { "resource_id": "construction_parts_3", "amount": 30 }
+    ],
+    "workers": 8,
+    "base_electricity_kw": 100,
+    "maintenance": {
+      "tier": "Maintenance1",
+      "amount_per_month": 4.0,
+      "idle_fraction": 0.33
+    },
+    "available_recipes": [
+      "process_meat",
+      "process_tofu",
+      "process_sausage",
+      "process_snack",
+      "mill_flour"
+    ],
+    "research_required": null,
+    "unity_boost": 0.2
+  },
+  {
+    "id": "baking_unit",
+    "name": "烘焙工廠",
+    "name_en": "Baking Unit",
+    "category": "FoodProduction",
+    "footprint": { "width": 7, "height": 5 },
+    "construction_costs": [
+      { "resource_id": "construction_parts_2", "amount": 40 }
+    ],
+    "workers": 8,
+    "base_electricity_kw": 200,
+    "maintenance": {
+      "tier": "Maintenance1",
+      "amount_per_month": 4.0,
+      "idle_fraction": 0.33
+    },
+    "available_recipes": [
+      "bake_bread",
+      "bake_cake"
+    ],
+    "research_required": null,
+    "unity_boost": 0.2
+  },
+  {
+    "id": "food_market",
+    "name": "食品市場",
+    "name_en": "Food Market",
+    "category": "FoodProduction",
+    "footprint": { "width": 11, "height": 7 },
+    "construction_costs": [
+      { "resource_id": "construction_parts", "amount": 25 }
+    ],
+    "workers": 3,
+    "base_electricity_kw": 0,
+    "available_recipes": [],
+    "research_required": null
+  }
+]

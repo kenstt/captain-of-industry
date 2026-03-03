@@ -1,0 +1,117 @@
+[
+  {
+    "id": "farm",
+    "name": "農場",
+    "name_en": "Farm",
+    "category": "Farming",
+    "footprint": { "width": 61, "height": 41 },
+    "construction_costs": [
+      { "resource_id": "construction_parts", "amount": 30 }
+    ],
+    "workers": 10,
+    "base_electricity_kw": 0,
+    "available_recipes": [
+      "farm_potato",
+      "farm_corn",
+      "farm_wheat",
+      "farm_soybean",
+      "farm_vegetables"
+    ],
+    "research_required": "basic_farming"
+  },
+  {
+    "id": "irrigated_farm",
+    "name": "灌溉農場",
+    "name_en": "Irrigated Farm",
+    "category": "Farming",
+    "footprint": { "width": 61, "height": 41 },
+    "construction_costs": [
+      { "resource_id": "construction_parts_2", "amount": 60 }
+    ],
+    "workers": 12,
+    "base_electricity_kw": 0,
+    "maintenance": {
+      "tier": "Maintenance1",
+      "amount_per_month": 2.0,
+      "idle_fraction": 0.33
+    },
+    "available_recipes": [
+      "irrigated_potato",
+      "irrigated_corn",
+      "irrigated_wheat",
+      "irrigated_soybean",
+      "irrigated_vegetables"
+    ],
+    "research_required": "irrigated_farming"
+  },
+  {
+    "id": "greenhouse",
+    "name": "溫室",
+    "name_en": "Greenhouse",
+    "category": "Farming",
+    "footprint": { "width": 61, "height": 41 },
+    "construction_costs": [
+      { "resource_id": "construction_parts_3", "amount": 100 },
+      { "resource_id": "glass", "amount": 320 }
+    ],
+    "workers": 18,
+    "base_electricity_kw": 0,
+    "maintenance": {
+      "tier": "Maintenance1",
+      "amount_per_month": 6.0,
+      "idle_fraction": 0.33
+    },
+    "available_recipes": [
+      "greenhouse_potato",
+      "greenhouse_corn",
+      "greenhouse_wheat",
+      "greenhouse_soybean",
+      "greenhouse_vegetables",
+      "greenhouse_fruit"
+    ],
+    "research_required": "greenhouse"
+  },
+  {
+    "id": "greenhouse_2",
+    "name": "溫室 II",
+    "name_en": "Greenhouse II",
+    "category": "Farming",
+    "footprint": { "width": 61, "height": 41 },
+    "construction_costs": [
+      { "resource_id": "construction_parts_3", "amount": 200 },
+      { "resource_id": "glass", "amount": 640 }
+    ],
+    "workers": 24,
+    "base_electricity_kw": 0,
+    "maintenance": {
+      "tier": "Maintenance1",
+      "amount_per_month": 8.0,
+      "idle_fraction": 0.33
+    },
+    "available_recipes": [
+      "greenhouse2_potato",
+      "greenhouse2_corn",
+      "greenhouse2_wheat",
+      "greenhouse2_soybean",
+      "greenhouse2_vegetables",
+      "greenhouse2_fruit"
+    ],
+    "research_required": "greenhouse_2"
+  },
+  {
+    "id": "chicken_farm",
+    "name": "養雞場",
+    "name_en": "Chicken Farm",
+    "category": "Farming",
+    "footprint": { "width": 11, "height": 16 },
+    "construction_costs": [
+      { "resource_id": "construction_parts_3", "amount": 50 }
+    ],
+    "workers": 12,
+    "base_electricity_kw": 0,
+    "available_recipes": [
+      "chicken_farm_produce"
+    ],
+    "research_required": "chicken_farm"
+  }
+]

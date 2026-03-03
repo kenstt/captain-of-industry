@@ -150,6 +150,12 @@
     "category": "FinalProduct"
   },
   {
+    "id": "construction_parts_4",
+    "name": "建設零件 IV",
+    "name_en": "Construction Parts IV",
+    "category": "FinalProduct"
+  },
+  {
     "id": "maintenance_1",
     "name": "維護 I",
     "name_en": "Maintenance I",
@@ -226,5 +232,339 @@
     "name": "氫氣",
     "name_en": "Hydrogen",
     "category": "Fuel"
+  },
+  {
+    "id": "potato",
+    "name": "馬鈴薯",
+    "name_en": "Potato",
+    "category": "Food"
+  },
+  {
+    "id": "corn",
+    "name": "玉米",
+    "name_en": "Corn",
+    "category": "Food"
+  },
+  {
+    "id": "bread",
+    "name": "麵包",
+    "name_en": "Bread",
+    "category": "Food"
+  },
+  {
+    "id": "wheat",
+    "name": "小麥",
+    "name_en": "Wheat",
+    "category": "Intermediate"
+  },
+  {
+    "id": "flour",
+    "name": "麵粉",
+    "name_en": "Flour",
+    "category": "Intermediate"
+  },
+  {
+    "id": "sugar",
+    "name": "糖",
+    "name_en": "Sugar",
+    "category": "Intermediate"
+  },
+  {
+    "id": "cooking_oil",
+    "name": "食用油",
+    "name_en": "Cooking Oil",
+    "category": "Intermediate"
+  },
+  {
+    "id": "meat",
+    "name": "肉",
+    "name_en": "Meat",
+    "category": "Food"
+  },
+  {
+    "id": "chicken_carcass",
+    "name": "雞屠體",
+    "name_en": "Chicken Carcass",
+    "category": "Intermediate"
+  },
+  {
+    "id": "meat_trimmings",
+    "name": "碎肉",
+    "name_en": "Meat Trimmings",
+    "category": "Intermediate"
+  },
+  {
+    "id": "eggs",
+    "name": "蛋",
+    "name_en": "Eggs",
+    "category": "Intermediate"
+  },
+  {
+    "id": "tofu",
+    "name": "豆腐",
+    "name_en": "Tofu",
+    "category": "Food"
+  },
+  {
+    "id": "soybean",
+    "name": "大豆",
+    "name_en": "Soybean",
+    "category": "Intermediate"
+  },
+  {
+    "id": "sausage",
+    "name": "香腸",
+    "name_en": "Sausage",
+    "category": "Food"
+  },
+  {
+    "id": "vegetables",
+    "name": "蔬菜",
+    "name_en": "Vegetables",
+    "category": "Food"
+  },
+  {
+    "id": "fruit",
+    "name": "水果",
+    "name_en": "Fruit",
+    "category": "Food"
+  },
+  {
+    "id": "snack",
+    "name": "零食",
+    "name_en": "Snack",
+    "category": "Food"
+  },
+  {
+    "id": "cake",
+    "name": "蛋糕",
+    "name_en": "Cake",
+    "category": "Food"
+  },
+  {
+    "id": "animal_feed",
+    "name": "飼料",
+    "name_en": "Animal Feed",
+    "category": "Intermediate"
+  },
+  {
+    "id": "biomass",
+    "name": "生質能",
+    "name_en": "Biomass",
+    "category": "Intermediate"
+  },
+  {
+    "id": "water",
+    "name": "水",
+    "name_en": "Water",
+    "category": "RawMaterial",
+    "is_primary": true
+  },
+  {
+    "id": "seawater",
+    "name": "海水",
+    "name_en": "Seawater",
+    "category": "RawMaterial",
+    "is_primary": true
+  },
+  {
+    "id": "wood",
+    "name": "木材",
+    "name_en": "Wood",
+    "category": "RawMaterial",
+    "is_primary": true
+  },
+  {
+    "id": "woodchips",
+    "name": "木屑",
+    "name_en": "Woodchips",
+    "category": "Intermediate"
+  },
+  {
+    "id": "rock",
+    "name": "岩石",
+    "name_en": "Rock",
+    "category": "RawMaterial",
+    "is_primary": true
+  },
+  {
+    "id": "gravel",
+    "name": "碎石",
+    "name_en": "Gravel",
+    "category": "Intermediate"
+  },
+  {
+    "id": "soil",
+    "name": "土壤",
+    "name_en": "Soil",
+    "category": "RawMaterial",
+    "is_primary": true
+  },
+  {
+    "id": "crude_oil",
+    "name": "原油",
+    "name_en": "Crude Oil",
+    "category": "RawMaterial",
+    "is_primary": true
+  },
+  {
+    "id": "gold_ore",
+    "name": "金礦",
+    "name_en": "Gold Ore",
+    "category": "RawMaterial",
+    "is_primary": true
+  },
+  {
+    "id": "quartz",
+    "name": "石英",
+    "name_en": "Quartz",
+    "category": "RawMaterial",
+    "is_primary": true
+  },
+  {
+    "id": "rubber",
+    "name": "橡膠",
+    "name_en": "Rubber",
+    "category": "Intermediate"
+  },
+  {
+    "id": "salt",
+    "name": "鹽",
+    "name_en": "Salt",
+    "category": "RawMaterial",
+    "is_primary": true
+  },
+  {
+    "id": "sulfur",
+    "name": "硫磺",
+    "name_en": "Sulfur",
+    "category": "RawMaterial",
+    "is_primary": true
+  },
+  {
+    "id": "steel",
+    "name": "鋼",
+    "name_en": "Steel",
+    "category": "Intermediate"
+  },
+  {
+    "id": "plastic",
+    "name": "塑膠",
+    "name_en": "Plastic",
+    "category": "Intermediate"
+  },
+  {
+    "id": "cement",
+    "name": "水泥",
+    "name_en": "Cement",
+    "category": "Intermediate"
+  },
+  {
+    "id": "concrete",
+    "name": "混凝土",
+    "name_en": "Concrete",
+    "category": "Intermediate"
+  },
+  {
+    "id": "fertilizer_1",
+    "name": "肥料",
+    "name_en": "Fertilizer",
+    "category": "Intermediate"
+  },
+  {
+    "id": "chlorine",
+    "name": "氯",
+    "name_en": "Chlorine",
+    "category": "Intermediate"
+  },
+  {
+    "id": "filter_media",
+    "name": "過濾介質",
+    "name_en": "Filter Media",
+    "category": "Intermediate"
+  },
+  {
+    "id": "solar_cell",
+    "name": "太陽能電池",
+    "name_en": "Solar Cell",
+    "category": "Intermediate"
+  },
+  {
+    "id": "high_pressure_steam",
+    "name": "高壓蒸氣",
+    "name_en": "High Pressure Steam",
+    "category": "Intermediate"
+  },
+  {
+    "id": "household_goods",
+    "name": "家用品",
+    "name_en": "Household Goods",
+    "category": "Service"
+  },
+  {
+    "id": "household_appliances",
+    "name": "家電",
+    "name_en": "Household Appliances",
+    "category": "Service"
+  },
+  {
+    "id": "luxury_goods",
+    "name": "奢侈品",
+    "name_en": "Luxury Goods",
+    "category": "Service"
+  },
+  {
+    "id": "consumer_electronics",
+    "name": "消費電子",
+    "name_en": "Consumer Electronics",
+    "category": "Service"
+  },
+  {
+    "id": "medical_supplies",
+    "name": "醫療用品",
+    "name_en": "Medical Supplies",
+    "category": "Service"
+  },
+  {
+    "id": "waste",
+    "name": "廢棄物",
+    "name_en": "Waste",
+    "category": "Waste",
+    "is_waste": true
+  },
+  {
+    "id": "waste_water",
+    "name": "廢水",
+    "name_en": "Waste Water",
+    "category": "Waste",
+    "is_waste": true
+  },
+  {
+    "id": "sludge",
+    "name": "污泥",
+    "name_en": "Sludge",
+    "category": "Waste",
+    "is_waste": true
+  },
+  {
+    "id": "toxic_slurry",
+    "name": "有毒泥漿",
+    "name_en": "Toxic Slurry",
+    "category": "Waste",
+    "is_waste": true
+  },
+  {
+    "id": "brine",
+    "name": "鹵水",
+    "name_en": "Brine",
+    "category": "Waste",
+    "is_waste": true
+  },
+  {
+    "id": "water_pollution",
+    "name": "水污染",
+    "name_en": "Water Pollution",
+    "category": "Pollution",
+    "is_pollution": true
   }
 ]

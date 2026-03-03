@@ -1,0 +1,58 @@
+[
+  {
+    "id": "settlement_1",
+    "name": "住宅 I",
+    "name_en": "Settlement I",
+    "category": "Housing",
+    "footprint": { "width": 8, "height": 6 },
+    "construction_costs": [
+      { "resource_id": "construction_parts", "amount": 15 }
+    ],
+    "workers": 0,
+    "base_electricity_kw": 0,
+    "available_recipes": [],
+    "research_required": null
+  },
+  {
+    "id": "settlement_2",
+    "name": "住宅 II",
+    "name_en": "Settlement II",
+    "category": "Housing",
+    "footprint": { "width": 8, "height": 6 },
+    "construction_costs": [
+      { "resource_id": "construction_parts_2", "amount": 30 }
+    ],
+    "workers": 0,
+    "base_electricity_kw": 0,
+    "available_recipes": [],
+    "research_required": null
+  },
+  {
+    "id": "settlement_3",
+    "name": "住宅 III",
+    "name_en": "Settlement III",
+    "category": "Housing",
+    "footprint": { "width": 8, "height": 6 },
+    "construction_costs": [
+      { "resource_id": "construction_parts_3", "amount": 60 }
+    ],
+    "workers": 0,
+    "base_electricity_kw": 0,
+    "available_recipes": [],
+    "research_required": null
+  },
+  {
+    "id": "settlement_4",
+    "name": "住宅 IV",
+    "name_en": "Settlement IV",
+    "category": "Housing",
+    "footprint": { "width": 8, "height": 6 },
+    "construction_costs": [
+      { "resource_id": "construction_parts_4", "amount": 100 }
+    ],
+    "workers": 0,
+    "base_electricity_kw": 0,
+    "available_recipes": [],
+    "research_required": null
+  }
+]

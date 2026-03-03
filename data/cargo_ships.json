@@ -1,1 +1,66 @@
-[]
+[
+  {
+    "size": 2,
+    "fuel_type": "diesel",
+    "fuel_per_trip": 2.0,
+    "fuel_per_trip_save_mode": 1.4,
+    "capacity_unit": 720,
+    "capacity_fluid": 880,
+    "workers": 12,
+    "travel_time_normal": 120.0,
+    "travel_time_save_fuel": 180.0,
+    "maintenance": {
+      "tier": "Maintenance1",
+      "amount_per_month": 4.0,
+      "idle_fraction": 0.33
+    }
+  },
+  {
+    "size": 4,
+    "fuel_type": "diesel",
+    "fuel_per_trip": 4.0,
+    "fuel_per_trip_save_mode": 2.8,
+    "capacity_unit": 1440,
+    "capacity_fluid": 1760,
+    "workers": 18,
+    "travel_time_normal": 120.0,
+    "travel_time_save_fuel": 180.0,
+    "maintenance": {
+      "tier": "Maintenance1",
+      "amount_per_month": 6.0,
+      "idle_fraction": 0.33
+    }
+  },
+  {
+    "size": 6,
+    "fuel_type": "diesel",
+    "fuel_per_trip": 6.0,
+    "fuel_per_trip_save_mode": 4.2,
+    "capacity_unit": 2160,
+    "capacity_fluid": 2640,
+    "workers": 24,
+    "travel_time_normal": 120.0,
+    "travel_time_save_fuel": 180.0,
+    "maintenance": {
+      "tier": "Maintenance1",
+      "amount_per_month": 8.0,
+      "idle_fraction": 0.33
+    }
+  },
+  {
+    "size": 8,
+    "fuel_type": "diesel",
+    "fuel_per_trip": 8.0,
+    "fuel_per_trip_save_mode": 5.6,
+    "capacity_unit": 2880,
+    "capacity_fluid": 3520,
+    "workers": 36,
+    "travel_time_normal": 120.0,
+    "travel_time_save_fuel": 180.0,
+    "maintenance": {
+      "tier": "Maintenance1",
+      "amount_per_month": 10.0,
+      "idle_fraction": 0.33
+    }
+  }
+]
