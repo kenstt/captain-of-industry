@@ -6,35 +6,35 @@
       "name": "碳水化合物",
       "name_en": "Carbs",
       "items": {
-        "potato":  { "per_100_pop_per_month": 4.20 },
-        "corn":    { "per_100_pop_per_month": 3.00 },
-        "bread":   { "per_100_pop_per_month": 2.00 }
+        "potato":  { "per_100_pop_per_month": 4.20, "name": "馬鈴薯", "name_en": "Potato" },
+        "corn":    { "per_100_pop_per_month": 3.00, "name": "玉米", "name_en": "Corn" },
+        "bread":   { "per_100_pop_per_month": 2.00, "name": "麵包", "name_en": "Bread" }
       }
     },
     "protein": {
       "name": "蛋白質",
       "name_en": "Protein",
       "items": {
-        "meat":    { "per_100_pop_per_month": 2.70 },
-        "eggs":    { "per_100_pop_per_month": 3.00 },
-        "tofu":    { "per_100_pop_per_month": 1.80 },
-        "sausage": { "per_100_pop_per_month": 3.35 }
+        "meat":    { "per_100_pop_per_month": 2.70, "name": "肉", "name_en": "Meat" },
+        "eggs":    { "per_100_pop_per_month": 3.00, "name": "蛋", "name_en": "Eggs" },
+        "tofu":    { "per_100_pop_per_month": 1.80, "name": "豆腐", "name_en": "Tofu" },
+        "sausage": { "per_100_pop_per_month": 3.35, "name": "香腸", "name_en": "Sausage" }
       }
     },
     "vitamins": {
       "name": "維生素",
       "name_en": "Vitamins",
       "items": {
-        "vegetables": { "per_100_pop_per_month": 4.20 },
-        "fruit":      { "per_100_pop_per_month": 3.15 }
+        "vegetables": { "per_100_pop_per_month": 4.20, "name": "蔬菜", "name_en": "Vegetables" },
+        "fruit":      { "per_100_pop_per_month": 3.15, "name": "水果", "name_en": "Fruit" }
       }
     },
     "treats": {
       "name": "零食",
       "name_en": "Treats",
       "items": {
-        "snack": { "per_100_pop_per_month": 2.60 },
-        "cake":  { "per_100_pop_per_month": 2.50 }
+        "snack": { "per_100_pop_per_month": 2.60, "name": "零食", "name_en": "Snack" },
+        "cake":  { "per_100_pop_per_month": 2.50, "name": "蛋糕", "name_en": "Cake" }
       }
     }
   },

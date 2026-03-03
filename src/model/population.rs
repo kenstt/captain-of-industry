@@ -7,6 +7,12 @@ use serde::{Deserialize, Serialize};
 pub struct FoodItem {
     /// 每 100 人每遊戲月消耗量
     pub per_100_pop_per_month: f64,
+    /// 繁體中文名稱
+    #[serde(default)]
+    pub name: Option<String>,
+    /// 英文名稱
+    #[serde(default)]
+    pub name_en: Option<String>,
 }
 
 /// 食物分類（碳水/蛋白質/維生素/零食）

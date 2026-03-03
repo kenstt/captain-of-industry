@@ -7,7 +7,9 @@ use comfy_table::{ContentArrangement, Table};
 use rustyline::DefaultEditor;
 
 use crate::data::GameData;
+use crate::engine::balance::compute_island_balance;
 use crate::engine::solver::{Engine, SolverSettings};
+use crate::model::island::PopulationSettings;
 use crate::model::*;
 
 use commands::{parse_command, Command, DifficultyCommand};
@@ -17,6 +19,7 @@ struct Session {
     engine: Engine,
     game_data: std::sync::Arc<GameData>,
     difficulty: DifficultySettings,
+    population: PopulationSettings,
     unlocked_research: HashSet<ResearchId>,
     recipe_preferences: HashMap<ResourceId, RecipeId>,
     last_chain: Option<results::ProductionChain>,
@@ -42,6 +45,7 @@ pub fn run(game_data: GameData) {
         engine,
         game_data: game_data_arc,
         difficulty: DifficultySettings::default(),
+        population: PopulationSettings::default(),
         unlocked_research: HashSet::new(),
         recipe_preferences: HashMap::new(),
         last_chain: None,
@@ -97,6 +101,7 @@ fn handle_command(session: &mut Session, cmd: Command) {
         Command::ListBuildings => cmd_list_buildings(session),
         Command::ListRecipes { building_id } => cmd_list_recipes(session, building_id.as_deref()),
         Command::ListResearch => cmd_list_research(session),
+        Command::Population { count, housing_tier } => cmd_population(session, count, housing_tier),
         Command::Help => display::print_help(),
         Command::Quit => unreachable!(),
         Command::Unknown(msg) => {
@@ -373,6 +378,32 @@ fn cmd_list_recipes(session: &Session, building_filter: Option<&str>) {
         ]);
     }
     println!("{table}");
+}
+
+fn cmd_population(session: &mut Session, count: u32, housing_tier: Option<u32>) {
+    if let Some(tier) = housing_tier {
+        if !(1..=4).contains(&tier) {
+            println!("住宅等級須為 1-4，使用預設等級 {}", session.population.housing_tier);
+        } else {
+            session.population.housing_tier = tier;
+        }
+    }
+    session.population.population = count;
+
+    let result = compute_island_balance(
+        &[],
+        &session.population,
+        &session.game_data,
+        &session.difficulty,
+    );
+
+    println!();
+    println!(
+        "═══ 人口需求: {} 人 / 住宅等級 {} ═══",
+        count, session.population.housing_tier
+    );
+    println!();
+    display::print_balance_sheet(&result.balance_sheet);
 }
 
 fn cmd_list_research(session: &Session) {

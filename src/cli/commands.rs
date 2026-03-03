@@ -25,6 +25,8 @@ pub enum Command {
     ListRecipes { building_id: Option<String> },
     /// 研究列表
     ListResearch,
+    /// 人口 <count> [housing_tier]
+    Population { count: u32, housing_tier: Option<u32> },
     /// 幫助
     Help,
     /// 離開
@@ -107,6 +109,15 @@ pub fn parse_command(input: &str) -> Command {
             building_id: parts.get(1).map(|s| s.to_string()),
         },
         "研究列表" | "research" => Command::ListResearch,
+        "人口" | "population" | "pop" => {
+            if parts.len() >= 2 {
+                if let Ok(count) = parts[1].parse::<u32>() {
+                    let housing_tier = parts.get(2).and_then(|s| s.parse::<u32>().ok());
+                    return Command::Population { count, housing_tier };
+                }
+            }
+            Command::Unknown("用法: 人口 <人數> [住宅等級]".into())
+        }
         "幫助" | "help" | "?" => Command::Help,
         "離開" | "quit" | "exit" | "q" => Command::Quit,
         _ => Command::Unknown(format!("未知指令: {}", parts[0])),

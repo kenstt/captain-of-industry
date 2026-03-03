@@ -159,7 +159,19 @@ pub fn compute_island_balance(
 
         // 工人（以 ceil 計算）
         let machines_actual = count.ceil() as u32;
-        total_workers += building.workers * machines_actual;
+        let workers = building.workers * machines_actual;
+        total_workers += workers;
+        if workers > 0 {
+            balance.add_consumption(
+                &ResourceId::new("workers"),
+                workers as f64,
+                EntryMeta {
+                    name: "工人（建築）".into(),
+                    name_en: "Workers (Buildings)".into(),
+                    category: ResourceCategory::Service,
+                },
+            );
+        }
     }
 
     // === 人口消耗 ===
@@ -183,12 +195,14 @@ pub fn compute_island_balance(
                         / (enabled_count as f64)
                         * difficulty.food_consumption_multiplier
                         / 60.0;
+                    let food_name = item.name.as_deref().unwrap_or(&choice.food_id);
+                    let food_name_en = item.name_en.as_deref().unwrap_or(&choice.food_id);
                     balance.add_consumption(
                         &ResourceId::new(&choice.food_id),
                         rate,
                         EntryMeta {
-                            name: choice.food_id.clone(),
-                            name_en: choice.food_id.clone(),
+                            name: food_name.to_string(),
+                            name_en: food_name_en.to_string(),
                             category: ResourceCategory::Food,
                         },
                     );
@@ -205,7 +219,12 @@ pub fn compute_island_balance(
             .unwrap_or_default();
 
         for (service_key, &base_rate) in &pop_data.services_per_1000_pop_per_60s {
-            let multiplier = match service_key.as_str() {
+            // waste_water 是產出，不是消耗，在下方廢棄物區段處理
+            if service_key == "waste_water" {
+                continue;
+            }
+
+            let tier_multiplier = match service_key.as_str() {
                 "electricity_kw" => tier_mult.electricity,
                 "water" => tier_mult.water,
                 "household_goods" => tier_mult.household_goods,
@@ -214,7 +233,13 @@ pub fn compute_island_balance(
                 _ => 1.0,
             };
 
-            let rate = base_rate * (pop / 1000.0) * multiplier / 60.0;
+            let difficulty_mult = match service_key.as_str() {
+                "household_goods" | "household_appliances" | "luxury_goods" | "consumer_electronics"
+                    => difficulty.goods_services_multiplier,
+                _ => 1.0,
+            };
+
+            let rate = base_rate * (pop / 1000.0) * tier_multiplier * difficulty_mult / 60.0;
 
             let (res_id, name, name_en, category) = match service_key.as_str() {
                 "electricity_kw" => (
@@ -224,7 +249,6 @@ pub fn compute_island_balance(
                     ResourceCategory::Electricity,
                 ),
                 "water" => ("water", "水", "Water", ResourceCategory::Service),
-                "waste_water" => ("waste_water", "廢水", "Waste Water", ResourceCategory::Waste),
                 "household_goods" => (
                     "household_goods",
                     "家用品",
@@ -292,6 +316,46 @@ pub fn compute_island_balance(
                 },
             );
         }
+
+        // 廢水產出（從 services 資料取得，但屬於產出而非消耗）
+        if let Some(&ww_rate) = pop_data.services_per_1000_pop_per_60s.get("waste_water") {
+            let rate = ww_rate * (pop / 1000.0) / 60.0;
+            balance.add_production(
+                &ResourceId::new("waste_water"),
+                rate,
+                EntryMeta {
+                    name: "廢水".into(),
+                    name_en: "Waste Water".into(),
+                    category: ResourceCategory::Waste,
+                },
+            );
+        }
+
+        // 凝聚力產出：每個啟用的食物分類貢獻 1.0 Unity/月 × unity_bonus × pop/1000
+        let enabled_food_count = population.food_choices.iter().filter(|c| c.enabled).count();
+        if enabled_food_count > 0 {
+            let unity_rate = (enabled_food_count as f64) * tier_mult.unity_bonus * (pop / 1000.0) / 60.0;
+            balance.add_production(
+                &ResourceId::new("unity"),
+                unity_rate,
+                EntryMeta {
+                    name: "凝聚力（人口）".into(),
+                    name_en: "Unity (Population)".into(),
+                    category: ResourceCategory::Unity,
+                },
+            );
+        }
+
+        // 工人供給（人口）
+        balance.add_production(
+            &ResourceId::new("workers"),
+            pop,
+            EntryMeta {
+                name: "工人（人口）".into(),
+                name_en: "Workers (Population)".into(),
+                category: ResourceCategory::Service,
+            },
+        );
     }
 
     IslandBalance {
