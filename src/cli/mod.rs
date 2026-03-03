@@ -12,7 +12,7 @@ use crate::engine::solver::{Engine, SolverSettings};
 use crate::model::island::PopulationSettings;
 use crate::model::*;
 
-use commands::{parse_command, Command, DifficultyCommand};
+use commands::{parse_command, Command, DifficultyCommand, NeedsCommand};
 
 /// CLI 互動 Session 狀態
 struct Session {
@@ -102,6 +102,7 @@ fn handle_command(session: &mut Session, cmd: Command) {
         Command::ListRecipes { building_id } => cmd_list_recipes(session, building_id.as_deref()),
         Command::ListResearch => cmd_list_research(session),
         Command::Population { count, housing_tier } => cmd_population(session, count, housing_tier),
+        Command::Needs(sub) => cmd_needs(session, sub),
         Command::Help => display::print_help(),
         Command::Quit => unreachable!(),
         Command::Unknown(msg) => {
@@ -160,7 +161,22 @@ fn cmd_gaps(session: &Session) {
         }
     }
     println!();
-    println!("（缺口建議功能將在後續版本實作）");
+
+    // 缺口分析建議
+    let settings = SolverSettings {
+        difficulty: session.difficulty.clone(),
+        unlocked_research: session.unlocked_research.clone(),
+        recipe_preferences: session.recipe_preferences.clone(),
+    };
+
+    let suggestions = crate::engine::gap::analyze_gaps(
+        &chain.balance_sheet,
+        &session.engine,
+        &settings,
+        &session.game_data,
+    );
+
+    display::print_gap_suggestions(&suggestions);
 }
 
 fn cmd_difficulty(session: &mut Session, sub: DifficultyCommand) {
@@ -380,7 +396,81 @@ fn cmd_list_recipes(session: &Session, building_filter: Option<&str>) {
     println!("{table}");
 }
 
+/// 確保 needs 已從 PopulationData 初始化
+fn ensure_needs_initialized(session: &mut Session) {
+    if session.population.needs.is_empty() {
+        session.population.needs =
+            PopulationSettings::build_default_needs(&session.game_data.population_data);
+    }
+}
+
+fn cmd_needs(session: &mut Session, sub: NeedsCommand) {
+    ensure_needs_initialized(session);
+
+    match sub {
+        NeedsCommand::List => {
+            display::print_needs(&session.population.needs, &session.game_data.population_data);
+        }
+        NeedsCommand::Toggle { key, on } => {
+            if let Some(need) = session.population.needs.iter_mut().find(|n| n.key == key) {
+                need.enabled = on;
+                let status = if on { "開" } else { "關" };
+                println!("{} ({}) → {status}", need.name, key);
+            } else {
+                println!("找不到需求: {key}");
+                println!("使用「需求」查看所有可用 key");
+            }
+        }
+        NeedsCommand::SelectFood { key, food_id } => {
+            let pop_data = &session.game_data.population_data;
+            // 從 key 提取分類 key（如 "food:carbs" → "carbs"）
+            let cat_key = key.strip_prefix("food:").unwrap_or(&key);
+            // 驗證食物 ID 是否存在
+            let valid = pop_data
+                .food_categories
+                .get(cat_key)
+                .map(|cat| cat.items.contains_key(&food_id))
+                .unwrap_or(false);
+
+            if !valid {
+                println!("無效食物: {food_id}（分類: {cat_key}）");
+                if let Some(cat) = pop_data.food_categories.get(cat_key) {
+                    let items: Vec<_> = cat.items.keys().collect();
+                    println!("可用選項: {}", items.iter().map(|s| s.as_str()).collect::<Vec<_>>().join(", "));
+                }
+                return;
+            }
+
+            if let Some(need) = session.population.needs.iter_mut().find(|n| n.key == key) {
+                if let Some(pos) = need.selected_items.iter().position(|s| s == &food_id) {
+                    need.selected_items.remove(pos);
+                    println!("{} 移除 {food_id}", need.name);
+                } else {
+                    need.selected_items.push(food_id.clone());
+                    println!("{} 加入 {food_id}", need.name);
+                }
+            } else {
+                println!("找不到需求: {key}");
+            }
+        }
+        NeedsCommand::AllOn => {
+            for need in &mut session.population.needs {
+                need.enabled = true;
+            }
+            println!("已啟用所有需求");
+        }
+        NeedsCommand::AllOff => {
+            for need in &mut session.population.needs {
+                need.enabled = false;
+            }
+            println!("已關閉所有需求");
+        }
+    }
+}
+
 fn cmd_population(session: &mut Session, count: u32, housing_tier: Option<u32>) {
+    ensure_needs_initialized(session);
+
     if let Some(tier) = housing_tier {
         if !(1..=4).contains(&tier) {
             println!("住宅等級須為 1-4，使用預設等級 {}", session.population.housing_tier);

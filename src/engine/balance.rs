@@ -3,7 +3,7 @@
 
 use crate::data::GameData;
 use crate::model::building::MaintenanceTier;
-use crate::model::island::{IslandEntry, PopulationSettings};
+use crate::model::island::{IslandEntry, NeedKind, PopulationSettings};
 use crate::model::results::{BalanceSheet, EntryMeta};
 use crate::model::resource::ResourceCategory;
 use crate::model::*;
@@ -179,161 +179,181 @@ pub fn compute_island_balance(
         let pop = population.population as f64;
         let pop_data = &game_data.population_data;
 
-        // 食物消耗：每個啟用的食物分類
-        let enabled_count = population.food_choices.iter().filter(|c| c.enabled).count();
-        for choice in &population.food_choices {
-            if !choice.enabled {
+        // 食物消耗：只計算啟用的食物需求
+        let enabled_food_count = population
+            .needs
+            .iter()
+            .filter(|n| n.kind == NeedKind::Food && n.enabled)
+            .count();
+
+        for need in &population.needs {
+            if !need.enabled {
                 continue;
             }
-            if let Some(cat) = pop_data.food_categories.get(&choice.category_key) {
-                if let Some(item) = cat.items.get(&choice.food_id) {
-                    // wiki 公式: per_100_pop_per_month / (Nc × N)
-                    // Nc = 啟用的分類數, N = 該分類中選用的食物數（我們只選一種，N=1）
-                    // 換算: per_100_pop_per_month × (pop / 100) / enabled_count / 60s → per_min
-                    // 遊戲月 = 60 秒
-                    let rate = item.per_100_pop_per_month * (pop / 100.0)
-                        / (enabled_count as f64)
-                        * difficulty.food_consumption_multiplier
-                        / 60.0;
-                    let food_name = item.name.as_deref().unwrap_or(&choice.food_id);
-                    let food_name_en = item.name_en.as_deref().unwrap_or(&choice.food_id);
+
+            match need.kind {
+                NeedKind::Food => {
+                    let cat_key = need.key.strip_prefix("food:").unwrap_or(&need.key);
+                    if need.selected_items.is_empty() {
+                        continue;
+                    }
+                    if let Some(cat) = pop_data.food_categories.get(cat_key) {
+                        let item_count = need.selected_items.len() as f64;
+                        for food_id in &need.selected_items {
+                            if let Some(item) = cat.items.get(food_id.as_str()) {
+                                let rate = item.per_100_pop_per_month * (pop / 100.0)
+                                    / (enabled_food_count as f64)
+                                    * difficulty.food_consumption_multiplier
+                                    / 60.0
+                                    / item_count;
+                                let food_name = item.name.as_deref().unwrap_or(food_id);
+                                let food_name_en = item.name_en.as_deref().unwrap_or(food_id);
+                                balance.add_consumption(
+                                    &ResourceId::new(food_id),
+                                    rate,
+                                    EntryMeta {
+                                        name: food_name.to_string(),
+                                        name_en: food_name_en.to_string(),
+                                        category: ResourceCategory::Food,
+                                    },
+                                );
+                            }
+                        }
+                    }
+                }
+                NeedKind::Service => {
+                    let service_key = need.key.strip_prefix("service:").unwrap_or(&need.key);
+                    let base_rate = match pop_data.services_per_1000_pop_per_60s.get(service_key) {
+                        Some(&r) => r,
+                        None => continue,
+                    };
+
+                    let tier_key = population.housing_tier.to_string();
+                    let tier_mult = pop_data
+                        .housing_tier_multipliers
+                        .get(&tier_key)
+                        .cloned()
+                        .unwrap_or_default();
+
+                    let tier_multiplier = match service_key {
+                        "electricity_kw" => tier_mult.electricity,
+                        "water" => tier_mult.water,
+                        "household_goods" => tier_mult.household_goods,
+                        "household_appliances" => tier_mult.household_appliances,
+                        "luxury_goods" => tier_mult.luxury_goods,
+                        _ => 1.0,
+                    };
+
+                    let difficulty_mult = match service_key {
+                        "household_goods" | "household_appliances" | "luxury_goods" | "consumer_electronics"
+                            => difficulty.goods_services_multiplier,
+                        _ => 1.0,
+                    };
+
+                    let rate = base_rate * (pop / 1000.0) * tier_multiplier * difficulty_mult / 60.0;
+
+                    let (res_id, name, name_en, category) = match service_key {
+                        "electricity_kw" => (
+                            "electricity",
+                            "電力（住宅）",
+                            "Electricity (Housing)",
+                            ResourceCategory::Electricity,
+                        ),
+                        "water" => ("water", "水", "Water", ResourceCategory::Service),
+                        "household_goods" => (
+                            "household_goods",
+                            "家用品",
+                            "Household Goods",
+                            ResourceCategory::Service,
+                        ),
+                        "household_appliances" => (
+                            "household_appliances",
+                            "家電",
+                            "Household Appliances",
+                            ResourceCategory::Service,
+                        ),
+                        "luxury_goods" => (
+                            "luxury_goods",
+                            "奢侈品",
+                            "Luxury Goods",
+                            ResourceCategory::Service,
+                        ),
+                        "consumer_electronics" => (
+                            "consumer_electronics",
+                            "消費電子",
+                            "Consumer Electronics",
+                            ResourceCategory::Service,
+                        ),
+                        "medical_supplies" => (
+                            "medical_supplies",
+                            "醫療用品",
+                            "Medical Supplies",
+                            ResourceCategory::Service,
+                        ),
+                        "computing_tflops" => (
+                            "computing",
+                            "算力（住宅）",
+                            "Computing (Housing)",
+                            ResourceCategory::Computing,
+                        ),
+                        _ => continue,
+                    };
+
                     balance.add_consumption(
-                        &ResourceId::new(&choice.food_id),
+                        &ResourceId::new(res_id),
                         rate,
                         EntryMeta {
-                            name: food_name.to_string(),
-                            name_en: food_name_en.to_string(),
-                            category: ResourceCategory::Food,
+                            name: name.into(),
+                            name_en: name_en.into(),
+                            category,
                         },
                     );
+                }
+                NeedKind::Waste => {
+                    let waste_key = need.key.strip_prefix("waste:").unwrap_or(&need.key);
+                    match waste_key {
+                        "base_waste" => {
+                            if let Some(&base_rate) = pop_data.waste_per_1000_pop_per_60s.get("base_waste") {
+                                let rate = base_rate * (pop / 1000.0) / 60.0;
+                                balance.add_production(
+                                    &ResourceId::new("waste"),
+                                    rate,
+                                    EntryMeta {
+                                        name: "廢棄物".into(),
+                                        name_en: "Waste".into(),
+                                        category: ResourceCategory::Waste,
+                                    },
+                                );
+                            }
+                        }
+                        "waste_water" => {
+                            if let Some(&ww_rate) = pop_data.services_per_1000_pop_per_60s.get("waste_water") {
+                                let rate = ww_rate * (pop / 1000.0) / 60.0;
+                                balance.add_production(
+                                    &ResourceId::new("waste_water"),
+                                    rate,
+                                    EntryMeta {
+                                        name: "廢水".into(),
+                                        name_en: "Waste Water".into(),
+                                        category: ResourceCategory::Waste,
+                                    },
+                                );
+                            }
+                        }
+                        _ => {}
+                    }
                 }
             }
         }
 
-        // 服務消耗
-        let tier_key = population.housing_tier.to_string();
-        let tier_mult = pop_data
-            .housing_tier_multipliers
-            .get(&tier_key)
-            .cloned()
-            .unwrap_or_default();
-
-        for (service_key, &base_rate) in &pop_data.services_per_1000_pop_per_60s {
-            // waste_water 是產出，不是消耗，在下方廢棄物區段處理
-            if service_key == "waste_water" {
-                continue;
-            }
-
-            let tier_multiplier = match service_key.as_str() {
-                "electricity_kw" => tier_mult.electricity,
-                "water" => tier_mult.water,
-                "household_goods" => tier_mult.household_goods,
-                "household_appliances" => tier_mult.household_appliances,
-                "luxury_goods" => tier_mult.luxury_goods,
-                _ => 1.0,
-            };
-
-            let difficulty_mult = match service_key.as_str() {
-                "household_goods" | "household_appliances" | "luxury_goods" | "consumer_electronics"
-                    => difficulty.goods_services_multiplier,
-                _ => 1.0,
-            };
-
-            let rate = base_rate * (pop / 1000.0) * tier_multiplier * difficulty_mult / 60.0;
-
-            let (res_id, name, name_en, category) = match service_key.as_str() {
-                "electricity_kw" => (
-                    "electricity",
-                    "電力（住宅）",
-                    "Electricity (Housing)",
-                    ResourceCategory::Electricity,
-                ),
-                "water" => ("water", "水", "Water", ResourceCategory::Service),
-                "household_goods" => (
-                    "household_goods",
-                    "家用品",
-                    "Household Goods",
-                    ResourceCategory::Service,
-                ),
-                "household_appliances" => (
-                    "household_appliances",
-                    "家電",
-                    "Household Appliances",
-                    ResourceCategory::Service,
-                ),
-                "luxury_goods" => (
-                    "luxury_goods",
-                    "奢侈品",
-                    "Luxury Goods",
-                    ResourceCategory::Service,
-                ),
-                "consumer_electronics" => (
-                    "consumer_electronics",
-                    "消費電子",
-                    "Consumer Electronics",
-                    ResourceCategory::Service,
-                ),
-                "medical_supplies" => (
-                    "medical_supplies",
-                    "醫療用品",
-                    "Medical Supplies",
-                    ResourceCategory::Service,
-                ),
-                "computing_tflops" => (
-                    "computing",
-                    "算力（住宅）",
-                    "Computing (Housing)",
-                    ResourceCategory::Computing,
-                ),
-                _ => continue,
-            };
-
-            balance.add_consumption(
-                &ResourceId::new(res_id),
-                rate,
-                EntryMeta {
-                    name: name.into(),
-                    name_en: name_en.into(),
-                    category,
-                },
-            );
-        }
-
-        // 廢棄物產出
-        for (waste_key, &base_rate) in &pop_data.waste_per_1000_pop_per_60s {
-            let rate = base_rate * (pop / 1000.0) / 60.0;
-            let (res_id, name, name_en) = match waste_key.as_str() {
-                "base_waste" => ("waste", "廢棄物", "Waste"),
-                _ => continue,
-            };
-            balance.add_production(
-                &ResourceId::new(res_id),
-                rate,
-                EntryMeta {
-                    name: name.into(),
-                    name_en: name_en.into(),
-                    category: ResourceCategory::Waste,
-                },
-            );
-        }
-
-        // 廢水產出（從 services 資料取得，但屬於產出而非消耗）
-        if let Some(&ww_rate) = pop_data.services_per_1000_pop_per_60s.get("waste_water") {
-            let rate = ww_rate * (pop / 1000.0) / 60.0;
-            balance.add_production(
-                &ResourceId::new("waste_water"),
-                rate,
-                EntryMeta {
-                    name: "廢水".into(),
-                    name_en: "Waste Water".into(),
-                    category: ResourceCategory::Waste,
-                },
-            );
-        }
-
-        // 凝聚力產出：每個啟用的食物分類貢獻 1.0 Unity/月 × unity_bonus × pop/1000
-        let enabled_food_count = population.food_choices.iter().filter(|c| c.enabled).count();
+        // 凝聚力產出：每個啟用的食物分類貢獻 Unity
         if enabled_food_count > 0 {
+            let tier_key = population.housing_tier.to_string();
+            let tier_mult = pop_data
+                .housing_tier_multipliers
+                .get(&tier_key)
+                .cloned()
+                .unwrap_or_default();
             let unity_rate = (enabled_food_count as f64) * tier_mult.unity_bonus * (pop / 1000.0) / 60.0;
             balance.add_production(
                 &ResourceId::new("unity"),

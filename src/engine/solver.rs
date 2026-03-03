@@ -40,6 +40,11 @@ impl Engine {
         Self { game_data }
     }
 
+    /// 取得遊戲資料的參考
+    pub fn game_data(&self) -> &GameData {
+        &self.game_data
+    }
+
     /// 求解完整生產鏈
     ///
     /// 從目標資源和目標速率出發，遞迴計算所需的所有建築、原料和副產物。
@@ -344,7 +349,7 @@ impl Engine {
     }
 
     /// 檢查配方是否可用（建築和配方的研究都已解鎖）
-    fn is_recipe_available(&self, recipe: &Recipe, settings: &SolverSettings) -> bool {
+    pub fn is_recipe_available(&self, recipe: &Recipe, settings: &SolverSettings) -> bool {
         // 如果沒有設定任何解鎖研究，視為全部解鎖（方便測試）
         if settings.unlocked_research.is_empty() {
             return true;

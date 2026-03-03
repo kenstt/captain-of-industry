@@ -1,7 +1,9 @@
 use comfy_table::{Cell, Color, ContentArrangement, Table};
 
+use crate::model::island::{NeedKind, PopulationNeed};
+use crate::model::population::PopulationData;
 use crate::model::resource::ResourceCategory;
-use crate::model::results::{BalanceSheet, ProductionChain};
+use crate::model::results::{BalanceSheet, GapSuggestion, ProductionChain};
 
 /// 顯示生產鏈結果
 pub fn print_chain(chain: &ProductionChain) {
@@ -81,6 +83,86 @@ pub fn print_balance_sheet(balance: &BalanceSheet) {
     println!("{table}");
 }
 
+/// 顯示缺口建議
+pub fn print_gap_suggestions(suggestions: &[GapSuggestion]) {
+    if suggestions.is_empty() {
+        println!("無可建議的建築（赤字資源皆為原料或無可用配方）");
+        return;
+    }
+
+    let mut table = Table::new();
+    table.set_content_arrangement(ContentArrangement::Dynamic);
+    table.set_header(vec!["資源", "赤字/分", "建議建築", "建議配方", "需要台數", "實際台數"]);
+
+    for s in suggestions {
+        let machines_actual = s.machines_needed.ceil() as u32;
+        table.add_row(vec![
+            Cell::new(&s.resource_name),
+            Cell::new(format!("{:.2}", s.deficit_per_min)).fg(Color::Red),
+            Cell::new(&s.suggested_building_name),
+            Cell::new(&s.suggested_recipe_name),
+            Cell::new(format!("{:.2}", s.machines_needed)),
+            Cell::new(machines_actual.to_string()),
+        ]);
+    }
+
+    println!("── 缺口建議 ──");
+    println!("{table}");
+}
+
+/// 顯示需求列表
+pub fn print_needs(needs: &[PopulationNeed], pop_data: &PopulationData) {
+    let mut table = Table::new();
+    table.set_content_arrangement(ContentArrangement::Dynamic);
+    table.set_header(vec!["類型", "Key", "名稱", "狀態", "選項（食物）"]);
+
+    for need in needs {
+        let kind_label = match need.kind {
+            NeedKind::Food => "食物",
+            NeedKind::Service => "服務",
+            NeedKind::Waste => "廢棄物",
+        };
+
+        let status = if need.enabled { "開" } else { "關" };
+        let status_color = if need.enabled { Color::Green } else { Color::DarkGrey };
+
+        let food_info = if need.kind == NeedKind::Food {
+            let cat_key = need.key.strip_prefix("food:").unwrap_or(&need.key);
+            if let Some(cat) = pop_data.food_categories.get(cat_key) {
+                let items: Vec<String> = cat
+                    .items
+                    .keys()
+                    .map(|k| {
+                        if need.selected_items.contains(k) {
+                            format!("[{k}]")
+                        } else {
+                            k.clone()
+                        }
+                    })
+                    .collect();
+                items.join(", ")
+            } else if !need.selected_items.is_empty() {
+                need.selected_items.iter().map(|s| format!("[{s}]")).collect::<Vec<_>>().join(", ")
+            } else {
+                "—".to_string()
+            }
+        } else {
+            "—".to_string()
+        };
+
+        table.add_row(vec![
+            Cell::new(kind_label),
+            Cell::new(&need.key),
+            Cell::new(&need.name),
+            Cell::new(status).fg(status_color),
+            Cell::new(food_info),
+        ]);
+    }
+
+    println!("── 人口需求設定 ──");
+    println!("{table}");
+}
+
 /// 顯示說明
 pub fn print_help() {
     println!(
@@ -100,6 +182,11 @@ pub fn print_help() {
   解鎖列表                     顯示已解鎖研究
 
   人口 <人數> [住宅等級]       計算人口需求（食物/服務/廢棄物/工人）
+
+  需求                         顯示人口需求開關狀態
+  需求 <key> on|off            啟用/關閉特定需求
+  需求 <food_key> <food_id>    選擇食物分類的具體食物
+  需求 全開|全關               一次啟用/關閉所有需求
 
   偏好 <resource_id> <recipe>  指定配方偏好
 

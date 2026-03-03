@@ -32,6 +32,8 @@ impl AppState {
     pub fn new(game_data: GameData) -> Self {
         let game_data = Arc::new(game_data);
         let engine = Arc::new(Engine::from_arc(game_data.clone()));
+        let mut population = PopulationSettings::default();
+        population.needs = PopulationSettings::build_default_needs(&game_data.population_data);
         Self {
             game_data,
             engine,
@@ -41,7 +43,7 @@ impl AppState {
             last_chain: None,
             active_tab: Tab::Calculator,
             island_entries: Vec::new(),
-            population: PopulationSettings::default(),
+            population,
             next_entry_id: 1,
         }
     }

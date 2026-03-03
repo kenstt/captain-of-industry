@@ -27,6 +27,8 @@ pub enum Command {
     ListResearch,
     /// 人口 <count> [housing_tier]
     Population { count: u32, housing_tier: Option<u32> },
+    /// 需求
+    Needs(NeedsCommand),
     /// 幫助
     Help,
     /// 離開
@@ -39,6 +41,15 @@ pub enum Command {
 pub enum DifficultyCommand {
     Show,
     Set { key: String, value: String },
+}
+
+#[derive(Debug)]
+pub enum NeedsCommand {
+    List,
+    Toggle { key: String, on: bool },
+    SelectFood { key: String, food_id: String },
+    AllOn,
+    AllOff,
 }
 
 /// 解析使用者輸入的指令
@@ -109,6 +120,39 @@ pub fn parse_command(input: &str) -> Command {
             building_id: parts.get(1).map(|s| s.to_string()),
         },
         "研究列表" | "research" => Command::ListResearch,
+        "需求" | "needs" => {
+            if parts.len() == 1 {
+                return Command::Needs(NeedsCommand::List);
+            }
+            match parts[1] {
+                "全開" | "all-on" => return Command::Needs(NeedsCommand::AllOn),
+                "全關" | "all-off" => return Command::Needs(NeedsCommand::AllOff),
+                _ => {
+                    let key = parts[1].to_string();
+                    if parts.len() >= 3 {
+                        match parts[2] {
+                            "on" | "開" => return Command::Needs(NeedsCommand::Toggle { key, on: true }),
+                            "off" | "關" => return Command::Needs(NeedsCommand::Toggle { key, on: false }),
+                            _ => {
+                                // 如果 key 以 food: 開頭，第三個參數視為食物選擇
+                                if key.starts_with("food:") {
+                                    return Command::Needs(NeedsCommand::SelectFood {
+                                        key,
+                                        food_id: parts[2].to_string(),
+                                    });
+                                }
+                                return Command::Unknown(
+                                    "用法: 需求 <key> on|off 或 需求 <food_key> <food_id>".into(),
+                                );
+                            }
+                        }
+                    }
+                    return Command::Unknown(
+                        "用法: 需求 | 需求 <key> on|off | 需求 <food_key> <food_id> | 需求 全開|全關".into(),
+                    );
+                }
+            }
+        }
         "人口" | "population" | "pop" => {
             if parts.len() >= 2 {
                 if let Ok(count) = parts[1].parse::<u32>() {

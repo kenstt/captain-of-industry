@@ -2,6 +2,7 @@ use dioxus::prelude::*;
 
 use crate::engine::balance::compute_island_balance;
 use crate::gui::state::AppState;
+use crate::model::island::NeedKind;
 use crate::model::resource::ResourceCategory;
 use crate::model::*;
 
@@ -105,19 +106,28 @@ pub fn Balance() -> Element {
         })
         .collect();
 
-    // ── 人口食物選項資料 ──
-    let food_cat_options: Vec<(String, String, Vec<(String, String)>)> = {
+    // ── 人口食物選項資料（含複選狀態）──
+    // (cat_key, cat_name, enabled, items: Vec<(food_id, is_selected)>)
+    let food_cat_options: Vec<(String, String, bool, Vec<(String, bool)>)> = {
         let pop_data = &state.game_data.population_data;
+        let needs = &state.population.needs;
         let mut cats: Vec<_> = pop_data
             .food_categories
             .iter()
             .map(|(key, cat)| {
+                let need_key = format!("food:{key}");
+                let need = needs.iter().find(|n| n.key == need_key);
+                let is_enabled = need.map_or(false, |n| n.enabled);
+                let selected = need.map(|n| &n.selected_items);
                 let items: Vec<_> = cat
                     .items
                     .keys()
-                    .map(|k| (k.clone(), k.clone()))
+                    .map(|k| {
+                        let checked = selected.map_or(false, |s| s.contains(k));
+                        (k.clone(), checked)
+                    })
                     .collect();
-                (key.clone(), cat.name.clone(), items)
+                (key.clone(), cat.name.clone(), is_enabled, items)
             })
             .collect();
         cats.sort_by(|a, b| a.0.cmp(&b.0));
@@ -126,7 +136,19 @@ pub fn Balance() -> Element {
 
     let pop_count = state.population.population;
     let housing_tier = state.population.housing_tier;
-    let food_choices = state.population.food_choices.clone();
+    let needs = state.population.needs.clone();
+
+    // ── 服務/廢棄物需求資料 ──
+    let service_needs: Vec<(String, String, bool)> = needs
+        .iter()
+        .filter(|n| n.kind == NeedKind::Service)
+        .map(|n| (n.key.clone(), n.name.clone(), n.enabled))
+        .collect();
+    let waste_needs: Vec<(String, String, bool)> = needs
+        .iter()
+        .filter(|n| n.kind == NeedKind::Waste)
+        .map(|n| (n.key.clone(), n.name.clone(), n.enabled))
+        .collect();
 
     // ── 平衡表行資料 ──
     let balance_rows: Vec<_> = sorted
@@ -374,46 +396,143 @@ pub fn Balance() -> Element {
                     let current = *show_pop_advanced.read();
                     show_pop_advanced.set(!current);
                 },
-                if *show_pop_advanced.read() { "收起食物設定 ▲" } else { "食物設定 ▼" }
+                if *show_pop_advanced.read() { "收起需求設定 Needs ▲" } else { "需求設定 Needs ▼" }
             }
 
             if *show_pop_advanced.read() {
-                div { class: "food-settings",
-                    for (cat_key, cat_name, items) in food_cat_options.iter() {
-                        {
-                            let cat_key_c = cat_key.clone();
-                            let cat_key_c2 = cat_key.clone();
-                            let choice = food_choices.iter().find(|c| c.category_key == *cat_key);
-                            let is_enabled = choice.map_or(false, |c| c.enabled);
-                            let selected_food = choice.map_or(String::new(), |c| c.food_id.clone());
-                            rsx! {
-                                div { class: "form-row",
-                                    label {
-                                        input {
-                                            r#type: "checkbox",
-                                            checked: is_enabled,
-                                            onchange: move |e: Event<FormData>| {
-                                                let mut state = app_state.write();
-                                                if let Some(c) = state.population.food_choices.iter_mut().find(|c| c.category_key == cat_key_c) {
-                                                    c.enabled = e.checked();
+                div { class: "needs-panel",
+                    // ── 全開/全關 ──
+                    div { class: "needs-toolbar",
+                        button {
+                            class: "btn-small",
+                            onclick: move |_| {
+                                let mut state = app_state.write();
+                                for n in state.population.needs.iter_mut() {
+                                    n.enabled = true;
+                                }
+                            },
+                            "全開 All On"
+                        }
+                        button {
+                            class: "btn-small",
+                            onclick: move |_| {
+                                let mut state = app_state.write();
+                                for n in state.population.needs.iter_mut() {
+                                    n.enabled = false;
+                                }
+                            },
+                            "全關 All Off"
+                        }
+                    }
+
+                    // ── 三欄橫向佈局 ──
+                    div { class: "needs-columns",
+                        // ── 食物 Food ──
+                        div { class: "needs-section",
+                            h4 { "食物 Food" }
+                            for (cat_key, cat_name, is_enabled, items) in food_cat_options.iter() {
+                                {
+                                    let need_key = format!("food:{cat_key}");
+                                    let is_enabled = *is_enabled;
+                                    let need_key_c = need_key.clone();
+                                    rsx! {
+                                        div { class: "food-category",
+                                            label { class: "food-cat-label",
+                                                input {
+                                                    r#type: "checkbox",
+                                                    checked: is_enabled,
+                                                    onchange: move |e: Event<FormData>| {
+                                                        let mut state = app_state.write();
+                                                        if let Some(n) = state.population.needs.iter_mut().find(|n| n.key == need_key_c) {
+                                                            n.enabled = e.checked();
+                                                        }
+                                                    },
                                                 }
-                                            },
+                                                " {cat_name}"
+                                            }
+                                            div { class: "food-items",
+                                                for (food_id, is_selected) in items.iter() {
+                                                    {
+                                                        let food_id_c = food_id.clone();
+                                                        let food_id_label = food_id.clone();
+                                                        let need_key_f = format!("food:{cat_key}");
+                                                        let is_selected = *is_selected;
+                                                        rsx! {
+                                                            label { class: "food-item-label",
+                                                                input {
+                                                                    r#type: "checkbox",
+                                                                    checked: is_selected,
+                                                                    onchange: move |_| {
+                                                                        let mut state = app_state.write();
+                                                                        if let Some(n) = state.population.needs.iter_mut().find(|n| n.key == need_key_f) {
+                                                                            if let Some(pos) = n.selected_items.iter().position(|s| s == &food_id_c) {
+                                                                                n.selected_items.remove(pos);
+                                                                            } else {
+                                                                                n.selected_items.push(food_id_c.clone());
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                }
+                                                                " {food_id_label}"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
-                                        " {cat_name}"
                                     }
-                                    select {
-                                        value: "{selected_food}",
-                                        onchange: move |e: Event<FormData>| {
-                                            let mut state = app_state.write();
-                                            if let Some(c) = state.population.food_choices.iter_mut().find(|c| c.category_key == cat_key_c2) {
-                                                c.food_id = e.value();
+                                }
+                            }
+                        }
+
+                        // ── 服務 Service ──
+                        div { class: "needs-section",
+                            h4 { "服務 Service" }
+                            for (svc_key, svc_name, svc_enabled) in service_needs.iter() {
+                                {
+                                    let svc_key_c = svc_key.clone();
+                                    let svc_name = svc_name.clone();
+                                    let svc_enabled = *svc_enabled;
+                                    rsx! {
+                                        label { class: "need-toggle",
+                                            input {
+                                                r#type: "checkbox",
+                                                checked: svc_enabled,
+                                                onchange: move |e: Event<FormData>| {
+                                                    let mut state = app_state.write();
+                                                    if let Some(n) = state.population.needs.iter_mut().find(|n| n.key == svc_key_c) {
+                                                        n.enabled = e.checked();
+                                                    }
+                                                },
                                             }
-                                        },
-                                        for (food_id, food_label) in items.iter() {
-                                            option {
-                                                value: "{food_id}",
-                                                "{food_label}"
+                                            " {svc_name}"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // ── 廢棄物 Waste ──
+                        div { class: "needs-section",
+                            h4 { "廢棄物 Waste" }
+                            for (waste_key, waste_name, waste_enabled) in waste_needs.iter() {
+                                {
+                                    let waste_key_c = waste_key.clone();
+                                    let waste_name = waste_name.clone();
+                                    let waste_enabled = *waste_enabled;
+                                    rsx! {
+                                        label { class: "need-toggle",
+                                            input {
+                                                r#type: "checkbox",
+                                                checked: waste_enabled,
+                                                onchange: move |e: Event<FormData>| {
+                                                    let mut state = app_state.write();
+                                                    if let Some(n) = state.population.needs.iter_mut().find(|n| n.key == waste_key_c) {
+                                                        n.enabled = e.checked();
+                                                    }
+                                                },
                                             }
+                                            " {waste_name}"
                                         }
                                     }
                                 }
