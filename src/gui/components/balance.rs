@@ -107,8 +107,8 @@ pub fn Balance() -> Element {
         .collect();
 
     // ── 人口食物選項資料（含複選狀態）──
-    // (cat_key, cat_name, enabled, items: Vec<(food_id, is_selected)>)
-    let food_cat_options: Vec<(String, String, bool, Vec<(String, bool)>)> = {
+    // (cat_key, cat_name, enabled, items: Vec<(food_id, display_name, is_selected)>)
+    let food_cat_options: Vec<(String, String, bool, Vec<(String, String, bool)>)> = {
         let pop_data = &state.game_data.population_data;
         let needs = &state.population.needs;
         let mut cats: Vec<_> = pop_data
@@ -121,10 +121,11 @@ pub fn Balance() -> Element {
                 let selected = need.map(|n| &n.selected_items);
                 let items: Vec<_> = cat
                     .items
-                    .keys()
-                    .map(|k| {
+                    .iter()
+                    .map(|(k, item)| {
                         let checked = selected.map_or(false, |s| s.contains(k));
-                        (k.clone(), checked)
+                        let display = item.name.as_deref().unwrap_or(k).to_string();
+                        (k.clone(), display, checked)
                     })
                     .collect();
                 (key.clone(), cat.name.clone(), is_enabled, items)
@@ -430,31 +431,17 @@ pub fn Balance() -> Element {
                         // ── 食物 Food ──
                         div { class: "needs-section",
                             h4 { "食物 Food" }
-                            for (cat_key, cat_name, is_enabled, items) in food_cat_options.iter() {
+                            for (cat_key, cat_name, _is_enabled, items) in food_cat_options.iter() {
                                 {
-                                    let need_key = format!("food:{cat_key}");
-                                    let is_enabled = *is_enabled;
-                                    let need_key_c = need_key.clone();
+                                    let cat_name = cat_name.clone();
                                     rsx! {
-                                        div { class: "food-category",
-                                            label { class: "food-cat-label",
-                                                input {
-                                                    r#type: "checkbox",
-                                                    checked: is_enabled,
-                                                    onchange: move |e: Event<FormData>| {
-                                                        let mut state = app_state.write();
-                                                        if let Some(n) = state.population.needs.iter_mut().find(|n| n.key == need_key_c) {
-                                                            n.enabled = e.checked();
-                                                        }
-                                                    },
-                                                }
-                                                " {cat_name}"
-                                            }
+                                        div { class: "food-row",
+                                            span { class: "food-cat-name", "{cat_name}" }
                                             div { class: "food-items",
-                                                for (food_id, is_selected) in items.iter() {
+                                                for (food_id, display_name, is_selected) in items.iter() {
                                                     {
                                                         let food_id_c = food_id.clone();
-                                                        let food_id_label = food_id.clone();
+                                                        let display_name = display_name.clone();
                                                         let need_key_f = format!("food:{cat_key}");
                                                         let is_selected = *is_selected;
                                                         rsx! {
@@ -470,10 +457,11 @@ pub fn Balance() -> Element {
                                                                             } else {
                                                                                 n.selected_items.push(food_id_c.clone());
                                                                             }
+                                                                            n.enabled = !n.selected_items.is_empty();
                                                                         }
                                                                     },
                                                                 }
-                                                                " {food_id_label}"
+                                                                " {display_name}"
                                                             }
                                                         }
                                                     }
@@ -488,24 +476,26 @@ pub fn Balance() -> Element {
                         // ── 服務 Service ──
                         div { class: "needs-section",
                             h4 { "服務 Service" }
-                            for (svc_key, svc_name, svc_enabled) in service_needs.iter() {
-                                {
-                                    let svc_key_c = svc_key.clone();
-                                    let svc_name = svc_name.clone();
-                                    let svc_enabled = *svc_enabled;
-                                    rsx! {
-                                        label { class: "need-toggle",
-                                            input {
-                                                r#type: "checkbox",
-                                                checked: svc_enabled,
-                                                onchange: move |e: Event<FormData>| {
-                                                    let mut state = app_state.write();
-                                                    if let Some(n) = state.population.needs.iter_mut().find(|n| n.key == svc_key_c) {
-                                                        n.enabled = e.checked();
-                                                    }
-                                                },
+                            div { class: "service-grid",
+                                for (svc_key, svc_name, svc_enabled) in service_needs.iter() {
+                                    {
+                                        let svc_key_c = svc_key.clone();
+                                        let svc_name = svc_name.clone();
+                                        let svc_enabled = *svc_enabled;
+                                        rsx! {
+                                            label { class: "need-toggle",
+                                                input {
+                                                    r#type: "checkbox",
+                                                    checked: svc_enabled,
+                                                    onchange: move |e: Event<FormData>| {
+                                                        let mut state = app_state.write();
+                                                        if let Some(n) = state.population.needs.iter_mut().find(|n| n.key == svc_key_c) {
+                                                            n.enabled = e.checked();
+                                                        }
+                                                    },
+                                                }
+                                                " {svc_name}"
                                             }
-                                            " {svc_name}"
                                         }
                                     }
                                 }
